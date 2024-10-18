@@ -1,33 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {ThemeProvider} from "styled-components";
+import {theme} from "@/styles/shared/Theme.ts";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {AuthProvider} from "./contexts/AuthContext.tsx";
+import Home from "@/pages/Home/Home.tsx";
+import Login from "@/pages/Login/Login.tsx";
+import ProtectedRoute from "./components/Layout/ProtectedRoute.tsx";
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Routes>
+              {/* 홈 페이지는 인증 필요 없음 */}
+              <Route path="/" element={<Home />} />
+
+              {/* 로그인 페이지 */}
+              <Route path="/login" element={<Login />} />
+
+              {/* 인증된 사용자만 접근할 수 있는 경로 */}
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </AuthProvider>
     </>
   )
 }

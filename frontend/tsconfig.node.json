@@ -16,7 +16,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* 절대 경로 설정 추가 */
+    "baseUrl": ".", // src 폴더를 기준으로 설정
+    "paths": {
+      "@/*": ["src/*"] // @로 src 폴더 내부 경로를 지정
+    }
   },
   "include": ["vite.config.ts"]
 }
