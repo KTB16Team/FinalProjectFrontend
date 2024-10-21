@@ -1,0 +1,51 @@
+# 워크플로우의 이름 설정
+name: Frontend CI Workflow
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+        # Node.js 설치 - Vite와 React 등을 사용하기 위해 Node.js가 필요
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+        # node_modules를 캐싱하여 빌드 시간을 단축시킵니다.
+      - name: Cache node modules
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: node_modules
+          key: npm-packages-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-packages-
+
+      # 의존성 설치
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      # 린트(lint) 실행 - 코드 스타일 및 에러 검사를 위해 사용합니다.
+      - name: Run linter
+        run: npm run lint
+        if: ${{ always() }}
+
+      # 타입스크립트 검사를 위해 tsc(타입스크립트 컴파일러) 실행
+      - name: Run TypeScript Compiler
+        run: npm run tsc
+        if: ${{ always() }}
+
+      # 빌드 실행 - Vite를 사용해 프로젝트를 빌드합니다.
+      - name: Build the project
+        run: npm run build
+        if: ${{ always() }}
