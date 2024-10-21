@@ -35,9 +35,7 @@ jobs:
 
       # AWS CLI 설치
       - name: Install AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install awscli -y
+        run: sudo apt-get install awscli
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
