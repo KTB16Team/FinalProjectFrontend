@@ -45,13 +45,14 @@ jobs:
             aws-region: ap-northeast-2  # 서울 리전
 
       # 파일 배포 (레포지토리 내의 파일을 S3 버킷에 업로드)
-      - name: Deploy to S3
+      # S3에 파일 업로드 및 성공 시 디스코드 알림 전송
+      - name: Deploy to S3 and notify Discord
         run: |
           aws s3 sync ./frontend s3://${{ secrets.S3_BUCKET_NAME }} --delete
-
-      - name: Send success notification to Discord
-        if: steps.deploy_to_s3.outcome == 'success'  # Deploy to S3 단계가 성공하면 실행
-        run: |
-          curl -H "Content-Type: application/json" \
-          -d '{"content": "S3에 파일이 성공적으로 업로드되었습니다!"}' \
-          https://discord.com/api/webhooks/1297841409314918400/q48PQoKwPJ6Sm9895nRFstQSqzpWZjbR_WLq_p3sr3jM1dVi9qV-kGTQV6lPwTwcQ_Wf
+          if [ $? -eq 0 ]; then
+            curl -H "Content-Type: application/json" \
+            -d '{"content": "S3에 파일이 성공적으로 업로드되었습니다!"}' \
+            https://discord.com/api/webhooks/1297841409314918400/q48PQoKwPJ6Sm9895nRFstQSqzpWZjbR_WLq_p3sr3jM1dVi9qV-kGTQV6lPwTwcQ_Wf
+          else
+            echo "S3 업로드에 실패했습니다."
+            exit 1
