@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PostCategory from "@/pages/PostCategory/PostCategory.tsx";
 import PostList from "@/pages/PostList/PostList.tsx";
 import Post from "@/pages/Post/Post.tsx";
+import AudioRecorder from "@/pages/Upload/AudioRecoder/AudioRecoder.tsx";
+import TextUpload from "@/pages/Upload/TextUpload/TextUpload.tsx";
 
 function App() {
 
@@ -36,6 +38,12 @@ function App() {
 
               {/*글*/}
               <Route path="/post/:postId" element={<Post/>}/>
+
+              {/*음성녹음 페이지*/}
+              <Route path="/audio-recorder" element={<AudioRecorder/>}/>
+
+              {/*글 작성 페이지*/}
+              <Route path="/text-upload" element={<TextUpload/>}/>
 
               {/* 인증된 사용자만 접근할 수 있는 경로 */}
               <Route
