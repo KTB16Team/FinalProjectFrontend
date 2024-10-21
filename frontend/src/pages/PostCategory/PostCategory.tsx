@@ -21,7 +21,7 @@ export default function PostCategory() {
             <PostCategoryItem
               key={category.path}
               name={category.name}
-              path={category.path}
+              path={`/categories${category.path}`}
             />
           ))}
         </ul>

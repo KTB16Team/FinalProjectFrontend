@@ -10,6 +10,8 @@ import SignUp from "@/pages/SignUp/SignUp.tsx";
 import Navbar from "@/components/Navbar/Navbar.tsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PostCategory from "@/pages/PostCategory/PostCategory.tsx";
+import PostList from "@/pages/PostList/PostList.tsx";
+import Post from "@/pages/Post/Post.tsx";
 
 function App() {
 
@@ -29,6 +31,12 @@ function App() {
               {/*회원 가입 페이지 */}
               <Route path="/signup" element={<SignUp/>}/>
 
+              {/*글 목록 페이지*/}
+              <Route path="/categories/:category" element={<PostList/>}/>
+
+              {/*글*/}
+              <Route path="/post/:postId" element={<Post/>}/>
+
               {/* 인증된 사용자만 접근할 수 있는 경로 */}
               <Route
                 path="/profile"
@@ -40,7 +48,7 @@ function App() {
               />
 
               {/* 게시판 목록 페이지 */}
-              <Route path="/article-menu" element={<PostCategory/>}/>
+              <Route path="/categories" element={<PostCategory/>}/>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>
