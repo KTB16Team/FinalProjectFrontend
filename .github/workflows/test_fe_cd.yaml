@@ -1,0 +1,33 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 프로젝트를 체크아웃합니다.
+      - uses: actions/checkout@v4
+
+      # Node.js 설정 (필요한 경우)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      # AWS CLI 설치
+      - name: Install AWS CLI
+        run: sudo apt-get install awscli
+
+      # 파일 배포 (레포지토리 내의 파일을 S3 버킷에 업로드)
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_IAM_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AAWS_S3_IAM_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
