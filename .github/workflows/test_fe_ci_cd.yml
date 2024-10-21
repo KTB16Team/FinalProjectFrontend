@@ -48,3 +48,10 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync ./frontend s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Send success notification to Discord
+        if: steps.deploy_to_s3.outcome == 'success'  # Deploy to S3 단계가 성공하면 실행
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{"content": "S3에 파일이 성공적으로 업로드되었습니다!"}' \
+          https://discord.com/api/webhooks/1297841409314918400/q48PQoKwPJ6Sm9895nRFstQSqzpWZjbR_WLq_p3sr3jM1dVi9qV-kGTQV6lPwTwcQ_Wf
