@@ -47,4 +47,4 @@ jobs:
       # 파일 배포 (레포지토리 내의 파일을 S3 버킷에 업로드)
       - name: Deploy to S3
         run: |
-          aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          aws s3 sync ./frontend s3://${{ secrets.S3_BUCKET_NAME }} --delete
