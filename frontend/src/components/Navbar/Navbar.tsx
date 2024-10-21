@@ -1,7 +1,14 @@
-export default function Navbar() {
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const Navbar: React.FC = () => {
   return (
-    <div>
-      <h1>Navbar</h1>
-    </div>
+    <nav className="navbar w-full">
+      <div className="logo">
+        <Link to="/">MyApp</Link>
+      </div>
+    </nav>
   );
-}
+};
+
+export default Navbar;
