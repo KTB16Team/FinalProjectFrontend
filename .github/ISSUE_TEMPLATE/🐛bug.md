@@ -1,6 +1,6 @@
 ---
-name: "✨feature"
-about: feature 이슈 템플릿입니다.
+name: "\U0001F41Bbug"
+about: bug 이슈 템플릿입니다.
 title: ''
 labels: ''
 assignees: ''
