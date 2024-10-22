@@ -1,4 +1,3 @@
-import './App.css'
 import {ThemeProvider} from "styled-components";
 import {theme} from "@/styles/shared/Theme.ts";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
@@ -7,8 +6,7 @@ import Home from "@/pages/Home/Home.tsx";
 import Login from "@/pages/Login/Login.tsx";
 import ProtectedRoute from "./components/Layout/ProtectedRoute.tsx";
 import SignUp from "@/pages/SignUp/SignUp.tsx";
-import Navbar from "@/components/Navbar/Navbar.tsx";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from "@/components/Header/Header.tsx";
 import PostCategory from "@/pages/PostCategory/PostCategory.tsx";
 import PostList from "@/pages/PostList/PostList.tsx";
 import Post from "@/pages/Post/Post.tsx";
@@ -22,7 +20,7 @@ function App() {
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
-            <Navbar/>
+            <Header/>
             <Routes>
               {/* 홈 페이지는 인증 필요 없음 */}
               <Route path="/" element={<Home/>}/>
