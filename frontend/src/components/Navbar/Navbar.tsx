@@ -1,14 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom";
+import styled from "styled-components";
 
-const Navbar: React.FC = () => {
+export default function Navbar() {
   return (
-    <nav className="navbar w-full">
-      <div className="logo">
-        <Link to="/">MyApp</Link>
+    <Nav className="fixed bottom-0 w-full flex flex-row bg-black text-white justify-center">
+      <div className="logo w-1/3">
+        <Link to="/">홈</Link>
       </div>
-    </nav>
+      <div className="logo w-1/3">
+        <Link to="/">게시판</Link>
+      </div>
+      <div className="logo w-1/3">
+        <Link to="/">내 안건</Link>
+      </div>
+    </Nav>
   );
-};
+}
 
-export default Navbar;
+const Nav = styled.nav`
+    height: 10vh;
+`

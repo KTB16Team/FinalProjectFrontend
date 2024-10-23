@@ -10,7 +10,7 @@ export default function PostItem({post}: PostItemProps) {
     <Link to={`/posts/${post.id}`}>
       <div>
         <div>{post.id}</div>
-        <div>{post.name}</div>
+        <div>{post.title}</div>
         <div>{post.content}</div>
         <div>
           <span>{post.createdAt}</span>

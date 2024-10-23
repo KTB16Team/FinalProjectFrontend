@@ -1,14 +1,5 @@
-import VoteSection from "@/components/Vote/VoteSection.tsx";
+import VoteSection from "@/components/Post/Vote/VoteSection.tsx";
 import CommentSection from "@/components/Comment/CommentSection.tsx";
-
-// interface PostBody {
-//   author: string;
-//   createdat: string;
-//   name: string;
-//   content: string;
-//   views: number;
-//   likes: number;
-// }
 
 const post = {
   author: 'React 선생님',

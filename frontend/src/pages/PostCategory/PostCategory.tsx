@@ -1,4 +1,4 @@
-import PostCategoryItem from "@/components/PostCategoryItem/PostCategoryItem.tsx";
+import PostCategoryItem from "@/components/PostCategory/PostCategoryItem/PostCategoryItem.tsx";
 
 interface Category {
   name: string;
