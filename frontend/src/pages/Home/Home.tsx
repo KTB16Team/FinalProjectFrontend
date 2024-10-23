@@ -9,6 +9,7 @@ import PopularItem from "@/components/Home/SliderItem/PopularItem.tsx";
 import MyAgendaItem from "@/components/Home/SliderItem/MyAgendaItem.tsx";
 import AllItem from "@/components/Home/SliderItem/AllItem.tsx";
 import {Post} from "@/types/post.ts";
+import Header from "@/components/Header/Header.tsx";
 
 const settings = {
   dots: true,
@@ -43,6 +44,7 @@ export default function () {
 
   return (
     <Body>
+      <Header/>
       <div className="w-full bg-white">
         {/* 내가 쓴 안건 섹션 */}
         <HomepageSection title={"내가 쓴 안건"} url={"/categories/my-agendas"}>
