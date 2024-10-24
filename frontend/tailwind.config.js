@@ -6,7 +6,8 @@ export default {
     extend: {
       colors: {
         customGray: '#E8E8E8',
-        background: '#F8F8F8'
+        background: '#F8F8F8',
+        mainColor: '#E55958',
       },
     },
   },

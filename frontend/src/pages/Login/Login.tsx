@@ -3,6 +3,7 @@ import {AuthContext} from "@/contexts/AuthContext.tsx";
 import {fetchLogin} from "@/apis/login.ts";
 import styled from "styled-components";
 import Button from "@/components/Button/Button.tsx";
+import NavigateButton from "@/components/Button/NavigateButton.tsx";
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -56,9 +57,9 @@ export default function Login() {
         {loginError && <p style={{color: 'red'}}>{loginError}</p>}
       </form>
 
-      <button>아이디 찾기</button>
-      | <button>비밀번호 찾기</button>
-      <button>회원가입</button>
+      <NavigateButton title="아이디 찾기" url="/"/>
+      | <NavigateButton title="비밀번호 찾기" url="/"/>
+      <NavigateButton title="회원가입" url="/signup"/>
 
       <Button
         color="#FAE300"
@@ -72,9 +73,9 @@ export default function Login() {
       </Button>
 
       <footer>
-        <button>이용약관</button>
-        <button>개인정보 처리방침</button>
-        <button>문의하기</button>
+        <NavigateButton title="이용약관" url="/"/>
+        <NavigateButton title="개인정보 처리방침" url="/"/>
+        <NavigateButton title="문의하기" url="/"/>
       </footer>
     </div>
   );

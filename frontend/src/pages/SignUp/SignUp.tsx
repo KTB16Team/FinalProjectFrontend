@@ -1,6 +1,5 @@
 import {useForm, SubmitHandler} from 'react-hook-form';
 import Input from "@/components/SignUp/Input.tsx";
-import Header from "@/components/Header/Header.tsx";
 import Body from "@/components/Body/Body.tsx";
 import RequiredInputIcon from "@/components/SignUp/RequiredInputIcon.tsx";
 import BottomButton from "@/components/Button/BottomButton.tsx";
@@ -9,6 +8,8 @@ import {SignUpForm} from "@/types/signUpForm.ts";
 import {signup} from "@/apis/signup.ts";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import CancelButton from "@/components/Button/CancelButton.tsx";
+import Header from "@/components/Header/Header.tsx";
 
 export default function SignUp() {
   const {register, handleSubmit, formState: {errors}, watch} = useForm<SignUpForm>();
@@ -65,7 +66,7 @@ export default function SignUp() {
 
   return (
     <Body>
-      <Header title="회원가입"/>
+      <Header title="회원가입" leftButton={<CancelButton url="/login"/>}/>
       <div className="signup-container p-5">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 이메일 */}
