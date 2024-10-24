@@ -6,12 +6,12 @@ import Home from "@/pages/Home/Home.tsx";
 import Login from "@/pages/Login/Login.tsx";
 import ProtectedRoute from "./components/Layout/ProtectedRoute.tsx";
 import SignUp from "@/pages/SignUp/SignUp.tsx";
-import Header from "@/components/Header/Header.tsx";
 import PostCategory from "@/pages/PostCategory/PostCategory.tsx";
 import PostList from "@/pages/PostList/PostList.tsx";
 import Post from "@/pages/Post/Post.tsx";
 import AudioRecorder from "@/pages/Upload/AudioRecoder/AudioRecoder.tsx";
 import TextUpload from "@/pages/Upload/TextUpload/TextUpload.tsx";
+import AiResult from "@/pages/AiResult/AiResult.tsx";
 
 function App() {
 
@@ -20,7 +20,6 @@ function App() {
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
-            <Header/>
             <Routes>
               {/* 홈 페이지는 인증 필요 없음 */}
               <Route path="/" element={<Home/>}/>
@@ -43,6 +42,12 @@ function App() {
               {/*글 작성 페이지*/}
               <Route path="/text-upload" element={<TextUpload/>}/>
 
+              {/* 게시판 목록 페이지 */}
+              <Route path="/categories" element={<PostCategory/>}/>
+
+              {/*AI 결과 페이지*/}
+              <Route path="/ai-result" element={<AiResult/>}/>
+
               {/* 인증된 사용자만 접근할 수 있는 경로 */}
               <Route
                 path="/profile"
@@ -53,8 +58,6 @@ function App() {
                 }
               />
 
-              {/* 게시판 목록 페이지 */}
-              <Route path="/categories" element={<PostCategory/>}/>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

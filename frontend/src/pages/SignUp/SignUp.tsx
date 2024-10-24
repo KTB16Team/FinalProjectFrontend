@@ -1,94 +1,157 @@
-import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import {useForm, SubmitHandler} from 'react-hook-form';
+import Input from "@/components/SignUp/Input.tsx";
+import Body from "@/components/Body/Body.tsx";
+import RequiredInputIcon from "@/components/SignUp/RequiredInputIcon.tsx";
+import BottomButton from "@/components/Button/BottomButton.tsx";
+import {useState, useEffect} from "react";
+import {SignUpForm} from "@/types/signUpForm.ts";
+import {signup} from "@/apis/signup.ts";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import CancelButton from "@/components/Button/CancelButton.tsx";
+import Header from "@/components/Header/Header.tsx";
 
-interface SignUpFormData {
-  nickname: string;
-  username: string;
-  password: string;
-  email: string;
-  confirmEmail: string;
-  birthdate: string;
-}
+export default function SignUp() {
+  const {register, handleSubmit, formState: {errors}, watch} = useForm<SignUpForm>();
+  const [isDone, setIsDone] = useState(false);
+  const navigate = useNavigate();
 
-const SignUpPage: React.FC = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm<SignUpFormData>();
-  const [submitted, setSubmitted] = useState(false);
-  const onSubmit: SubmitHandler<SignUpFormData> = data => {
-    console.log(data);
-    setSubmitted(true);
+  // 모든 필드를 감시
+  const watchFields = watch([
+    'email', 'password', 'confirmPassword', 'username', 'birth', 'gender'
+  ]);
+
+  // 회원가입 요청
+  const onSubmit: SubmitHandler<SignUpForm> = data => {
+
+    signup(data)
+      .then(() => {
+        navigate('/login');
+      })
+      .catch((error) => {
+        // 에러 처리
+        if (axios.isAxiosError(error)) {
+          const response = error.response?.data;
+
+          // 서버 응답에서 code를 가져와 처리
+          switch (response?.code) {
+            case 'COMMON-002':
+              alert('요청 파라미터가 잘못되었습니다.');
+              break;
+            case 'MEMBER-005':
+              alert('이메일이 중복되었습니다.');
+              break;
+            case 'MEMBER-006':
+              alert('닉네임이 중복되었습니다.');
+              break;
+            // 다른 에러 코드 처리
+            default:
+              alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+          }
+        } else {
+          // 예상치 못한 에러 처리
+          alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+        }
+      })
   };
 
-  const email = watch("email");
+  // useEffect를 사용하여 watchFields가 변경될 때마다 isDone 상태 업데이트
+  useEffect(() => {
+    // 모든 필드가 채워졌는지 확인
+    const allFieldsFilled = watchFields.every(field => field !== undefined && field !== '');
+    const passwordsMatch = watchFields[1] === watchFields[2]; // password와 confirmPassword가 일치하는지 확인
+
+    setIsDone(allFieldsFilled && passwordsMatch); // 모든 필드가 채워지고 비밀번호가 일치하면 true로 설정
+  }, [watchFields]);
 
   return (
-    <div className="signup-container">
-      <h1>회원가입</h1>
-      {submitted ? (
-        <div className="success-message">Registration Successful!</div>
-      ) : (
+    <Body>
+      <Header title="회원가입" leftButton={<CancelButton url="/login"/>}/>
+      <div className="signup-container p-5">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>닉네임</label>
-            <input
-              {...register('nickname', {required: 'Nickname is required'})}
-            />
-            {errors.nickname && <p>{errors.nickname.message}</p>}
-          </div>
+          {/* 이메일 */}
+          <Input
+            label={"이메일"}
+            type="email"
+            placeholder={'이메일을 입력해주세요'}
+            register={register('email', {required: '이메일을 입력해주세요'})}
+            error={errors.email?.message}
+            required={true}
+          />
 
-          <div>
-            <label>아이디</label>
-            <input
-              {...register('username', {required: 'Username is required'})}
-            />
-            {errors.username && <p>{errors.username.message}</p>}
-          </div>
+          {/* 비밀번호 */}
+          <Input
+            label="비밀번호"
+            type="password"
+            placeholder={'비밀번호를 입력해주세요'}
+            register={register('password', {
+              required: '비밀번호를 입력해주세요',
+              minLength: {value: 6, message: '비밀번호를 6자 이상 입력해주세요'}
+            })}
+            error={errors.password?.message}
+            required={true}
+          />
 
-          <div>
-            <label>비밀번호</label>
-            <input
-              type="password"
-              {...register('password', {required: 'Password is required', minLength: 6})}
-            />
-            {errors.password && <p>{errors.password.message}</p>}
-          </div>
+          {/* 비밀번호 재입력 */}
+          <Input
+            label="비밀번호 재입력"
+            type="password"
+            placeholder={'비밀번호를 다시 입력해주세요'}
+            register={register('confirmPassword', {
+              required: '비밀번호 재입력을 입력해주세요',
+              validate: value =>
+                value === watch('password') || '비밀번호가 일치하지 않습니다'
+            })}
+            error={errors.confirmPassword?.message}
+            required={true}
+          />
 
-          <div>
-            <label>이메일</label>
-            <input
-              type="email"
-              {...register('email', {required: 'Email is required'})}
-            />
-            {errors.email && <p>{errors.email.message}</p>}
-          </div>
+          {/* 닉네임 */}
+          <Input
+            label="닉네임"
+            type="text"
+            placeholder={'닉네임을 입력해주세요'}
+            register={register('username', {required: '닉네임을 입력해주세요'})}
+            error={errors.username?.message}
+            required={true}
+          />
 
-          <div>
-            <label>Confirm Email</label>
-            <input
-              type="email"
-              {...register('confirmEmail', {
-                required: 'Confirming email is required',
-                validate: value => value === email || 'Emails do not match',
-              })}
-            />
-            {errors.confirmEmail && <p>{errors.confirmEmail.message}</p>}
-          </div>
+          {/* 생년월일 */}
+          <Input
+            label="생년월일"
+            type="date"
+            register={register('birth', {required: '생년월일을 입력해주세요'})}
+            error={errors.birth?.message}
+            required={true}
+          />
 
-          <div>
-            <label>생년월일</label>
-            <input
-              type="date"
-              {...register('birthdate', {required: 'Birthdate is required'})}
-            />
-            {errors.birthdate && <p>{errors.birthdate.message}</p>}
+          {/* 성별 */}
+          <div className="mb-6">
+            <div className="text-left">
+              성별
+              <RequiredInputIcon/>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div>
+                <input type="radio" id="male" value="male" {...register('gender', {required: '성별을 선택해주세요'})} />
+                <label htmlFor="male" className="text-gray-700">남성</label>
+              </div>
+              <div>
+                <input type="radio" id="female" value="female" {...register('gender', {required: '성별을 선택해주세요'})} />
+                <label htmlFor="female" className="text-gray-700">여성</label>
+              </div>
+            </div>
+            <div className="text-red-600 text-sm text-left">
+              {errors.gender && <p>{errors.gender.message}</p>}
+            </div>
           </div>
-          <button type="submit"
-                  className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-            Dark
-          </button>
         </form>
-      )}
-    </div>
+      </div>
+      <BottomButton
+        label="회원 가입"
+        disabled={isDone}  // isDone 상태에 따라 버튼 활성화
+        onClick={handleSubmit(onSubmit)}  // 폼 제출
+      />
+    </Body>
   );
 };
-
-export default SignUpPage;
