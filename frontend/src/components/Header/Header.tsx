@@ -9,7 +9,7 @@ type HeaderProps = {
 
 export default function Header ({title, leftButton} : HeaderProps) {
   return (
-    <Container className="fixed top-0 border-b border-gray-400 flex flex-col-reverse bg-white">
+    <Container className="fixed top-0 border-b border-gray-400 flex flex-col-reverse bg-white z-50">
       <div className="m-3">
         <span className="top-1/2">
           {leftButton}
