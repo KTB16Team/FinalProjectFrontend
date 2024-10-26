@@ -131,20 +131,23 @@ export default function MyPrivatePostList() {
   };
 
   return (
-    <div
-      className="bg-background w-full"
-      style={{
-        height: '100vh',
-        overflowY: 'scroll',
-        marginTop: '15vh',
-      }}
-    >
-      <Header title="내 개인 글" />
-      {posts.map((post) => (
-        <MyPrivatePostItem key={post.post_id} post={post} onDelete={deletePost} />
-      ))}
-      <div id="scroll-end" style={{ height: '1px' }} />
-      {loading && <p className="text-center">Loading...</p>}
+    <div>
+      <Header title="내 개인 글"/>
+      <div
+        className="bg-background w-full p-3"
+        style={{
+          height: '85vh',
+          overflowY: 'scroll',
+          marginTop: '15vh',
+        }}
+      >
+        {posts.map((post) => (
+          <MyPrivatePostItem key={post.post_id} post={post} onDelete={deletePost}/>
+        ))}
+        <div id="scroll-end" style={{height: '1px'}}/>
+        {loading && <p className="text-center">Loading...</p>}
+      </div>
     </div>
+
   );
 };

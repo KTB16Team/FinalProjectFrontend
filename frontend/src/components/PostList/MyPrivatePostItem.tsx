@@ -38,7 +38,7 @@ export default function MyPrivatePostItem({post, onDelete}: PostItemProps) {
   };
 
   return (
-    <div onClick={handleClick} className="m-3 relative overflow-hidden">
+    <div onClick={handleClick} className="mb-3 relative overflow-hidden">
       <div
         className={`rounded-lg bg-white flex items-center text-left p-4 transition-transform duration-300 ${isSwiped ? 'transform -translate-x-20' : ''}`}
         onTouchStart={handleSwipe}
