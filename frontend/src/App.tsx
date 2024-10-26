@@ -12,6 +12,8 @@ import Post from "@/pages/Post/Post.tsx";
 import AudioRecorder from "@/pages/Upload/AudioRecoder/AudioRecoder.tsx";
 import TextUpload from "@/pages/Upload/TextUpload/TextUpload.tsx";
 import AiResult from "@/pages/AiResult/AiResult.tsx";
+import MyPrivatePostList from "@/pages/MyPrivatePostList/MyPrivatePostList.tsx";
+import MyPrivatePostDetail from "@/pages/MyPrivatePostDetail/MyPrivatePostDetail.tsx";
 
 function App() {
 
@@ -45,6 +47,13 @@ function App() {
               {/* 게시판 목록 페이지 */}
               <Route path="/categories" element={<PostCategory/>}/>
 
+              {/*내 개인 글 목록 페이지*/}
+              <Route path="/my-private-posts" element={<MyPrivatePostList/>}/>
+
+              {/* 내 개인 글 게시물 페이지 */}
+              <Route path="/my-private-posts/:postId" element={<MyPrivatePostDetail/>}/>
+
+              {/*내가 쓴 글 페이지*/}
               {/*AI 결과 페이지*/}
               <Route path="/ai-result" element={<AiResult/>}/>
 
