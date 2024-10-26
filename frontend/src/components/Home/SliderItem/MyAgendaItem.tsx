@@ -1,6 +1,6 @@
-import {Post} from "@/types/post.ts";
+import {PostForm} from "@/types/postForm.ts";
 
-export default function SliderItem({id, title, content, createdAt, views, likes, comments}: Post) {
+export default function SliderItem({id, title, content, createdAt, views, likes, comments}: PostForm) {
   return (
     <div className="bg-white border-8 border-grey-300 rounded-2xl">
       <span>[{id}]</span> <span className="text-2xl font-bold">{title}</span>

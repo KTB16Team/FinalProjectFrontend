@@ -1,4 +1,4 @@
-export interface Pageable {
+export interface PageableForm {
   pageNumber: number;
   pageSize: number;
   offset: number;
