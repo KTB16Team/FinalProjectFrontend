@@ -1,8 +1,8 @@
 import {useLocation} from "react-router-dom";
-import {Post} from "@/types/post.ts";
-import PostItem from "@/components/PostList/PostItem/PostItem.tsx";
+import {PostForm} from "@/types/postForm.ts";
+import PostItem from "@/components/PostList/PostItem.tsx";
 
-const posts: Post[] = [
+const posts: PostForm[] = [
   {
     id: 1,
     title: "리엑트 선생님",

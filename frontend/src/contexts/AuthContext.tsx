@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import axios from 'axios';
+
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface AuthContextType {
@@ -16,7 +17,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
 
@@ -54,7 +55,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await axios.post(`${BACKEND_URL}/api/v1/refresh-token`, {
         refreshToken,
       });
-      const { accessToken: newAccessToken } = response.data;
+      const {accessToken: newAccessToken} = response.data;
       setAccessToken(newAccessToken);
       localStorage.setItem('accessToken', newAccessToken);
       return newAccessToken;
@@ -66,7 +67,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, refreshToken, login, logout, refreshAccessToken }}>
+    <AuthContext.Provider value={{accessToken, refreshToken, login, logout, refreshAccessToken}}>
       {children}
     </AuthContext.Provider>
   );

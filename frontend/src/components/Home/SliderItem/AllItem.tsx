@@ -1,6 +1,6 @@
-import {SimplePost} from "@/types/simplePost.ts";
+import {SimplePostForm} from "@/types/simplePostForm.ts";
 
-export default function AllItem({id, title, likes, comments} : SimplePost) {
+export default function AllItem({id, title, likes, comments} : SimplePostForm) {
   return (
     <div className="bg-customGray rounded-lg mb-2 p-2">
       <span>[{id}] <span>{title}</span></span>

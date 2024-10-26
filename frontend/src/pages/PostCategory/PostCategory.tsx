@@ -6,6 +6,7 @@ interface Category {
 }
 
 const categories: Category[] = [
+  { name: '내 개인 글', path: '/my-private-posts' },
   { name: '내가 쓴 글', path: '/my-posts' },
   { name: '댓글 단 글', path: '/commented-posts' },
   { name: '인기 게시판', path: '/popular-posts' },

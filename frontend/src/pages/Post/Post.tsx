@@ -1,4 +1,4 @@
-import VoteSection from "@/components/Post/Vote/VoteSection.tsx";
+import VoteSection from "@/components/Post/VoteSection.tsx";
 import CommentSection from "@/components/Comment/CommentSection.tsx";
 
 const post = {

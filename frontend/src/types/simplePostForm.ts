@@ -1,4 +1,4 @@
-export interface SimplePost {
+export interface SimplePostForm {
   id: number;
   title: string;
   likes: number;

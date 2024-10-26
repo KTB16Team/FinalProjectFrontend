@@ -1,8 +1,8 @@
-import {Post} from "@/types/post.ts";
+import {PostForm} from "@/types/postForm.ts";
 import {Link} from "react-router-dom";
 
 interface PostItemProps {
-  post: Post;
+  post: PostForm;
 }
 
 export default function PostItem({post}: PostItemProps) {

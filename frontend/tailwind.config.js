@@ -8,6 +8,7 @@ export default {
         customGray: '#E8E8E8',
         background: '#F8F8F8',
         mainColor: '#E55958',
+        deleteButtonBackground: '#D94251',
       },
     },
   },
