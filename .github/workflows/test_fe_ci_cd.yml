@@ -20,6 +20,10 @@ jobs:
         with:
           node-version: '16'
 
+      # .env 파일 생성
+      - name: Create .env file
+        run: echo "${{ secrets.BE_URL }}" > .env
+
       # 디렉토리 이동 (package.json 위치)
       - name: Navigate to project directory
         run: cd frontend
