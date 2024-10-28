@@ -1,32 +1,54 @@
-import PostCategoryItem from "@/components/PostCategory/PostCategoryItem/PostCategoryItem.tsx";
-
-interface Category {
-  name: string;
-  path: string;
-}
-
-const categories: Category[] = [
-  { name: '내 개인 글', path: '/my-private-posts' },
-  { name: '내가 쓴 글', path: '/my-posts' },
-  { name: '댓글 단 글', path: '/commented-posts' },
-  { name: '인기 게시판', path: '/popular-posts' },
-  { name: '전체 게시판', path: '/all-posts' },
-];
+import PostCategoryItem from "@/components/PostCategory/PostCategoryItem.tsx";
+import Header from "@/components/Header/Header.tsx";
+import GoBackButton from "@/components/Button/GoBackButton.tsx";
 
 export default function PostCategory() {
   return (
     <div>
-      <nav>
-        <ul>
-          {categories.map((category) => (
-            <PostCategoryItem
-              key={category.path}
-              name={category.name}
-              path={`/categories${category.path}`}
-            />
-          ))}
-        </ul>
-      </nav>
+      <Header title={"메뉴"} leftButton={<GoBackButton url="/"/>}/>
+      <div
+        className="bg-background w-full p-3"
+        style={{
+          marginTop: "15vh",
+          height: "85vh"
+        }}
+      >
+        {/*나와 관련된 글*/}
+        <div className="mb-6">
+          <PostCategoryItem
+            name={"내 개인글"}
+            path={"/my-private-posts"}
+          />
+          <PostCategoryItem
+            name={"내 공개글"}
+            path={"/categories/my-public-posts"}
+          />
+          <PostCategoryItem
+            name={"댓글 단 글"}
+            path={"/categories/commented-posts"}
+          />
+        </div>
+
+        {/*게시판*/}
+        <div className="mb-6">
+          <PostCategoryItem
+            name={"인기 게시판"}
+            path={"/categories/popular-posts"}
+          />
+          <PostCategoryItem
+            name={"전체 게시판"}
+            path={"/categories/all-posts"}
+          />
+        </div>
+
+        {/*마이 페이지*/}
+        <div>
+          <PostCategoryItem
+            name={"마이 페이지"}
+            path={"/my-page"}
+          />
+        </div>
+      </div>
     </div>
   );
 }

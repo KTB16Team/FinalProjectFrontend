@@ -1,9 +1,11 @@
 export interface PostForm {
-  id: number;
+  post_id: number;
   title: string;
-  content: string;
-  createdAt: string;
+  content_preview: string;
+  created_at: string;
   views: number;
   likes: number;
-  comments: number;
+  comments_count: number;
+  "vote_rate_plaintiff": number;
+  "vote_rate_defendant": number;
 }

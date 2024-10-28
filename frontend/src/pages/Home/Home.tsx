@@ -1,15 +1,15 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import Navbar from "@/components/Navbar/Navbar.tsx";
-import Body from "@/components/Body/Body.tsx";
 import HomepageSection from "@/components/Home/HomepageSection/HomepageSection.tsx";
 import PopularItem from "@/components/Home/SliderItem/PopularItem.tsx";
 import MyAgendaItem from "@/components/Home/SliderItem/MyAgendaItem.tsx";
 import AllItem from "@/components/Home/SliderItem/AllItem.tsx";
-import {Post} from "@/types/post.ts";
+import {PostForm} from "@/types/postForm.ts";
 import Header from "@/components/Header/Header.tsx";
+import PostItem from "@/components/Post/PostItem.tsx";
+import Post from "@/pages/Post/Post.tsx";
 
 const settings = {
   dots: true,
@@ -20,21 +20,21 @@ const settings = {
 };
 
 export default function () {
-  const [popularPosts, setPopularPosts] = useState<Post[]>([]);
-  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const [popularPosts, setPopularPosts] = useState<PostForm[]>([]);
+  const [allPosts, setAllPosts] = useState<PostForm[]>([]);
 
   useEffect(() => {
     // 더미 데이터 설정
-    const dummyPopularPosts: Post[] = [
-      {id: 1, title: '인기 글 1', content: '내용...', createdAt: '4:42', views: 30, likes: 50, comments: 20},
-      {id: 2, title: '인기 글 2', content: '내용...', createdAt: '4:42', views: 30, likes: 40, comments: 15},
-      {id: 3, title: '인기 글 3', content: '내용...', createdAt: '4:42', views: 30, likes: 30, comments: 10},
+    const dummyPopularPosts: PostForm[] = [
+      {post_id: 1, title: '인기 글 1', content_preview: '내용...', created_at: '4:42', views: 30, likes: 50, comments_count: 20, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
+      {post_id: 2, title: '인기 글 2', content_preview: '내용...', created_at: '4:42', views: 30, likes: 40, comments_count: 15, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
+      {post_id: 3, title: '인기 글 3', content_preview: '내용...', created_at: '4:42', views: 30, likes: 30, comments_count: 10, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
     ];
 
-    const dummyAllPosts: Post[] = [
-      {id: 4, title: '전체 글 1', content: '내용...', createdAt: '4:42', views: 30, likes: 25, comments: 10},
-      {id: 5, title: '전체 글 2', content: '내용...', createdAt: '4:42', views: 30, likes: 15, comments: 5},
-      {id: 6, title: '전체 글 2', content: '내용...', createdAt: '4:42', views: 30, likes: 15, comments: 5},
+    const dummyAllPosts: PostForm[] = [
+      {post_id: 4, title: '전체 글 1', content_preview: '내용...', created_at: '4:42', views: 30, likes: 25, comments_count: 10, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
+      {post_id: 5, title: '전체 글 2', content_preview: '내용...', created_at: '4:42', views: 30, likes: 15, comments_count: 5, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
+      {post_id: 6, title: '전체 글 2', content_preview: '내용...', created_at: '4:42', views: 30, likes: 15, comments_count: 5, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
     ];
 
     setPopularPosts(dummyPopularPosts);
@@ -43,23 +43,23 @@ export default function () {
 
 
   return (
-    <Body>
-      <Header/>
-      <div className="w-full bg-white">
+    <div>
+      <Header title={"aimo"} />
+      <div
+        className="bg-background w-full p-3"
+        style={{
+          marginTop: "15vh",
+          height: "85vh",
+        }}
+      >
         {/* 내가 쓴 안건 섹션 */}
-        <HomepageSection title={"내가 쓴 안건"} url={"/categories/my-agendas"}>
+        <HomepageSection title={"내 공개글"} url={"/categories/my-public-posts"}>
           <div>
             <Slider {...settings}>
               {allPosts.slice(0, 3).map((post) => (
-                <MyAgendaItem
-                  key={post.id}
-                  id={post.id}
-                  title={post.title}
-                  content={post.content}
-                  createdAt={post.createdAt}
-                  views={post.views}
-                  likes={post.likes}
-                  comments={post.comments}
+                <PostItem
+                  key={post.post_id}
+                  post={post}
                 />
               ))}
             </Slider>
@@ -70,34 +70,27 @@ export default function () {
         {/* 인기 Top 3 섹션 */}
         <HomepageSection title={"인기 Top 3"} url={"/categories/popular-posts"}>
           {popularPosts.map((post) => (
-            <PopularItem
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              createdAt={post.createdAt}
-              views={post.views}
-              likes={post.likes}
-              comments={post.comments}
+            <PostItem
+              key={post.post_id}
+              post={post}
             />
           ))}
         </HomepageSection>
 
 
         {/* 전체 글 무한 스크롤 */}
-        <HomepageSection title={"전체 글"} url={"/categoies/all-posts"}>
+        <HomepageSection title={"전체 글"} url={"/categories/all-posts"}>
           {allPosts.map((post) => (
             <AllItem
-              key={post.id}
-              id={post.id}
+              key={post.post_id}
+              id={post.post_id}
               title={post.title}
               likes={post.likes}
-              comments={post.comments}/>
+              comments={post.comments_count}/>
           ))}
         </HomepageSection>
       </div>
-      <Navbar/>
-    </Body>
+    </div>
   );
 };
 
