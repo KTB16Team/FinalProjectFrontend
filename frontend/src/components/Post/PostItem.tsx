@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { PostForm } from "@/types/postForm.ts";
+import { PostPreviewForm } from "@/types/postPreviewForm.ts";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
 import CommentLogo from "@/assets/imgs/Comment.svg?react";
 
 interface PostItemProps {
-  post: PostForm;
+  post: PostPreviewForm;
 }
 
 export default function PostItem({ post }: PostItemProps) {

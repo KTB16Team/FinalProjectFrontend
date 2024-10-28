@@ -15,3 +15,7 @@ export const getPrivatePost = async (postId: number) => {
 export const getPosts = async (category: string, page: number, size: number) => {
   return await axios.get(`/api/v1/posts?category=${category}page=${page}&size=${size}`);
 }
+
+export const getPost = async (postId: number) => {
+  return await axios.get(`/api/v1/posts/${postId}`);
+}

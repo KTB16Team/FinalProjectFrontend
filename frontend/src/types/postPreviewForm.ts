@@ -1,4 +1,4 @@
-export interface PostForm {
+export interface PostPreviewForm {
   post_id: number;
   title: string;
   content_preview: string;

@@ -6,7 +6,7 @@ import HomepageSection from "@/components/Home/HomepageSection/HomepageSection.t
 import PopularItem from "@/components/Home/SliderItem/PopularItem.tsx";
 import MyAgendaItem from "@/components/Home/SliderItem/MyAgendaItem.tsx";
 import AllItem from "@/components/Home/SliderItem/AllItem.tsx";
-import {PostForm} from "@/types/postForm.ts";
+import {PostPreviewForm} from "@/types/postPreviewForm.ts";
 import Header from "@/components/Header/Header.tsx";
 import PostItem from "@/components/Post/PostItem.tsx";
 import Post from "@/pages/Post/Post.tsx";
@@ -20,18 +20,18 @@ const settings = {
 };
 
 export default function () {
-  const [popularPosts, setPopularPosts] = useState<PostForm[]>([]);
-  const [allPosts, setAllPosts] = useState<PostForm[]>([]);
+  const [popularPosts, setPopularPosts] = useState<PostPreviewForm[]>([]);
+  const [allPosts, setAllPosts] = useState<PostPreviewForm[]>([]);
 
   useEffect(() => {
     // 더미 데이터 설정
-    const dummyPopularPosts: PostForm[] = [
+    const dummyPopularPosts: PostPreviewForm[] = [
       {post_id: 1, title: '인기 글 1', content_preview: '내용...', created_at: '4:42', views: 30, likes: 50, comments_count: 20, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
       {post_id: 2, title: '인기 글 2', content_preview: '내용...', created_at: '4:42', views: 30, likes: 40, comments_count: 15, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
       {post_id: 3, title: '인기 글 3', content_preview: '내용...', created_at: '4:42', views: 30, likes: 30, comments_count: 10, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
     ];
 
-    const dummyAllPosts: PostForm[] = [
+    const dummyAllPosts: PostPreviewForm[] = [
       {post_id: 4, title: '전체 글 1', content_preview: '내용...', created_at: '4:42', views: 30, likes: 25, comments_count: 10, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
       {post_id: 5, title: '전체 글 2', content_preview: '내용...', created_at: '4:42', views: 30, likes: 15, comments_count: 5, vote_rate_plaintiff: 10, vote_rate_defendant: 90},
       {post_id: 6, title: '전체 글 2', content_preview: '내용...', created_at: '4:42', views: 30, likes: 15, comments_count: 5, vote_rate_plaintiff: 10, vote_rate_defendant: 90},

@@ -1,6 +1,6 @@
-import {PostForm} from "@/types/postForm.ts";
+import {PostPreviewForm} from "@/types/postPreviewForm.ts";
 
-export default function PopularItem({post_id, title, content_preview, created_at, likes, comments_count} : PostForm) {
+export default function PopularItem({post_id, title, content_preview, created_at, likes, comments_count} : PostPreviewForm) {
   return (
     <div className="bg-white border-8 border-grey-300 rounded-2xl mb-2">
       <span>[{post_id}]</span> <span className="text-2xl font-bold">{title}</span>

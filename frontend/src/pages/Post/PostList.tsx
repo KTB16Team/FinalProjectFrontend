@@ -1,5 +1,5 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {PostForm} from "@/types/postForm.ts";
+import {PostPreviewForm} from "@/types/postPreviewForm.ts";
 import PostItem from "@/components/Post/PostItem.tsx";
 import Header from "@/components/Header/Header.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
@@ -9,7 +9,7 @@ import {getPosts, getMyPrivatePosts} from "@/apis/post.ts"; // Add relevant APIs
 
 const FETCH_SIZE = 10;
 
-const mockPosts: PostForm[] = [
+const mockPosts: PostPreviewForm[] = [
   {
     post_id: 1,
     title: "Mock Title 1",
@@ -40,7 +40,7 @@ export default function PostList() {
   const navigate = useNavigate();
   const {categoryName} = location.state;
 
-  const [posts, setPosts] = useState<PostForm[]>([]);
+  const [posts, setPosts] = useState<PostPreviewForm[]>([]);
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
