@@ -8,7 +8,6 @@ import ProtectedRoute from "./components/Layout/ProtectedRoute.tsx";
 import SignUp from "@/pages/SignUp/SignUp.tsx";
 import PostCategory from "@/pages/PostCategory/PostCategory.tsx";
 import PostList from "@/pages/Post/PostList.tsx";
-import Post from "@/pages/Post/Post.tsx";
 import AudioRecorder from "@/pages/Upload/AudioRecoder/AudioRecoder.tsx";
 import TextUpload from "@/pages/Upload/TextUpload/TextUpload.tsx";
 import MyPrivatePostList from "@/pages/MyPrivatePost/MyPrivatePostList.tsx";
