@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
 import {MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
 import MyPrivatePostItem from "@/components/MyPrivatePost/MyPrivatePostItem.tsx";
+import GoBackButton from "@/components/Button/GoBackButton.tsx";
 
 export default function MyPrivatePostList() {
   const [posts, setPosts] = useState<MyPrivatePostForm[]>([]);
@@ -22,7 +23,7 @@ export default function MyPrivatePostList() {
   // 포스트 목록 조회
   const fetchPosts = useCallback(async (pageNumber: number) => {
     setLoading(true);
-    getMyPrivatePosts({page: pageNumber})
+    getMyPrivatePosts(pageNumber, 10)
       .then((response) => {
         // 더미 데이터
         const myPrivatePosts: MyPrivatePostForm[] = [
@@ -132,7 +133,7 @@ export default function MyPrivatePostList() {
 
   return (
     <div>
-      <Header title="내 개인 글"/>
+      <Header title="내 개인 글" leftButton={<GoBackButton url="/categories"/>}/>
       <div
         className="bg-background w-full p-3"
         style={{
