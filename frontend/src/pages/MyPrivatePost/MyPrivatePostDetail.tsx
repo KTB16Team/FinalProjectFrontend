@@ -5,9 +5,9 @@ import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import PrevButton from "@/assets/imgs/PrevButton.svg?react";
 import NextButton from "@/assets/imgs/NextButton.svg?react";
-import TextSlide from "@/components/AIResult/TextSlide.tsx";
-import JudgementSlide from "@/components/AIResult/JudgementSlide.tsx";
-import {fetchPrivatePost} from "@/apis/post.ts";
+import TextSlide from "@/components/MyPrivatePost/TextSlide.tsx";
+import JudgementSlide from "@/components/MyPrivatePost/JudgementSlide.tsx";
+import {getPrivatePost} from "@/apis/post.ts";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
 
 interface ArrowProps {
@@ -62,7 +62,7 @@ export default function MyPrivatePostDetail() {
   };
 
   useEffect(() => {
-    fetchPrivatePost(Number(postId))
+    getPrivatePost(Number(postId))
       .then((response) => {
         setPostData(dummyData);
       })
@@ -72,7 +72,7 @@ export default function MyPrivatePostDetail() {
         } else if (error.response.data.code === "AUTH_003") {
           const newAccessToken = refreshAccessToken();
           if (newAccessToken != null) {
-            fetchPrivatePost(Number(postId));
+            getPrivatePost(Number(postId));
           } else {
             logout();
           }

@@ -1,10 +1,10 @@
 import {useContext, useEffect, useState, useRef, useCallback} from 'react';
 import Header from "@/components/Header/Header.tsx";
-import {deleteMyPrivatePost, fetchMyPrivatePosts} from "@/apis/post.ts";
+import {deleteMyPrivatePost, getMyPrivatePosts} from "@/apis/post.ts";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
 import {MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
-import MyPrivatePostItem from "@/components/PostList/MyPrivatePostItem.tsx";
+import MyPrivatePostItem from "@/components/MyPrivatePost/MyPrivatePostItem.tsx";
 
 export default function MyPrivatePostList() {
   const [posts, setPosts] = useState<MyPrivatePostForm[]>([]);
@@ -22,7 +22,7 @@ export default function MyPrivatePostList() {
   // 포스트 목록 조회
   const fetchPosts = useCallback(async (pageNumber: number) => {
     setLoading(true);
-    fetchMyPrivatePosts({page: pageNumber})
+    getMyPrivatePosts({page: pageNumber})
       .then((response) => {
         // 더미 데이터
         const myPrivatePosts: MyPrivatePostForm[] = [

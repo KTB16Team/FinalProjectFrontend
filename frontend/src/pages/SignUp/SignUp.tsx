@@ -1,6 +1,5 @@
 import {useForm, SubmitHandler} from 'react-hook-form';
 import Input from "@/components/SignUp/Input.tsx";
-import Body from "@/components/Body/Body.tsx";
 import RequiredInputIcon from "@/components/SignUp/RequiredInputIcon.tsx";
 import BottomButton from "@/components/Button/BottomButton.tsx";
 import {useState, useEffect} from "react";
@@ -65,9 +64,14 @@ export default function SignUp() {
   }, [watchFields]);
 
   return (
-    <Body>
+    <div>
       <Header title="회원가입" leftButton={<CancelButton url="/login"/>}/>
-      <div className="signup-container p-5">
+      <div className="p-5"
+        style={{
+          marginTop: "15vh",
+          height: "85vh"
+        }}
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 이메일 */}
           <Input
@@ -152,6 +156,6 @@ export default function SignUp() {
         disabled={isDone}  // isDone 상태에 따라 버튼 활성화
         onClick={handleSubmit(onSubmit)}  // 폼 제출
       />
-    </Body>
+    </div>
   );
 };

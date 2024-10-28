@@ -7,10 +7,8 @@ interface CategoryMenuItemProps {
 
 export default function PostCategoryItem({name, path}: CategoryMenuItemProps) {
   return (
-    <li key={path}>
-      <Link to={path} state={{categoryName: name}}>
+    <Link className="block rounded-lg bg-white mb-1 p-4 text-left" to={path} state={{categoryName: name}}>
         {name}
-      </Link>
-    </li>
+    </Link>
   );
 }

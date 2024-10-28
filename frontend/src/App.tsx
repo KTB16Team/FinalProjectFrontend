@@ -7,13 +7,13 @@ import Login from "@/pages/Login/Login.tsx";
 import ProtectedRoute from "./components/Layout/ProtectedRoute.tsx";
 import SignUp from "@/pages/SignUp/SignUp.tsx";
 import PostCategory from "@/pages/PostCategory/PostCategory.tsx";
-import PostList from "@/pages/PostList/PostList.tsx";
+import PostList from "@/pages/Post/PostList.tsx";
 import Post from "@/pages/Post/Post.tsx";
 import AudioRecorder from "@/pages/Upload/AudioRecoder/AudioRecoder.tsx";
 import TextUpload from "@/pages/Upload/TextUpload/TextUpload.tsx";
-import AiResult from "@/pages/AiResult/AiResult.tsx";
-import MyPrivatePostList from "@/pages/MyPrivatePostList/MyPrivatePostList.tsx";
-import MyPrivatePostDetail from "@/pages/MyPrivatePostDetail/MyPrivatePostDetail.tsx";
+import MyPrivatePostList from "@/pages/MyPrivatePost/MyPrivatePostList.tsx";
+import MyPrivatePostDetail from "@/pages/MyPrivatePost/MyPrivatePostDetail.tsx";
+import PostDetail from "@/pages/Post/PostDetail.tsx";
 
 function App() {
 
@@ -35,9 +35,6 @@ function App() {
               {/*글 목록 페이지*/}
               <Route path="/categories/:category" element={<PostList/>}/>
 
-              {/*글*/}
-              <Route path="/post/:postId" element={<Post/>}/>
-
               {/*음성녹음 페이지*/}
               <Route path="/audio-recorder" element={<AudioRecorder/>}/>
 
@@ -53,9 +50,8 @@ function App() {
               {/* 내 개인 글 게시물 페이지 */}
               <Route path="/my-private-posts/:postId" element={<MyPrivatePostDetail/>}/>
 
-              {/*내가 쓴 글 페이지*/}
-              {/*AI 결과 페이지*/}
-              <Route path="/ai-result" element={<AiResult/>}/>
+              {/*포스트 디테일 페이지*/}
+              <Route path="/posts/:postId" element={<PostDetail/>}/>
 
               {/* 인증된 사용자만 접근할 수 있는 경로 */}
               <Route

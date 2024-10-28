@@ -1,16 +1,21 @@
 import axios from "axios";
 
-interface Payload {
-  page: number;
-}
-export const fetchMyPrivatePosts = async (payload: Payload) => {
-  return await axios.get(`/api/v1/private-posts?page=${payload.page}&size=10`);
+export const getMyPrivatePosts = async (page: number, size: number) => {
+  return await axios.get(`/api/v1/private-posts?page=${page}&size=${size}`);
 }
 
 export const deleteMyPrivatePost = async (postId: number) => {
   return await axios.delete(`/api/v1/private-posts/${postId}`);
 }
 
-export const fetchPrivatePost = async (postId: number) => {
+export const getPrivatePost = async (postId: number) => {
   return await axios.get(`/api/v1/private-posts/${postId}`);
+}
+
+export const getPosts = async (category: string, page: number, size: number) => {
+  return await axios.get(`/api/v1/posts?category=${category}page=${page}&size=${size}`);
+}
+
+export const getPost = async (postId: number) => {
+  return await axios.get(`/api/v1/posts/${postId}`);
 }
