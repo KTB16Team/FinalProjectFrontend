@@ -9,8 +9,8 @@ interface BodyProps {
 
 export default function HomepageSection({children, title, url}: BodyProps) {
   return (
-    <div className="w-full border-b border-gray-300 mb-2 pb-8">
-      <div className="flex flex-row justify-between mb-2">
+    <div className="w-full border-b border-gray-300 mb-4 pb-8">
+      <div className="flex flex-row justify-between mb-6">
         <div className="text-left font-semibold">{title}</div>
         <Link to={url} className="float-right">더보기</Link>
       </div>

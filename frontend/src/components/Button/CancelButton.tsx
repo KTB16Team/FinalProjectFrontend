@@ -6,7 +6,7 @@ interface CancelButtonProps {
 
 export default function CancelButton({url}: CancelButtonProps) {
   return (
-    <Link to={url}>
+    <Link to={url} className="flex items-center">
       <CancelLogo width={20}/>
     </Link>
   );

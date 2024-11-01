@@ -4,17 +4,23 @@ import styled from "styled-components";
 
 type HeaderProps = {
   title: string;
-  leftButton? : React.ReactNode;
+  leftButton?: React.ReactNode;
+  rightButton?: React.ReactNode;
 };
 
-export default function Header ({title, leftButton} : HeaderProps) {
+export default function Header({title, leftButton, rightButton}: HeaderProps) {
   return (
-    <Container className="fixed top-0 border-b border-gray-400 flex flex-col-reverse bg-white z-50">
-      <div className="m-3">
-        <span className="top-1/2">
+    <Container className="fixed top-0 border-gray-400 flex flex-col-reverse bg-white z-50 shadow-sm">
+      <div className="m-3 flex justify-between items-center relative">
+        <div className="absolute left-0">
           {leftButton}
-        </span>
-        <Link className="text-2xl font-semibold" to="/">{title}</Link>
+        </div>
+        <div className="flex-1 text-center">
+          <Link className="text-2xl font-light" to="/">{title}</Link>
+        </div>
+        <div className="absolute right-0">
+          {rightButton}
+        </div>
       </div>
     </Container>
   );

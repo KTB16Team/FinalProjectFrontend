@@ -30,7 +30,7 @@ const SLIDE_COUNT = 4;
 function PrevArrow({onClick, currentSlide}: ArrowProps) {
   if (currentSlide === 0) return null;
   return (
-    <button onClick={onClick} className="z-10 absolute left-4 top-7 transform -translate-y-1/2 p-2">
+    <button onClick={onClick} className="z-10 absolute left-4 top-7 p-2">
       <PrevButton/>
     </button>
   );

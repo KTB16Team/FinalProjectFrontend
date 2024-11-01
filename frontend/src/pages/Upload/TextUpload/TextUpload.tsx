@@ -1,3 +1,4 @@
+import Header from '@/components/Header/Header';
 import React, { useState } from 'react';
 
 const MIN_CONTENT_LENGTH = 10;
@@ -19,22 +20,39 @@ export default function TextUpload() {
     alert('다음 단계로 이동합니다.');
     // 여기서 필요한 로직을 추가할 수 있습니다. 예를 들어 다음 페이지로 이동 등.
   };
+  const handleRegisterClick =() => {
+    alert('글이 등록되었습니다.');
+
+  };
 
   return (
     <div>
-      <h2>글 작성하기</h2>
-      <textarea
-        placeholder="글 내용을 10자 이상 작성해주세요."
-        value={content}
-        onChange={handleContentChange}
-        rows={5}
-        cols={50}
+      {/* 헤더에 등록 버튼 추가 */}
+      <Header 
+        title="텍스트 업로드" 
+        rightButton={
+          <button 
+            onClick={handleRegisterClick} 
+            className="text-mainColor text-sm font-medium"
+            disabled={!isButtonEnabled}
+          >
+            등록
+          </button>
+        } 
+        leftButton={<button onClick={() => alert("취소")} className="text-mainColor text-sm font-medium">취소</button>}
       />
-      <br />
-      <button onClick={handleNextClick} disabled={!isButtonEnabled}>
-        다음
-      </button>
+
+      <div className="p-5">
+        <h2 className="text-sm font-medium text-gray-700 mb-2 mt-32 text-left">글 내용</h2>
+        <textarea
+          placeholder="사연을 입력해주세요."
+          value={content}
+          onChange={handleContentChange}
+          rows={10}
+          className="w-full h-80 p-4 text-gray-700 bg-gray-100 rounded-md focus:outline-none focus:border-mainColor"
+        />
+      </div>
     </div>
   );
-};
+}
 

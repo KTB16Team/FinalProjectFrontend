@@ -29,43 +29,48 @@ export default function MyPrivatePostList() {
         const myPrivatePosts: MyPrivatePostForm[] = [
           {
             post_id: 1,
-            title: "Introduction to AI-Powered Voice Transcription",
-            content_preview: "Explore how AI can convert voice recordings into accurate text transcriptions...",
+            title: "제목",
+            content_preview: "아니 애인이 새우를 까서 앞사람...",
             origin_type: 'VOICE',
-            created_at: "2024-10-24T08:30:00Z",
-            published: true
+            created_at: "2024.10.26 19:35",
+            published: true,
+            views: 475
           },
           {
             post_id: 2,
-            title: "Effective Spring Backend Development",
-            content_preview: "Learn about best practices in developing backend applications using Spring...",
+            title: "제목2",
+            content_preview: "아니 애인이 새우를 까서 앞사람...",
             origin_type: 'TEXT',
-            created_at: "2024-10-23T12:45:00Z",
-            published: false
+            created_at: "2024.10.26 19:35",
+            published: false,
+            views: 475
           },
           {
             post_id: 3,
-            title: "Optimizing Chatbots for User Engagement",
-            content_preview: "Discover techniques for enhancing chatbot interactions to improve user retention...",
+            title: "제목3",
+            content_preview: "아니 애인이 새우를 까서 앞사람...",
             origin_type: 'CHAT',
-            created_at: "2024-10-22T15:00:00Z",
-            published: true
+            created_at: "2024.10.26 19:35",
+            published: true,
+            views: 475
           },
           {
             post_id: 4,
-            title: "Understanding Asynchronous Processing in Java",
-            content_preview: "A deep dive into using Mono for asynchronous processing over traditional methods...",
+            title: "제목4",
+            content_preview: "아니 애인이 새우를 까서 앞사람...",
             origin_type: 'TEXT',
-            created_at: "2024-10-21T10:30:00Z",
-            published: true
+            created_at: "2024.10.26 19:35",
+            published: true,
+            views: 475
           },
           {
             post_id: 5,
-            title: "Voice AI: Transcription and Analysis",
-            content_preview: "An overview of AI-based voice transcription systems and their applications...",
+            title: "제목5",
+            content_preview: "아니 애인이 새우를 까서 앞사람...",
             origin_type: 'VOICE',
-            created_at: "2024-10-20T09:00:00Z",
-            published: false
+            created_at: "2024.10.26 19:35",
+            published: false,
+            views: 475
           }
         ];
 
@@ -132,23 +137,42 @@ export default function MyPrivatePostList() {
   };
 
   return (
-    <div>
-      <Header title="내 개인 글" leftButton={<GoBackButton url="/categories"/>}/>
+    <div className="bg-gray-50 min-h-screen">
+      <Header 
+        title="내 개인글" 
+        leftButton={<GoBackButton url="/categories"/>}
+        rightButton={
+          <div className="relative p-2">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          </div>
+        }
+      />
+      
       <div
-        className="bg-background w-full p-3"
+        className="w-full px-4"
         style={{
-          height: '85vh',
-          overflowY: 'scroll',
-          marginTop: '15vh',
+          marginTop: "15vh",
+          height: "85vh",
+          overflowY: 'auto',
+          padding: '20px 20px'
         }}
       >
         {posts.map((post) => (
-          <MyPrivatePostItem key={post.post_id} post={post} onDelete={deletePost}/>
+          <MyPrivatePostItem 
+            key={post.post_id} 
+            post={post} 
+            onDelete={deletePost}
+          />
         ))}
         <div id="scroll-end" style={{height: '1px'}}/>
-        {loading && <p className="text-center">Loading...</p>}
+        {loading && (
+          <p className="text-center text-gray-500 py-4">Loading...</p>
+        )}
       </div>
     </div>
-
   );
-};
+ }
+

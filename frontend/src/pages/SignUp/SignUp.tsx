@@ -64,14 +64,13 @@ export default function SignUp() {
   }, [watchFields]);
 
   return (
-    <div>
-      <Header title="회원가입" leftButton={<CancelButton url="/login"/>}/>
-      <div className="p-5"
-        style={{
-          marginTop: "15vh",
-          height: "85vh"
-        }}
-      >
+    <div className="min-h-screen bg-white">
+      {/* 헤더 부분 수정 */}
+      <Header title="회원가입" leftButton={<CancelButton url="/login"  />}
+      />
+
+      {/* 메인 컨텐츠 영역 */}
+      <div className="pt-48 px-5">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 이메일 */}
           <Input
@@ -82,7 +81,6 @@ export default function SignUp() {
             error={errors.email?.message}
             required={true}
           />
-
           {/* 비밀번호 */}
           <Input
             label="비밀번호"
@@ -155,6 +153,7 @@ export default function SignUp() {
         label="회원 가입"
         disabled={isDone}  // isDone 상태에 따라 버튼 활성화
         onClick={handleSubmit(onSubmit)}  // 폼 제출
+        className = "bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
       />
     </div>
   );
