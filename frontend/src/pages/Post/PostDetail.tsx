@@ -13,11 +13,12 @@ import LikeLogo from "@/assets/imgs/Like.svg?react";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import ChildComment from "@/components/Post/ChildComment.tsx";
 import Comment from "@/components/Post/Comment.tsx";
+import voteIcon from "@/assets/imgs/vote.svg?react";
 
 // Mock data for testing
 const mockPost = {
-  title: "게시글 제목",
-  username: "닉네임",
+  title: "부장 vs 차장",
+  username: "닉네임1",
   content: "게시글 내용입니다. 이곳에 게시글의 상세 내용이 표시됩니다.",
   votes_plaintiff: 5,
   votes_defendant: 5,
@@ -150,7 +151,8 @@ export default function PostDetail() {
           <div className="bg-background rounded-2xl p-2 mb-6">
             <div className="flex justify-between">
               <div className="text-left mb-2">
-                <span className="text-lg font-semibold">투표</span>
+                <img src={voteIcon} alt="Vote Icon" className="w-5 h-5"/>
+                <span className="ml-2 text-lg font-semibold">투표</span>
                 <span className="text-sm text-gray-500">{totalVotes}명 참여중</span>
               </div>
               <button
@@ -165,7 +167,7 @@ export default function PostDetail() {
             <div className="flex flex-col items-center">
               <button
                 onClick={() => setSelectedVote("A")}
-                className={`w-full text-left py-2 rounded-xl bg-white mb-2 ${
+                className={`w-full text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
                   selectedVote === "A" ? "border-blue-500" : "border-gray-300"
                 }`}
               >
@@ -173,7 +175,7 @@ export default function PostDetail() {
               </button>
               <button
                 onClick={() => setSelectedVote("B")}
-                className={`w-full text-left py-2 rounded-xl bg-white ${
+                className={`w-full text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
                   selectedVote === "B" ? "border-blue-500" : "border-gray-300"
                 }`}
               >
