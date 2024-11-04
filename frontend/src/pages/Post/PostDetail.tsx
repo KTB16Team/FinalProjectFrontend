@@ -133,20 +133,40 @@ export default function PostDetail() {
   return (
     <div>
       <Header title="게시판" leftButton={<GoBackButton url={"/categories"} />} />
-      <div className="p-4 bg-white" style={{ marginTop: "15vh", height: "80vh", overflowY: "scroll" }}>
+      <div className="p-4 bg-white" style={{marginTop: "15vh", height: "80vh", overflowY: "scroll"}}>
 
         {/* 본문 */}
         <div className="border-b">
           <h1 className="text-2xl text-left font-bold mb-2">{post.title}</h1>
           <div className="flex justify-between text-sm text-gray-500 mb-4">
             <span>작성자: {post.username}</span>
-            <span>{post.created_at}</span>
-            <span>조회 {post.view_count}</span>
+            <div className="flex space-x-2">
+              <span>{post.created_at}</span>
+              <span>조회 {post.view_count}</span>
+            </div>
           </div>
 
-          <div className="bg-background text-gray-800 text-left mb-6 rounded-xl p-3">{post.content}</div>
 
-          <Link to="/ai-results" className="underline">AI 결과보기</Link>
+          <div className="bg-background text-gray-800 text-left mb-6 rounded-xl p-3">
+            {post.content}
+
+            <Link
+                to="/ai-results"
+                className="text-right block no-underline text-sm font-bold" // 글자 크기 줄이고 볼드로 설정
+                style={{
+                  textDecoration: "underline",
+                  textDecorationStyle: "dotted",
+                }}
+            >
+              AI 결과보기
+            </Link>
+
+          </div>
+
+
+
+
+
 
           <div className="bg-background rounded-2xl p-2 mb-6 mt-4">
             <div className="flex justify-between">
@@ -155,14 +175,17 @@ export default function PostDetail() {
                   <VoteIcon className="inline-block mr-1"/>
                   <span className="text-lg font-semibold mr-2">투표</span>
                   <span className="text-lg font-semibold mr-2">|</span>
-                  <span className="text-sm font-semibold text-gray-500">{totalVotes}명 참여중...</span>
+                  <span className="text-sm font-semibold">{totalVotes}명 참여중...</span>
+
+
+                  {/*  글자색 블랙으로*/}
                 </div>
 
               </div>
               <button
                   onClick={() => handleVote(selectedVote!)}
                   disabled={!selectedVote}
-                  className="text-xs px-7 py-2 bg-mainColor text-white rounded-xl mr-4 mb-5" // mb-4 추가
+                  className="text-xs px-4 py-2 bg-mainColor text-white rounded-lg mr-4 mb-3" // mb-4 추가
               >
                 {isVoted ? "재투표하기" : "투표하기"}
               </button>
@@ -172,17 +195,17 @@ export default function PostDetail() {
             <div className="flex flex-col items-center">
               <button
                   onClick={() => setSelectedVote("A")}
-                  className={`w-full text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
+                  className={`w-11/12 text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
                       selectedVote === "A" ? "border-blue-500" : "border-gray-300"
-                }`}
+                  }`}
               >
                 입장 A {isVoted && `(${plaintiffPercentage}% | ${post.votes_plaintiff})`}
               </button>
               <button
-                onClick={() => setSelectedVote("B")}
-                className={`w-full text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
-                  selectedVote === "B" ? "border-blue-500" : "border-gray-300"
-                }`}
+                  onClick={() => setSelectedVote("B")}
+                  className={`w-11/12 text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
+                      selectedVote === "B" ? "border-blue-500" : "border-gray-300"
+                  }`}
               >
                 입장 B {isVoted && `(${defendantPercentage}% | ${post.votes_defendant})`}
               </button>
@@ -191,10 +214,10 @@ export default function PostDetail() {
 
           <div className="w-full text-right mb-2">
             <span className="mr-3">
-              <LikeLogo className="inline-block" /> {post.likes}
+              <LikeLogo className="inline-block"/> {post.likes}
             </span>
             <span>
-              <CommentLogo className="inline-block" /> {post.comments_count}
+              <CommentLogo className="inline-block"/> {post.comments_count}
             </span>
           </div>
         </div>
@@ -202,35 +225,36 @@ export default function PostDetail() {
         {/* 댓글 */}
         <div>
           {post.comments.map((comment) => (
-            <React.Fragment key={comment.comment_id}>
-              <Comment comment={comment} onReply={setReplyingTo} refreshComments={refreshComments} />
-              {comment.child_comments.map((child) => (
-                <ChildComment key={child.child_comments_id} child={child} onReply={setReplyingTo} refreshComments={refreshComments} />
-              ))}
-            </React.Fragment>
+              <React.Fragment key={comment.comment_id}>
+                <Comment comment={comment} onReply={setReplyingTo} refreshComments={refreshComments}/>
+                {comment.child_comments.map((child) => (
+                    <ChildComment key={child.child_comments_id} child={child} onReply={setReplyingTo}
+                                  refreshComments={refreshComments}/>
+                ))}
+              </React.Fragment>
           ))}
         </div>
       </div>
 
       {/* 댓글 쓰기 */}
       <div
-        className="flex p-1 absolute bottom-0 w-full bg-white"
-        style={{
-          height: "7vh",
-        }}
+          className="flex p-1 absolute bottom-0 w-full bg-white"
+          style={{
+            height: "7vh",
+          }}
       >
         <input
-          type="text"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="댓글을 남겨주세요."
-          className="border rounded p-2 flex-grow"
+            type="text"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="댓글을 남겨주세요."
+            className="border rounded p-2 flex-grow"
         />
         <button
           onClick={handleAddComment}
           className="px-4 py-2 bg-blue-500 text-white rounded flex-shrink-0"
         >
-          전송
+          입력
         </button>
       </div>
     </div>
