@@ -89,7 +89,7 @@ export default function Login() {
           onClick={() => alert('카카오톡으로 로그인')}
           className="w-full py-3 bg-yellow-300 text-black rounded-lg font-medium hover:bg-yellow-400 transition-colors flex items-center justify-center space-x-2"
         >
-          <KakaoLogo/>
+          <KakaoLogo width="20"/>
           <span>카카오톡으로 로그인</span>
         </button>
       </div>
