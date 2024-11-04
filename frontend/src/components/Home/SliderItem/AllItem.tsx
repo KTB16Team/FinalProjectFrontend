@@ -1,11 +1,16 @@
-import {SimplePostForm} from "@/types/simplePostForm.ts";
+import {PostPreviewForm} from "@/types/postPreviewForm.ts";
+import {Link} from "react-router-dom";
 
-export default function AllItem({id, title, likes, comments} : SimplePostForm) {
+interface AllItemProps {
+  post: PostPreviewForm;
+}
+
+export default function AllItem({ post }: AllItemProps) {
   return (
-    <div className="bg-customGray rounded-lg mb-2 p-2">
-      <span>[{id}] <span>{title}</span></span>
-      <span className="mt-1">좋아요: {likes}</span>
-      <span className="mt-1">댓글: {comments}</span>
-    </div>
+    <Link className="block bg-customGray rounded-lg mb-2 p-2" to={`/posts/${post.postId}`}>
+      <span>[{post.postId}] <span>{post.title}</span></span>
+      <span className="mt-1">좋아요: {post.likesCount}</span>
+      <span className="mt-1">댓글: {post.commentsCount}</span>
+    </Link>
   );
 }

@@ -5,8 +5,8 @@ export interface PostPreviewForm {
   title: string;
   contentPreview: string;
   createdAt: string;
-  views: number;
-  likes: number;
+  viewsCount: number;
+  likesCount: number;
   commentsCount: number;
   "voteRatePlaintiff": number;
   "voteRateDefendant": number;

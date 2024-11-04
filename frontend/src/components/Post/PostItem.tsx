@@ -36,8 +36,8 @@ export default function PostItem({ post }: PostItemProps) {
           {/*메타 정보*/}
           <div className="flex flex-row mt-2 text-sm text-gray-600">
             <div className="mr-3">{post.createdAt}</div>
-            <div className="mr-3">조회 {post.views}</div>
-            <div className="mr-3 flex items-center"><LikeLogo /> {post.likes}</div>
+            <div className="mr-3">조회 {post.viewsCount}</div>
+            <div className="mr-3 flex items-center"><LikeLogo /> {post.likesCount}</div>
             <div className="flex items-center"><CommentLogo /> {post.commentsCount}</div>
           </div>
         </div>

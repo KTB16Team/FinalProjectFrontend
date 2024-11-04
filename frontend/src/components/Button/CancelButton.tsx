@@ -1,13 +1,15 @@
-import {Link} from "react-router-dom";
-import CancelLogo from "@/assets/imgs/Cancel.svg?react";
-interface CancelButtonProps {
-  url: string;
-}
+import {useNavigate} from "react-router-dom";
 
-export default function CancelButton({url}: CancelButtonProps) {
+export default function CancelButton() {
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  }
+
   return (
-    <Link to={url} className="flex items-center">
-      <CancelLogo width={20}/>
-    </Link>
+    <div onClick={goBack} className="text-mainColor text-sm font-medium">
+      취소
+    </div>
   );
 }

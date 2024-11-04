@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
-import GoBackButton from "@/assets/imgs/GoBack.svg?react";
+import GoBackLogo from "@/assets/imgs/GoBack.svg?react";
 
-export default function CancelButton() {
+export default function GoBackButton() {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -10,7 +10,7 @@ export default function CancelButton() {
 
   return (
     <div onClick={goBack}>
-      <GoBackButton width={20}/>
+      <GoBackLogo width={20}/>
     </div>
   );
 }

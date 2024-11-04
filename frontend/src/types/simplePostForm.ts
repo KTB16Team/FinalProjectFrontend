@@ -1,5 +1,5 @@
 export interface SimplePostForm {
-  id: number;
+  postId: number;
   title: string;
   likes: number;
   comments: number;
