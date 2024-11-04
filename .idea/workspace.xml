@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc8341e2-72a2-48f8-a2e9-afe688f324ad" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/imgs/Vote.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/imgs/Vote.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/imgs/Vote.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/Post/PostDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Post/PostDetail.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +29,10 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "ts.external.directory.path": "E:\\ktb\\Final\\FinalProjectFrontend\\frontend\\node_modules\\typescript\\lib",
@@ -38,8 +42,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -52,7 +56,11 @@
       <option name="presentableId" value="Default" />
       <updated>1729061547816</updated>
       <workItem from="1729061549065" duration="1000" />
+      <workItem from="1730682525812" duration="943000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

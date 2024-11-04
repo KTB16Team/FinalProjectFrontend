@@ -13,7 +13,7 @@ import LikeLogo from "@/assets/imgs/Like.svg?react";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import ChildComment from "@/components/Post/ChildComment.tsx";
 import Comment from "@/components/Post/Comment.tsx";
-import voteIcon from "@/assets/imgs/vote.svg?react";
+import VoteIcon from "@/assets/imgs/vote.svg?react";
 
 // Mock data for testing
 const mockPost = {
@@ -146,29 +146,34 @@ export default function PostDetail() {
 
           <div className="bg-background text-gray-800 text-left mb-6 rounded-xl p-3">{post.content}</div>
 
-          <Link to="/ai-results" className="underline mb-2">AI 결과보기</Link>
+          <Link to="/ai-results" className="underline">AI 결과보기</Link>
 
-          <div className="bg-background rounded-2xl p-2 mb-6">
+          <div className="bg-background rounded-2xl p-2 mb-6 mt-4">
             <div className="flex justify-between">
-              <div className="text-left mb-2">
-                <img src={voteIcon} alt="Vote Icon" className="w-5 h-5"/>
-                <span className="ml-2 text-lg font-semibold">투표</span>
-                <span className="text-sm text-gray-500">{totalVotes}명 참여중</span>
+              <div className="flex justify-between">
+                <div className="text-left mb-2">
+                  <VoteIcon className="inline-block mr-1"/>
+                  <span className="text-lg font-semibold mr-2">투표</span>
+                  <span className="text-lg font-semibold mr-2">|</span>
+                  <span className="text-sm font-semibold text-gray-500">{totalVotes}명 참여중...</span>
+                </div>
+
               </div>
               <button
-                onClick={() => handleVote(selectedVote!)}
-                disabled={!selectedVote}
-                className="text-xs px-4 py-2 bg-mainColor text-white rounded-xl"
+                  onClick={() => handleVote(selectedVote!)}
+                  disabled={!selectedVote}
+                  className="text-xs px-7 py-2 bg-mainColor text-white rounded-xl mr-4 mb-5" // mb-4 추가
               >
                 {isVoted ? "재투표하기" : "투표하기"}
               </button>
+
             </div>
 
             <div className="flex flex-col items-center">
               <button
-                onClick={() => setSelectedVote("A")}
-                className={`w-full text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
-                  selectedVote === "A" ? "border-blue-500" : "border-gray-300"
+                  onClick={() => setSelectedVote("A")}
+                  className={`w-full text-left py-2 rounded-xl bg-white mb-2 text-sm ml-2 mr-2 pl-5 ${
+                      selectedVote === "A" ? "border-blue-500" : "border-gray-300"
                 }`}
               >
                 입장 A {isVoted && `(${plaintiffPercentage}% | ${post.votes_plaintiff})`}
@@ -218,7 +223,7 @@ export default function PostDetail() {
           type="text"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          placeholder="댓글을 입력하세요..."
+          placeholder="댓글을 남겨주세요."
           className="border rounded p-2 flex-grow"
         />
         <button
