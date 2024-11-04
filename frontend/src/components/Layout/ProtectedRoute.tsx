@@ -11,7 +11,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
 
   // authContext가 undefined이거나 accessToken이 없으면 로그인 페이지로 리다이렉트
   if (!authContext || !authContext.accessToken) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login"/>;
   }
 
 
