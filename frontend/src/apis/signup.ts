@@ -3,7 +3,7 @@ import {SignUpForm} from "@/types/signUpForm.ts";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface SignUpRequest {
-  username: string;
+  nickname: string;
   email: string;
   password: string;
   gender: string;
@@ -12,7 +12,7 @@ interface SignUpRequest {
 
 export const signup =  async (signUpForm: SignUpForm) => {
   const request: SignUpRequest = {
-    username: signUpForm.username,
+    nickname: signUpForm.nickname,
     email: signUpForm.email,
     password: signUpForm.password,
     gender: signUpForm.gender,

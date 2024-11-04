@@ -17,7 +17,7 @@ export default function SignUp() {
 
   // 모든 필드를 감시
   const watchFields = watch([
-    'email', 'password', 'confirmPassword', 'username', 'birth', 'gender'
+    'email', 'password', 'confirmPassword', 'nickname', 'birth', 'gender'
   ]);
 
   // 회원가입 요청
@@ -25,6 +25,7 @@ export default function SignUp() {
 
     signup(data)
       .then(() => {
+        alert('회원가입이 완료되었습니다.');
         navigate('/login');
       })
       .catch((error) => {
@@ -32,15 +33,21 @@ export default function SignUp() {
         if (axios.isAxiosError(error)) {
           const response = error.response?.data;
 
+          // validation 에러 처리
+          if (error.status === 400) {
+            alert(response.reasons);
+            return;
+          }
+
           // 서버 응답에서 code를 가져와 처리
           switch (response?.code) {
             case 'COMMON-002':
               alert('요청 파라미터가 잘못되었습니다.');
               break;
-            case 'MEMBER-005':
+            case 'MEMBER-003':
               alert('이메일이 중복되었습니다.');
               break;
-            case 'MEMBER-006':
+            case 'MEMBER-004':
               alert('닉네임이 중복되었습니다.');
               break;
             // 다른 에러 코드 처리
@@ -113,8 +120,8 @@ export default function SignUp() {
             label="닉네임"
             type="text"
             placeholder={'닉네임을 입력해주세요'}
-            register={register('username', {required: '닉네임을 입력해주세요'})}
-            error={errors.username?.message}
+            register={register('nickname', {required: '닉네임을 입력해주세요'})}
+            error={errors.nickname?.message}
             required={true}
           />
 
@@ -151,7 +158,7 @@ export default function SignUp() {
       </div>
       <BottomButton
         label="회원 가입"
-        disabled={isDone}  // isDone 상태에 따라 버튼 활성화
+        disabled={!isDone} // 모든 필드가 채워지고 비밀번호가 일치할 때만 버튼 활성화
         onClick={handleSubmit(onSubmit)}  // 폼 제출
         className = "bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
       />

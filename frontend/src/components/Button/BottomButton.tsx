@@ -19,7 +19,6 @@ export default function BottomButton({
         disabled ? "bg-gray-300 text-black" : "bg-mainColor text-white"
       }`}
       onClick={onClick}
-      disabled={disabled} // 버튼 비활성화 상태 전달
     >
       {label}
     </Button>
