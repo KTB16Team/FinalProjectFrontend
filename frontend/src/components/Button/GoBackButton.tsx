@@ -1,14 +1,16 @@
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import GoBackButton from "@/assets/imgs/GoBack.svg?react";
 
-interface CancelButtonProps {
-  url: string;
-}
+export default function CancelButton() {
+  const navigate = useNavigate();
 
-export default function CancelButton({url}: CancelButtonProps) {
+  const goBack = () => {
+    navigate(-1);
+  }
+
   return (
-    <Link to={url}>
+    <div onClick={goBack}>
       <GoBackButton width={20}/>
-    </Link>
+    </div>
   );
 }

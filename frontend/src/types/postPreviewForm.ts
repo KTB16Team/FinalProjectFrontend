@@ -1,27 +1,27 @@
 import {CommentForm} from "@/types/CommentForm.ts";
 
 export interface PostPreviewForm {
-  post_id: number;
+  postId: number;
   title: string;
-  content_preview: string;
-  created_at: string;
+  contentPreview: string;
+  createdAt: string;
   views: number;
   likes: number;
-  comments_count: number;
-  "vote_rate_plaintiff": number;
-  "vote_rate_defendant": number;
+  commentsCount: number;
+  "voteRatePlaintiff": number;
+  "voteRateDefendant": number;
 }
 
 export interface PostForm {
   title: string;
-  username: string;
+  nickname: string;
   content: string;
-  votes_plaintiff: number;
-  votes_defendant: number;
+  votesPlaintiff: number;
+  votesDefendant: number;
   likes: number;
-  view_count: number;
-  votes_count: number;
-  comments_count: number;
-  created_at: string;
+  viewCount: number;
+  votesCount: number;
+  commentsCount: number;
+  createdAt: string;
   comments: CommentForm[];
 }

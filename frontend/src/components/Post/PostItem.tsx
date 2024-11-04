@@ -9,15 +9,15 @@ interface PostItemProps {
 
 export default function PostItem({ post }: PostItemProps) {
   // Calculate the vote percentages
-  const plaintiffRate = post.vote_rate_plaintiff;
+  const plaintiffRate = post.voteRatePlaintiff;
   const defendantRate = 100 - plaintiffRate;
 
   return (
     <div className="bg-white rounded-2xl mb-2 p-3 shadow-md">
-      <Link to={`/posts/${post.post_id}`}>
+      <Link to={`/posts/${post.postId}`}>
         <div className="text-left">
           <div className="text-lg font-semibold">{post.title}</div>
-          <div className="text-gray-500">{post.content_preview}</div>
+          <div className="text-gray-500">{post.contentPreview}</div>
 
           {/*막대 그래프*/}
           <div className="w-full bg-gray-200 rounded-full h-2 mt-3 overflow-hidden">
@@ -35,10 +35,10 @@ export default function PostItem({ post }: PostItemProps) {
 
           {/*메타 정보*/}
           <div className="flex flex-row mt-2 text-sm text-gray-600">
-            <div className="mr-3">{post.created_at}</div>
+            <div className="mr-3">{post.createdAt}</div>
             <div className="mr-3">조회 {post.views}</div>
             <div className="mr-3 flex items-center"><LikeLogo /> {post.likes}</div>
-            <div className="flex items-center"><CommentLogo /> {post.comments_count}</div>
+            <div className="flex items-center"><CommentLogo /> {post.commentsCount}</div>
           </div>
         </div>
       </Link>
