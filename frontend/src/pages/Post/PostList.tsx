@@ -40,37 +40,35 @@ export default function PostList() {
 
   // Map category names to API calls
   const fetchPosts = useCallback(async (page: number) => {
-      setLoading(true);
+    setLoading(true);
 
-      let response: PostResponse;
-      try {
-        switch (location.pathname) {
-          case "/my-public-posts":
-            response = await getPosts("MY", page, FETCH_SIZE);
-            break;
-          case "/my-private-posts":
-            response = await getMyPrivatePosts(page, FETCH_SIZE);
-            break;
-          case "/categories/commented-posts":
-            response = await getPosts("COMMENTED", page, FETCH_SIZE);
-            break;
-          case "/categories/popular-posts":
-            response = await getPosts("POPULAR", page, FETCH_SIZE);
-            break;
-          case "/categories/all-posts":
-          default:
-            response = await getPosts("ANY", page, FETCH_SIZE);
-            break;
-        }
-
-        setPosts((prevPosts) => [...prevPosts, ...response.data.data.content]);
-        setTotalPages(response.data.totalPages);
-      } finally {
-        setLoading(false);
+    let response: PostResponse;
+    try {
+      switch (location.pathname) {
+        case "/my-public-posts":
+          response = await getPosts("MY", page, FETCH_SIZE);
+          break;
+        case "/my-private-posts":
+          response = await getMyPrivatePosts(page, FETCH_SIZE);
+          break;
+        case "/categories/commented-posts":
+          response = await getPosts("COMMENTED", page, FETCH_SIZE);
+          break;
+        case "/categories/popular-posts":
+          response = await getPosts("POPULAR", page, FETCH_SIZE);
+          break;
+        case "/categories/all-posts":
+        default:
+          response = await getPosts("ANY", page, FETCH_SIZE);
+          break;
       }
-    },
-    [location.pathname, navigate, refreshAccessToken, logout]
-  );
+
+      setPosts((prevPosts) => [...prevPosts, ...response.data.data.content]);
+      setTotalPages(response.data.totalPages);
+    } finally {
+      setLoading(false);
+    }
+  }, [location.pathname, navigate, refreshAccessToken, logout]);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -105,8 +103,8 @@ export default function PostList() {
           height: "85vh",
         }}
       >
-        {posts.map((post) => (
-          <PostItem key={post.postId} post={post}/>
+        {posts.map((post, index) => (
+          <PostItem key={index} post={post}/>
         ))}
         <div id="scroll-end" style={{height: '1px'}}/>
         {loading && <p className="text-center">Loading...</p>}

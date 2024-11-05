@@ -8,13 +8,13 @@ interface PostItemProps {
 }
 
 export default function PostItem({ post }: PostItemProps) {
-  // Calculate the vote percentages
+  // 투표 퍼센트 계산
   const plaintiffRate = post.voteRatePlaintiff;
   const defendantRate = 100 - plaintiffRate;
 
   return (
     <div className="bg-white rounded-2xl mb-2 p-3 shadow-md">
-      <Link to={`/posts/${post.postId}`}>
+      <Link to={`/posts/${post.id}`}>
         <div className="text-left">
           <div className="text-lg font-semibold">{post.title}</div>
           <div className="text-gray-500">{post.contentPreview}</div>
@@ -24,12 +24,12 @@ export default function PostItem({ post }: PostItemProps) {
             <div
               className="bg-blue-500 h-full"
               style={{ width: `${plaintiffRate}%` }}
-              title={`Plaintiff: ${plaintiffRate}%`}
+              title={`Plaintiff: ${post.voteRatePlaintiff}%`}
             />
             <div
               className="bg-red-500 h-full"
               style={{ width: `${defendantRate}%` }}
-              title={`Defendant: ${defendantRate}%` }
+              title={`Defendant: ${post.voteRateDefendant}%` }
             />
           </div>
 
