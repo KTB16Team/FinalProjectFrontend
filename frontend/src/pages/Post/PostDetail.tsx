@@ -13,6 +13,7 @@ import LikeLogo from "@/assets/imgs/Like.svg?react";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import ChildComment from "@/components/Post/ChildComment.tsx";
 import Comment from "@/components/Post/Comment.tsx";
+import VoteLogo from "@/assets/imgs/Vote.svg?react";
 
 // Mock data for testing
 const mockPost = {
@@ -150,6 +151,7 @@ export default function PostDetail() {
           <div className="bg-background rounded-2xl p-2 mb-6">
             <div className="flex justify-between">
               <div className="text-left mb-2">
+                <VoteLogo className="inline-block mr-2" />
                 <span className="text-lg font-semibold">투표</span>
                 <span className="text-sm text-gray-500">{totalVotes}명 참여중</span>
               </div>

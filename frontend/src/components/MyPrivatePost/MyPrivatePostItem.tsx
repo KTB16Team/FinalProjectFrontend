@@ -1,4 +1,4 @@
-import {useState, useReft} from "react";
+import {useState, useRef} from "react";
 import {MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
 import AudioLogo from "@/assets/imgs/Audio.svg";
 import TextLogo from "@/assets/imgs/Text.svg";

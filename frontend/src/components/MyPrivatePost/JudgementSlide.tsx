@@ -1,64 +1,51 @@
 export default function JudgementSlide(
   {
-    title,
     judgement,
     faultRate,
   }: {
-    title: string;
     judgement?: string;
     faultRate?: number;
   }) {
-  const plaintiffRate = faultRate || 0;       // 원고(A) 과실 비율
-  const defendantRate = 100 - plaintiffRate;  // 피고(B) 과실 비율
+  const plaintiffRate = faultRate || 0;      
+  const defendantRate = 100 - plaintiffRate;  
 
   return (
-    <div className="p-4">
-      <h2 className="text-lg font-semibold mb-4">{title}</h2>
-
-      {/* 세로 막대그래프 영역 */}
-      <div className="flex justify-around items-end h-40 mb-4">
-        {/* 원고(A) 막대 */}
-        <div className="flex flex-col items-center h-full">
-          <div className="flex items-end"
-               style={{
-                 height: "70%"
-               }}
-          >
-            <div
-              className="bg-red-500 w-8"
+    <div>
+      {/* 그래프 박스 */}
+      <div className="bg-white p-4 mb-4 rounded">
+        <div className="flex justify-center space-x-16 py-8">
+          {/* A입장 */}
+          <div className="flex flex-col items-center">
+            <div 
+              className="rounded-t-full w-10 bg-[#9F7AEA]" 
               style={{
-                height: `${plaintiffRate}%`, // 원고 과실 비율에 따른 높이 설정
-                minHeight: "10px",            // 최소 높이 지정
+                height: '200px'
               }}
             />
+            <div className="mt-4 text-2xl font-bold">{plaintiffRate}%</div>
+            <div className="mt-1 text-[#9F7AEA]">A입장</div>
           </div>
-          <div className="mt-2">{plaintiffRate}%</div>
-          <div className='text-sm'>A 과실</div>
-        </div>
 
-        {/* 피고(B) 막대 */}
-        <div className="flex flex-col items-center h-full">
-          <div className="flex items-end"
-               style={{
-                 height: "70%"
-               }}
-          >
-            <div
-              className="bg-green-500 w-8"
+          {/* B입장 */}
+          <div className="flex flex-col items-center">
+            <div 
+              className="rounded-t-full w-10 bg-[#D6BCFA]" 
               style={{
-                height: `${defendantRate}%`, // 원고 과실 비율에 따른 높이 설정
-                minHeight: "10px",            // 최소 높이 지정
+                height: '10px'
               }}
             />
+            <div className="mt-4 text-2xl font-bold">{defendantRate}%</div>
+            <div className="mt-1 text-[#D6BCFA]">B입장</div>
           </div>
-
-          <div className="mt-2">{defendantRate}%</div>
-          <div className='text-sm'>B 과실</div>
         </div>
       </div>
 
-      {/* 판결문 내용 */}
-      <p className="text-base">{judgement || "Loading..."}</p>
+      {/* 판결문 박스 - 완전히 분리된 새로운 박스 */}
+      <div className="bg-white p-4 rounded">
+        <div className="mb-4 font-light text-m text-left">
+          {judgement || "Loading..."}
+        </div>
+      </div>
     </div>
   );
 }

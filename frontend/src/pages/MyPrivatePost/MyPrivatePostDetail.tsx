@@ -9,6 +9,8 @@ import TextSlide from "@/components/MyPrivatePost/TextSlide.tsx";
 import JudgementSlide from "@/components/MyPrivatePost/JudgementSlide.tsx";
 import {getPrivatePost} from "@/apis/post.ts";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
+import BottomButton from "@/components/Button/BottomButton.tsx";
+import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -30,7 +32,7 @@ const SLIDE_COUNT = 4;
 function PrevArrow({onClick, currentSlide}: ArrowProps) {
   if (currentSlide === 0) return null;
   return (
-    <button onClick={onClick} className="z-10 absolute left-4 top-7 p-2">
+    <button onClick={onClick} className="z-10 absolute left-4 top-7 transform -translate-y-1/2 p-2">
       <PrevButton/>
     </button>
   );
@@ -51,6 +53,7 @@ export default function MyPrivatePostDetail() {
   const [postData, setPostData] = useState<PostData | null>(null);
   const navigate = useNavigate();
   const {refreshAccessToken, logout} = useContext(AuthContext)!;
+  const [isDone] = useState(false);
 
   const dummyData = {
     title: "교통사고 대화록",
@@ -99,27 +102,144 @@ export default function MyPrivatePostDetail() {
 
   return (
     <div>
-      <Header title="결과" leftButton={<GoBackButton url="/my-private-posts"/>}/>
-      <div className="bg-background w-full p-3"
-           style={{
-             height: "85vh",
-             overflowY: "scroll",
-             marginTop: "15vh"
-           }}>
-        <div className="bg-white mb-2"
+      <Header title="결과" leftButton={<GoBackButton url="/my-private-posts" />} />
+      <div
+        className="bg-background w-full p-3"
+        style={{
+          height: "80vh", // 메인 스크롤 영역의 높이 조정
+          overflowY: "scroll",
+          marginTop: "15vh",
+        }}
+      >
+         <div
+          className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg"
           style={{
             height: "7vh",
           }}
         >
+          <TitleIcon className="mr-2"  />
           {postData?.title}
         </div>
-        <Slider className="bg-white" {...settings}>
-          <TextSlide title="AI 요약문" text={postData?.summary_ai}/>
-          <TextSlide title="A 입장" text={postData?.stance_plaintiff}/>
-          <TextSlide title="B 입장" text={postData?.stance_diefendant}/>
-          <JudgementSlide title="판결" judgement={postData?.judgement} faultRate={postData?.fault_rate}/>
+        
+        <Slider {...settings}>
+        {/* AI 요약문 슬라이드 */}
+        <div>
+          {/* AI 요약문 제목 박스 */}
+          <div
+            className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
+            style={{
+              height: "7vh",
+            }}
+          >
+            AI 요약문
+            <NextArrow 
+              onClick={() => setCurrentSlide(currentSlide + 1)} 
+              currentSlide={currentSlide} 
+              slideCount={SLIDE_COUNT} 
+            />
+          </div>
+          
+          {/* summary_ai 내용 박스 - 완전히 분리된 새로운 박스 */}
+          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+            <div className="p-4">
+              {postData?.summary_ai}
+            </div>
+          </div>
+        </div>
+          {/* A의 입장 */}
+          <div>
+          <div
+            className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
+            style={{
+              height: "7vh",
+            }}
+          >
+            A의 입장
+            <NextArrow 
+              onClick={() => setCurrentSlide(currentSlide + 1)} 
+              currentSlide={currentSlide} 
+              slideCount={SLIDE_COUNT} 
+            />
+          </div>
+          
+          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+            <div className="p-4">
+              {postData?.stance_plaintiff}
+            </div>
+          </div>
+        </div>
+          {/* B의 입장 */}
+          <div>
+          <div
+            className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
+            style={{
+              height: "7vh",
+            }}
+          >
+            B의 입장
+            <NextArrow 
+              onClick={() => setCurrentSlide(currentSlide + 1)} 
+              currentSlide={currentSlide} 
+              slideCount={SLIDE_COUNT} 
+            />
+          </div>
+          
+          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+            <div className="p-4">
+              {postData?.stance_diefendant}
+            </div>
+          </div>
+        </div>
+          {/* 판결 */}
+          <div>
+          <div className="bg-white mb-2 p-4 flex items-center justify-center font-light text-m text-left rounded"
+          style={{
+            height: "7vh",
+          }}
+        >
+          판결
+          </div>
+          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+            <div className="p-4">
+            <JudgementSlide judgement={postData?.judgement} faultRate={postData?.fault_rate} />
+          </div>
+          </div>
+          </div>
         </Slider>
+        
       </div>
+      <BottomButton
+        label="발행"
+        disabled={false}  // isDone 상태에 따라 버튼 활성화
+        onClick={() => {
+          console.log('발행 버튼 클릭');
+        }}  // 폼 제출
+        className = "bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
+      />
     </div>
   );
 }
+
+// <div>
+//     <div
+//       className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
+//       style={{
+//         height: "7vh",
+//       }}
+//     >
+//       판결
+//       <NextArrow 
+//         onClick={() => setCurrentSlide(currentSlide + 1)} 
+//         currentSlide={currentSlide} 
+//         slideCount={SLIDE_COUNT} 
+//       />
+//     </div>
+    
+//     <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+//       <div className="p-4">
+//         <div>{postData?.judgement}</div>
+//         <div>과실 비율: {postData?.fault_rate}%</div>
+//       </div>
+//     </div>
+//   </div>
+// </Slider>
