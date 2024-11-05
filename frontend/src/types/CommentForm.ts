@@ -7,21 +7,21 @@ export interface PutCommentForm {
 }
 
 export interface CommentForm {
-  is_mine: boolean;
-  username: string;
-  comment_id: number;
+  isMine: boolean;
+  nickname: string;
+  commentId: number;
   content: string;
-  likes: number;
-  created_at: string;
-  child_comments: ChildCommentForm[];
+  likesCount: number;
+  createdAt: string;
+  childComments: ChildCommentForm[];
 }
 
 export interface ChildCommentForm {
-  is_mine: boolean;
-  username: string;
-  child_comments_id: number;
+  isMine: boolean;
+  nickname: string;
+  childCommentId: number;
   content: string;
-  likes: number;
-  created_at: string;
+  likesCount: number;
+  createdAt: string;
 }
 

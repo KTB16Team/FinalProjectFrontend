@@ -13,6 +13,7 @@ import TextUpload from "@/pages/Upload/TextUpload/TextUpload.tsx";
 import MyPrivatePostList from "@/pages/MyPrivatePost/MyPrivatePostList.tsx";
 import MyPrivatePostDetail from "@/pages/MyPrivatePost/MyPrivatePostDetail.tsx";
 import PostDetail from "@/pages/Post/PostDetail.tsx";
+import Page500 from "@/pages/error/Page500/Page500.tsx";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
 
               {/* 회원 가입 페이지 */}
               <Route path="/signup" element={<SignUp />} />
+
+              {/* 500 에러 페이지 */}
+              <Route path="/500" element={<Page500/>} />
 
               {/* 인증이 필요한 경로 */}
               <Route
