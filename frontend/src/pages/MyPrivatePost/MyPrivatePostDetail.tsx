@@ -61,7 +61,7 @@ export default function MyPrivatePostDetail() {
     stance_plaintiff: "원고는 정상적인 차선에서 주행 중이었으며, 피고인의 무리한 차선 변경으로 인해 사고가 발생했다고 주장하고 있습니다.",
     stance_diefendant: "피고인은 사고 당시 주변 차량이 많아 어쩔 수 없이 차선을 변경해야 했으며, 원고가 속도를 줄이지 않아 사고가 발생했다고 주장합니다.",
     judgement: "AI는 피고인의 차선 변경이 부적절했다고 판단하여, 과실 비율을 원고 56.8%, 피고 43.2%로 결정하였습니다.",
-    fault_rate: 100,
+    fault_rate: 70,
   };
 
   useEffect(() => {
