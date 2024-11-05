@@ -25,76 +25,14 @@ export default function MyPrivatePostList() {
     setLoading(true);
     getMyPrivatePosts(pageNumber, 10)
       .then((response) => {
-        // 더미 데이터
-        const myPrivatePosts: MyPrivatePostForm[] = [
-          {
-            post_id: 1,
-            title: "제목",
-            content_preview: "아니 애인이 새우를 까서 앞사람...",
-            origin_type: 'VOICE',
-            created_at: "2024.10.26 19:35",
-            published: true,
-            views: 475
-          },
-          {
-            post_id: 2,
-            title: "제목2",
-            content_preview: "아니 애인이 새우를 까서 앞사람...",
-            origin_type: 'TEXT',
-            created_at: "2024.10.26 19:35",
-            published: false,
-            views: 475
-          },
-          {
-            post_id: 3,
-            title: "제목3",
-            content_preview: "아니 애인이 새우를 까서 앞사람...",
-            origin_type: 'CHAT',
-            created_at: "2024.10.26 19:35",
-            published: true,
-            views: 475
-          },
-          {
-            post_id: 4,
-            title: "제목4",
-            content_preview: "아니 애인이 새우를 까서 앞사람...",
-            origin_type: 'TEXT',
-            created_at: "2024.10.26 19:35",
-            published: true,
-            views: 475
-          },
-          {
-            post_id: 5,
-            title: "제목5",
-            content_preview: "아니 애인이 새우를 까서 앞사람...",
-            origin_type: 'VOICE',
-            created_at: "2024.10.26 19:35",
-            published: false,
-            views: 475
-          }
-        ];
-
-        // setPosts((prevPosts) => [...prevPosts, ...response.data.data]);
-        setPosts((prevPosts) => [...prevPosts, ...myPrivatePosts]);
+        setPosts((prevPosts) => [...prevPosts, ...response.data.data.content]);
         setTotalPages(response.data.totalPages);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
-        if (error.response.data.code === "AUTH_001") {
-          navigate('/login');
-        } else if (error.response.data.code === "AUTH_003") {
-          const newAccessToken = refreshAccessToken();
-          if (newAccessToken != null) {
-            fetchPosts(pageNumber);
-          } else {
-            logout();
-          }
-        } else {
-          console.error("서버에서 오류가 발생했습니다.");
-        }
       });
-  }, [navigate, refreshAccessToken, logout]);
+  }, [navigate]);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -118,7 +56,7 @@ export default function MyPrivatePostList() {
   }, [handleObserver]);
 
   const deletePost = (id: number) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post.post_id !== id));
+    setPosts((prevPosts) => prevPosts.filter((post) => post.postId !== id));
     deleteMyPrivatePost(id)
       .catch((error) => {
         if (error.response.data.code === "AUTH_001") {
@@ -138,19 +76,20 @@ export default function MyPrivatePostList() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Header 
-        title="내 개인글" 
-        leftButton={<GoBackButton url="/categories"/>}
+      <Header
+        title="내 개인글"
+        leftButton={<GoBackButton/>}
         rightButton={
           <div className="relative p-2">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
             </svg>
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </div>
         }
       />
-      
+
       <div
         className="w-full px-4"
         style={{
@@ -161,9 +100,9 @@ export default function MyPrivatePostList() {
         }}
       >
         {posts.map((post) => (
-          <MyPrivatePostItem 
-            key={post.post_id} 
-            post={post} 
+          <MyPrivatePostItem
+            key={post.postId}
+            post={post}
             onDelete={deletePost}
           />
         ))}
@@ -174,5 +113,5 @@ export default function MyPrivatePostList() {
       </div>
     </div>
   );
- }
+}
 
