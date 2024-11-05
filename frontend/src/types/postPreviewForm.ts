@@ -1,7 +1,7 @@
 import {CommentForm} from "@/types/CommentForm.ts";
 
 export interface PostPreviewForm {
-  postId: number;
+  id: number;
   title: string;
   contentPreview: string;
   createdAt: string;
@@ -13,13 +13,15 @@ export interface PostPreviewForm {
 }
 
 export interface PostForm {
+  isMine: boolean;
+  postId: number;
   title: string;
   nickname: string;
   content: string;
   votesPlaintiff: number;
   votesDefendant: number;
-  likes: number;
-  viewCount: number;
+  likesCount: number;
+  viewsCount: number;
   votesCount: number;
   commentsCount: number;
   createdAt: string;

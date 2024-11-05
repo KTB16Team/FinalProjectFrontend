@@ -13,7 +13,7 @@ interface MyPrivatePostItemProps {
  const MyPrivatePostItem = ({post, onDelete}: MyPrivatePostItemProps) => {
   const getIcon = () => {
     const iconStyle = "w-8 h-8";
-    switch (post.origin_type) {
+    switch (post.originType) {
       case 'VOICE':
         return (
           <svg className={iconStyle} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,9 +55,9 @@ interface MyPrivatePostItemProps {
               <span className="inline-block bg-red-500 text-white text-xs px-2 py-1 rounded">공개</span> 
             )}
           </div>
-          <p className="text-gray-500 mb-3 font-light text-left">{post.content_preview}</p>
+          <p className="text-gray-500 mb-3 font-light text-left">{post.contentPreview}</p>
           <div className="flex items-center text-sm text-gray-500">
-            <span>{formatDate(post.created_at)}</span>
+            <span>{formatDate(post.createdAt)}</span>
             <span className="mx-2"></span>
             <span>조회 475</span> {/* 조회수 추가 */}
           </div>

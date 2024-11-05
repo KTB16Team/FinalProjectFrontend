@@ -1,5 +1,6 @@
 import Header from '@/components/Header/Header';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import CancelButton from "@/components/Button/CancelButton.tsx";
 
 const MIN_CONTENT_LENGTH = 10;
 
@@ -28,18 +29,18 @@ export default function TextUpload() {
   return (
     <div>
       {/* 헤더에 등록 버튼 추가 */}
-      <Header 
-        title="텍스트 업로드" 
+      <Header
+        title="텍스트 업로드"
         rightButton={
-          <button 
-            onClick={handleRegisterClick} 
+          <button
+            onClick={handleRegisterClick}
             className="text-mainColor text-sm font-medium"
             disabled={!isButtonEnabled}
           >
             등록
           </button>
-        } 
-        leftButton={<button onClick={() => alert("취소")} className="text-mainColor text-sm font-medium">취소</button>}
+        }
+        leftButton={<CancelButton/>}
       />
 
       <div className="p-5">

@@ -1,8 +1,8 @@
 export interface MyPrivatePostForm {
-  post_id: number;
+  postId: number;
   title: string;
-  content_preview: string;
-  origin_type: 'VOICE' | 'TEXT' | 'CHAT';
-  created_at: string;
+  contentPreview: string;
+  originType: 'VOICE' | 'TEXT' | 'CHAT';
+  createdAt: string;
   published: boolean;
 }
