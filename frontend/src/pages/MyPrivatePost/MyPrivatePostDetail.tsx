@@ -1,30 +1,20 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useEffect, useState} from "react";
 import Slider from "react-slick";
 import Header from "@/components/Header/Header.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import PrevButton from "@/assets/imgs/PrevButton.svg?react";
 import NextButton from "@/assets/imgs/NextButton.svg?react";
-import TextSlide from "@/components/MyPrivatePost/TextSlide.tsx";
 import JudgementSlide from "@/components/MyPrivatePost/JudgementSlide.tsx";
 import {getPrivatePost} from "@/apis/post.ts";
-import {AuthContext} from "@/contexts/AuthContext.tsx";
 import BottomButton from "@/components/Button/BottomButton.tsx";
 import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
+import {MyPrivatePostForm} from "@/types/myPrivatePostPreviewForm.ts";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   currentSlide: number;
   slideCount?: number;
-}
-
-interface PostData {
-  title: string;
-  summary_ai: string;
-  stance_plaintiff: string;
-  stance_diefendant: string;
-  judgement: string;
-  fault_rate: number;
 }
 
 const SLIDE_COUNT = 4;
@@ -50,42 +40,20 @@ function NextArrow({onClick, currentSlide, slideCount}: ArrowProps) {
 export default function MyPrivatePostDetail() {
   const {postId} = useParams<{ postId: string }>();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [postData, setPostData] = useState<PostData | null>(null);
-  const navigate = useNavigate();
-  const {refreshAccessToken, logout} = useContext(AuthContext)!;
-  const [isDone] = useState(false);
+  const [postData, setPostData] = useState<MyPrivatePostForm | null>(null);
 
-  const dummyData = {
-    title: "교통사고 대화록",
-    summary_ai: "이 사건은 피고인의 잘못된 차선 변경으로 인한 교통사고로, 피해자와 피고인의 과실을 검토한 결과입니다.",
-    stance_plaintiff: "원고는 정상적인 차선에서 주행 중이었으며, 피고인의 무리한 차선 변경으로 인해 사고가 발생했다고 주장하고 있습니다.",
-    stance_diefendant: "피고인은 사고 당시 주변 차량이 많아 어쩔 수 없이 차선을 변경해야 했으며, 원고가 속도를 줄이지 않아 사고가 발생했다고 주장합니다.",
-    judgement: "AI는 피고인의 차선 변경이 부적절했다고 판단하여, 과실 비율을 원고 56.8%, 피고 43.2%로 결정하였습니다.",
-    fault_rate: 70,
-  };
 
   useEffect(() => {
-    getPrivatePost(Number(postId))
-      .then((response) => {
-        setPostData(dummyData);
-      })
-      .catch((error) => {
-        if (error.response.data.code === "AUTH_001") {
-          navigate('/login');
-        } else if (error.response.data.code === "AUTH_003") {
-          const newAccessToken = refreshAccessToken();
-          if (newAccessToken != null) {
-            getPrivatePost(Number(postId));
-          } else {
-            logout();
-          }
-        } else if (error.response.data.code === "PRIVATE-POST-001") {
-          alert("해당 게시글이 존재하지 않습니다.");
-          navigate('/my-private-posts');
-        } else {
+    // postId가 유효할 때에만 getPrivatePost 호출
+    if (postId) {
+      getPrivatePost(parseInt(postId))
+        .then((response) => {
+          setPostData(response.data.data);
+        })
+        .catch(() => {
           console.error("서버에서 오류가 발생했습니다.");
-        }
-      });
+        });
+    }
   }, [postId]);
 
   const settings = {
@@ -102,7 +70,7 @@ export default function MyPrivatePostDetail() {
 
   return (
     <div>
-      <Header title="결과" leftButton={<GoBackButton url="/my-private-posts" />} />
+      <Header title="결과" leftButton={<GoBackButton/>}/>
       <div
         className="bg-background w-full p-3"
         style={{
@@ -111,102 +79,107 @@ export default function MyPrivatePostDetail() {
           marginTop: "15vh",
         }}
       >
-         <div
+        <div
           className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg"
           style={{
             height: "7vh",
           }}
         >
-          <TitleIcon className="mr-2"  />
+          <TitleIcon className="mr-2"/>
           {postData?.title}
         </div>
-        
+
         <Slider {...settings}>
-        {/* AI 요약문 슬라이드 */}
-        <div>
-          {/* AI 요약문 제목 박스 */}
-          <div
-            className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-            style={{
-              height: "7vh",
-            }}
-          >
-            AI 요약문
-            <NextArrow 
-              onClick={() => setCurrentSlide(currentSlide + 1)} 
-              currentSlide={currentSlide} 
-              slideCount={SLIDE_COUNT} 
-            />
-          </div>
-          
-          {/* summary_ai 내용 박스 - 완전히 분리된 새로운 박스 */}
-          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-            <div className="p-4">
-              {postData?.summary_ai}
+          {/* AI 요약문 슬라이드 */}
+          <div>
+            {/* AI 요약문 제목 박스 */}
+            <div
+              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
+              style={{
+                height: "7vh",
+              }}
+            >
+              AI 요약문
+              <NextArrow
+                onClick={() => setCurrentSlide(currentSlide + 1)}
+                currentSlide={currentSlide}
+                slideCount={SLIDE_COUNT}
+              />
+            </div>
+
+            {/* summary_ai 내용 박스 - 완전히 분리된 새로운 박스 */}
+            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+              <div className="p-4">
+                {postData?.summaryAi}
+              </div>
             </div>
           </div>
-        </div>
+
           {/* A의 입장 */}
           <div>
-          <div
-            className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-            style={{
-              height: "7vh",
-            }}
-          >
-            A의 입장
-            <NextArrow 
-              onClick={() => setCurrentSlide(currentSlide + 1)} 
-              currentSlide={currentSlide} 
-              slideCount={SLIDE_COUNT} 
-            />
-          </div>
-          
-          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-            <div className="p-4">
-              {postData?.stance_plaintiff}
+            <div
+              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
+              style={{
+                height: "7vh",
+              }}
+            >
+              A의 입장
+              <NextArrow
+                onClick={() => setCurrentSlide(currentSlide + 1)}
+                currentSlide={currentSlide}
+                slideCount={SLIDE_COUNT}
+              />
+            </div>
+
+            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+              <div className="p-4">
+                {postData?.stancePlaintiff}
+              </div>
             </div>
           </div>
-        </div>
+
           {/* B의 입장 */}
           <div>
-          <div
-            className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-            style={{
-              height: "7vh",
-            }}
-          >
-            B의 입장
-            <NextArrow 
-              onClick={() => setCurrentSlide(currentSlide + 1)} 
-              currentSlide={currentSlide} 
-              slideCount={SLIDE_COUNT} 
-            />
-          </div>
-          
-          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-            <div className="p-4">
-              {postData?.stance_diefendant}
+            <div
+              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
+              style={{
+                height: "7vh",
+              }}
+            >
+              B의 입장
+              <NextArrow
+                onClick={() => setCurrentSlide(currentSlide + 1)}
+                currentSlide={currentSlide}
+                slideCount={SLIDE_COUNT}
+              />
+            </div>
+
+            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+              <div className="p-4">
+                {postData?.stanceDefendant}
+              </div>
             </div>
           </div>
-        </div>
+
           {/* 판결 */}
           <div>
-          <div className="bg-white mb-2 p-4 flex items-center justify-center font-light text-m text-left rounded"
-          style={{
-            height: "7vh",
-          }}
-        >
-          판결
-          </div>
-          <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-            <div className="p-4">
-            <JudgementSlide judgement={postData?.judgement} faultRate={postData?.fault_rate} />
-          </div>
-          </div>
+            <div className="bg-white mb-2 p-4 flex items-center justify-center font-light text-m text-left rounded"
+                 style={{
+                   height: "7vh",
+                 }}
+            >
+              판결
+            </div>
+            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
+              <div className="p-4">
+                {postData && (
+                  <JudgementSlide myPrivatePost={postData} />
+                )}
+              </div>
+            </div>
           </div>
         </Slider>
-        
+
       </div>
       <BottomButton
         label="발행"
@@ -214,32 +187,8 @@ export default function MyPrivatePostDetail() {
         onClick={() => {
           console.log('발행 버튼 클릭');
         }}  // 폼 제출
-        className = "bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
+        className="bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
       />
     </div>
   );
 }
-
-// <div>
-//     <div
-//       className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-//       style={{
-//         height: "7vh",
-//       }}
-//     >
-//       판결
-//       <NextArrow 
-//         onClick={() => setCurrentSlide(currentSlide + 1)} 
-//         currentSlide={currentSlide} 
-//         slideCount={SLIDE_COUNT} 
-//       />
-//     </div>
-    
-//     <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-//       <div className="p-4">
-//         <div>{postData?.judgement}</div>
-//         <div>과실 비율: {postData?.fault_rate}%</div>
-//       </div>
-//     </div>
-//   </div>
-// </Slider>
