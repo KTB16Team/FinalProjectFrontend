@@ -8,7 +8,7 @@ interface PopularItemProps {
 
 export default function PopularItem({ post, index }: PopularItemProps) {
   return (
-    <Link key={post.postId} className="block bg-white p-4 mb-4 -mx-3" to={`/posts/${post.postId}`}>
+    <Link key={post.id} className="block bg-white p-4 mb-4 -mx-3" to={`/posts/${post.id}`}>
       <div className="flex items-start mt-4">
         <span className="text-xl font-bold text-red-500 mr-3">{index + 1}</span>
         <div className="flex-1">

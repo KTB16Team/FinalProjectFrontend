@@ -5,7 +5,7 @@ import CommentLogo from "@/assets/imgs/Comment.svg?react";
 import MenuVertical from "@/assets/imgs/MenuVertical.svg?react";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx"; // ConfirmModal 추가
 import { postChildCommentLike, deleteChildComment } from "@/apis/comment.ts";
-import { ChildCommentForm } from "@/types/CommentForm.ts";
+import { ChildCommentForm } from "@/types/commentForm.ts";
 
 interface ChildCommentProps {
   child: ChildCommentForm;

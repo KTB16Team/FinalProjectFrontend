@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { getPost, postPostLike } from "@/apis/post.ts";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {getPost, postPostLike} from "@/apis/post.ts";
 import Header from "@/components/Header/Header.tsx";
-import { postChildComment, postComment } from "@/apis/comment.ts";
-import { postVote } from "@/apis/vote.ts";
-import { PostForm } from "@/types/postPreviewForm.ts";
+import {postChildComment, postComment} from "@/apis/comment.ts";
+import {postVote} from "@/apis/vote.ts";
+import {PostForm} from "@/types/postPreviewForm.ts";
 import CommentLogo from "@/assets/imgs/Comment.svg?react";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import ChildComment from "@/components/Post/ChildComment.tsx";
 import Comment from "@/components/Post/Comment.tsx";
 import VoteIcon from "@/assets/imgs/vote.svg?react";
-import { PostCommentForm } from "@/types/CommentForm.ts";
+import {PostCommentForm} from "@/types/commentForm.ts";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 
 export default function PostDetail() {
