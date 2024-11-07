@@ -73,7 +73,7 @@ export default function SignUp() {
   return (
     <div className="min-h-screen bg-white">
       {/* 헤더 부분 수정 */}
-      <Header title="회원가입" leftButton={<CancelButton url="/login"  />}
+      <Header title="회원가입" leftButton={<CancelButton/>}
       />
 
       {/* 메인 컨텐츠 영역 */}
