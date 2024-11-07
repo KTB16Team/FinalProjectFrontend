@@ -113,7 +113,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
             <Slider {...settings}>
               {allPosts.slice(0, 3).map((post) => (
-                <MyPublicItem post={post} key={post.id} />
+                <MyPublicItem post={post} key={post.postId} />
               ))}
             </Slider>
           </div>
