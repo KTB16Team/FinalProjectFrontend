@@ -35,6 +35,8 @@ export interface PostPostForm {
   stanceDefendant: string;
   summaryAi: string;
   judgement: string;
+  faultRatePlaintiff: number;
+  faultRateDefendant: number;
   originType: 'VOICE' | 'TEXT' | 'CHAT';
 }
 

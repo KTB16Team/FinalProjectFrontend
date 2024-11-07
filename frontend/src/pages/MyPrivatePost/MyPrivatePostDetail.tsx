@@ -79,6 +79,8 @@ export default function MyPrivatePostDetail() {
       stanceDefendant: postData.stanceDefendant,
       summaryAi: postData.summaryAi,
       judgement: postData.judgement,
+      faultRatePlaintiff: postData.faultRatePlaintiff,
+      faultRateDefendant: postData.faultRateDefendant,
       originType: 'TEXT',
     }
 
