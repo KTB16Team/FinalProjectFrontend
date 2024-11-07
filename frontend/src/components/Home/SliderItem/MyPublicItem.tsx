@@ -1,5 +1,5 @@
-import { PostPreviewForm } from "@/types/postPreviewForm.ts";
-import { Link } from "react-router-dom";
+import {PostPreviewForm} from "@/types/postForm";
+import {Link} from "react-router-dom";
 
 interface MyPublicItemProps {
   post: PostPreviewForm;

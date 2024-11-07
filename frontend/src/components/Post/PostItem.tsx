@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PostPreviewForm } from "@/types/postPreviewForm.ts";
+import { PostPreviewForm } from "@/types/postForm.ts";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
 import CommentLogo from "@/assets/imgs/Comment.svg?react";
 

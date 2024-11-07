@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import{ useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import BottomButton from "@/components/Button/BottomButton";
-import LoginIdLogo from "@/assets/imgs/LoginId.svg?react";
 
 const ResetPasswordCompletePage = () => {
     const navigate = useNavigate();

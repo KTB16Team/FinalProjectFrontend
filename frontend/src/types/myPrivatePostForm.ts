@@ -18,3 +18,8 @@ export interface MyPrivatePostForm {
   faultRateDefendant: number;
   published: boolean;
 }
+
+export interface JudgementForm {
+  content: string;
+  originType: 'VOICE' | 'TEXT' | 'CHAT';
+}

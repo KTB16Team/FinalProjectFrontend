@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { deleteComment, postCommentLike } from "@/apis/comment.ts";
-import { CommentForm } from "@/types/CommentForm.ts";
+import { CommentForm } from "@/types/commentForm.ts";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
 import CommentLogo from "@/assets/imgs/Comment.svg?react";
 import MenuVertical from "@/assets/imgs/MenuVertical.svg?react";

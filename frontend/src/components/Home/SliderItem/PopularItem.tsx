@@ -1,4 +1,4 @@
-import {PostPreviewForm} from "@/types/postPreviewForm.ts";
+import {PostPreviewForm} from "@/types/postForm.ts";
 import {Link} from "react-router-dom";
 
 interface PopularItemProps {

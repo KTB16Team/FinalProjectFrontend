@@ -1,5 +1,5 @@
 import { useState, TouchEvent } from "react";
-import { MyPrivatePostPreviewForm } from "@/types/myPrivatePostPreviewForm.ts";
+import { MyPrivatePostPreviewForm } from "@/types/myPrivatePostForm.ts";
 import { Link } from "react-router-dom";
 
 interface MyPrivatePostItemProps {

@@ -1,5 +1,5 @@
 import { PieChart, Pie, Cell } from 'recharts';
-import {MyPrivatePostForm} from "@/types/myPrivatePostPreviewForm.ts";
+import {MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
 
 interface JudgementSlideProps {
   myPrivatePost: MyPrivatePostForm;

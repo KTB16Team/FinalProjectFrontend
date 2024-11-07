@@ -1,4 +1,4 @@
-import {PostCommentForm, PutCommentForm} from "@/types/CommentForm.ts";
+import {PostCommentForm, PutCommentForm} from "@/types/commentForm.ts";
 import {axiosInstance} from "@/apis/index.ts";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 

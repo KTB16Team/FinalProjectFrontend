@@ -1,4 +1,4 @@
-import {CommentForm} from "@/types/CommentForm.ts";
+import {CommentForm} from "@/types/commentForm.ts";
 
 export interface PostPreviewForm {
   postId: number;
@@ -8,8 +8,8 @@ export interface PostPreviewForm {
   viewsCount: number;
   likesCount: number;
   commentsCount: number;
-  "voteRatePlaintiff": number;
-  "voteRateDefendant": number;
+  voteRatePlaintiff: number;
+  voteRateDefendant: number;
 }
 
 export interface PostForm {
@@ -26,4 +26,14 @@ export interface PostForm {
   commentsCount: number;
   createdAt: string;
   comments: CommentForm[];
+}
+
+export interface PostPostForm {
+  privatePostId: number;
+  title: string;
+  stancePlaintiff: string;
+  stanceDefendant: string;
+  summaryAi: string;
+  judgement: string;
+  originType: 'VOICE' | 'TEXT' | 'CHAT';
 }

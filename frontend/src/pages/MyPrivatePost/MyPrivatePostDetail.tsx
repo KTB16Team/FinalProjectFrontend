@@ -6,10 +6,11 @@ import {useParams} from "react-router-dom";
 import PrevButton from "@/assets/imgs/PrevButton.svg?react";
 import NextButton from "@/assets/imgs/NextButton.svg?react";
 import JudgementSlide from "@/components/MyPrivatePost/JudgementSlide.tsx";
-import {getPrivatePost} from "@/apis/post.ts";
+import {getPrivatePost, postPost} from "@/apis/post.ts";
 import BottomButton from "@/components/Button/BottomButton.tsx";
 import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
-import {MyPrivatePostForm} from "@/types/myPrivatePostPreviewForm.ts";
+import {MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
+import {PostPostForm} from "@/types/postForm.ts";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -55,6 +56,35 @@ export default function MyPrivatePostDetail() {
         });
     }
   }, [postId]);
+
+  const handlePublish = () => {
+    if (!postData) return;
+
+    const request: PostPostForm = {
+      privatePostId: postData.privatePostId,
+      title: postData.title,
+      stancePlaintiff: postData.stancePlaintiff,
+      stanceDefendant: postData.stanceDefendant,
+      summaryAi: postData.summaryAi,
+      judgement: postData.judgement,
+      originType: 'TEXT',
+    }
+
+    postPost(request)
+      .then(() => {
+        alert("대화록이 발행되었습니다.");
+      }).catch((error) => {
+        const response = error.response.data;
+
+        if (response.code === "PRIVATEPOST-001") {
+          alert("대화록을 찾을 수 없습니다.");
+        } else if (response.code === "PRIVATEPOST-002") {
+          alert("이미 발행된 대화록입니다.");  
+        } else {
+          alert("서버에서 오류가 발생했습니다.");
+        }
+    });
+  };
 
   const settings = {
     dots: false,
@@ -181,14 +211,14 @@ export default function MyPrivatePostDetail() {
         </Slider>
 
       </div>
-      <BottomButton
-        label="발행"
-        disabled={false}  // isDone 상태에 따라 버튼 활성화
-        onClick={() => {
-          console.log('발행 버튼 클릭');
-        }}  // 폼 제출
-        className="bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
-      />
+      {!postData?.published &&
+        <BottomButton
+          label="발행"
+          disabled={postData?.published}  // isDone 상태에 따라 버튼 활성화
+          onClick={handlePublish}  // 폼 제출
+          className="bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
+        />
+      }
     </div>
   );
 }
