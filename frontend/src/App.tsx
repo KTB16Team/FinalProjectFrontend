@@ -25,7 +25,7 @@ function App() {
             <Routes>
               {/* 로그인 페이지 */}
               <Route path="/login" element={<Login />} />
-              <Route path="/my-page" element={<MyPage />} />
+              
               {/* 회원 가입 페이지 */}
               <Route path="/signup" element={<SignUp />} />
 
@@ -42,7 +42,7 @@ function App() {
                       <Route path="/" element={<Home />} />
                       
                       {/* 마이 페이지 */}
-                      {/* <Route path="/my-page" element={<MyPage />} /> */}
+                      <Route path="/my-page" element={<MyPage />} />
 
                       {/* 글 목록 페이지 */}
                       <Route path="/categories/:category" element={<PostList />} />
