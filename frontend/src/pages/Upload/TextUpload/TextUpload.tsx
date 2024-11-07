@@ -31,6 +31,8 @@ export default function TextUpload() {
         alert('글이 등록되었습니다.');
         navigate(-1);
       })
+
+    
   };
 
   return (

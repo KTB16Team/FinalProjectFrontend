@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import HomepageSection from "@/components/Home/HomepageSection/HomepageSection.tsx";
 import AllItem from "@/components/Home/SliderItem/AllItem.tsx";
-import { PostPreviewForm } from "@/types/postPreviewForm.ts";
+import { PostPreviewForm } from "@/types/postForm.ts";
 import Header from "@/components/Header/Header.tsx";
 import { useNavigate } from 'react-router-dom';
 import MicIcon from "@/assets/imgs/Mic.svg";

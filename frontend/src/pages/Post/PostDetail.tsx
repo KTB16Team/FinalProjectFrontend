@@ -4,7 +4,7 @@ import {getPost, postPostLike, postPostView} from "@/apis/post.ts";
 import Header from "@/components/Header/Header.tsx";
 import {postChildComment, postComment} from "@/apis/comment.ts";
 import {postVote} from "@/apis/vote.ts";
-import {PostForm} from "@/types/postPreviewForm.ts";
+import {PostForm} from "@/types/postForm.ts";
 import CommentLogo from "@/assets/imgs/Comment.svg?react";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";

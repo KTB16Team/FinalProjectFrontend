@@ -1,5 +1,5 @@
 import {useLocation} from "react-router-dom";
-import {PostPreviewForm} from "@/types/postPreviewForm.ts";
+import {PostPreviewForm} from "@/types/postForm.ts";
 import PostItem from "@/components/Post/PostItem.tsx";
 import Header from "@/components/Header/Header.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";

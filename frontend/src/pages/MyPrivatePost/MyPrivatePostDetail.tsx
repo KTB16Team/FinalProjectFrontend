@@ -9,7 +9,7 @@ import JudgementSlide from "@/components/MyPrivatePost/JudgementSlide.tsx";
 import {getPrivatePost} from "@/apis/post.ts";
 import BottomButton from "@/components/Button/BottomButton.tsx";
 import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
-import {MyPrivatePostForm} from "@/types/myPrivatePostPreviewForm.ts";
+import {MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
