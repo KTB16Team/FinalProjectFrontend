@@ -73,7 +73,7 @@ export default function SignUp() {
   return (
     <div className="min-h-screen bg-white">
       {/* 헤더 부분 수정 */}
-      <Header title="회원가입" leftButton={<CancelButton/>}
+      <Header title="회원가입" leftButton={<CancelButton />}
       />
 
       {/* 메인 컨텐츠 영역 */}
@@ -160,7 +160,6 @@ export default function SignUp() {
         label="회원 가입"
         disabled={!isDone} // 모든 필드가 채워지고 비밀번호가 일치할 때만 버튼 활성화
         onClick={handleSubmit(onSubmit)}  // 폼 제출
-        className = "bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
       />
     </div>
   );

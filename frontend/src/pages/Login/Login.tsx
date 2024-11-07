@@ -30,6 +30,10 @@ export default function Login() {
       );
   };
 
+  const handleFindPassword = () => {
+    navigate('/password-find');
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-50 px-6 pt-48">
       <h1 className="text-6xl font-light mb-8 pb-4">aimo</h1>
@@ -73,7 +77,8 @@ export default function Login() {
           </button>
 
           <div className="flex justify-between text-xs text-gray-500 px-1 mt-1">
-            <button type="button" className="hover:text-gray-700">비밀번호 찾기</button>
+            <button type="button" onClick={handleFindPassword}
+              className="hover:text-gray-700">비밀번호 찾기</button>
             <Link to="/signup" type="button" className="text-red-400 hover:text-red-500">회원가입</Link>
           </div>
 
