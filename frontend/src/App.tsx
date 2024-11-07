@@ -14,6 +14,7 @@ import MyPrivatePostList from "@/pages/MyPrivatePost/MyPrivatePostList.tsx";
 import MyPrivatePostDetail from "@/pages/MyPrivatePost/MyPrivatePostDetail.tsx";
 import PostDetail from "@/pages/Post/PostDetail.tsx";
 import Page500 from "@/pages/error/Page500/Page500.tsx";
+import MyPage from "./pages/MyPage/MyPage.tsx";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             <Routes>
               {/* 로그인 페이지 */}
               <Route path="/login" element={<Login />} />
-
+              <Route path="/my-page" element={<MyPage />} />
               {/* 회원 가입 페이지 */}
               <Route path="/signup" element={<SignUp />} />
 
@@ -39,6 +40,10 @@ function App() {
                     <Routes>
                       {/* 홈 페이지는 인증 필요 없음 */}
                       <Route path="/" element={<Home />} />
+                      
+                      {/* 마이 페이지 */}
+                      {/* <Route path="/my-page" element={<MyPage />} /> */}
+
                       {/* 글 목록 페이지 */}
                       <Route path="/categories/:category" element={<PostList />} />
 
