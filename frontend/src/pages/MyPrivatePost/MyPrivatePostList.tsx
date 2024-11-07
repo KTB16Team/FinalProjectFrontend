@@ -15,21 +15,21 @@ export default function MyPrivatePostList() {
   const navigate = useNavigate();
   const { refreshAccessToken, logout } = useContext(AuthContext)!;
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const scrollEndRef = useRef<HTMLDivElement | null>(null);
 
   // 포스트 목록 조회
   const fetchPosts = useCallback(async (page: number) => {
-    if (loading) return;
     setLoading(true);
     try {
       const response = await getMyPrivatePosts(page, 10);
       setPosts((prevPosts) => [...prevPosts, ...response.data.data.content]);
-      setTotalPages(response.data.totalPages);
-    } catch {
-      console.error("포스트를 불러오는 중 오류 발생");
+      setTotalPages(response.data.data.totalPages);
+    } catch (error) {
+      console.error("포스트를 불러오는 중 오류 발생", error);
     } finally {
       setLoading(false);
     }
-  }, [loading]);
+  }, [loading, totalPages]);
 
   useEffect(() => {
     fetchPosts(page);
@@ -42,16 +42,18 @@ export default function MyPrivatePostList() {
         setPage((prevPage) => prevPage + 1);
       }
     },
-    [totalPages, loading]
+    [page, totalPages, loading]
   );
 
   useEffect(() => {
     if (observerRef.current) observerRef.current.disconnect();
 
-    observerRef.current = new IntersectionObserver(handleObserver);
-    const scrollEndElement = document.querySelector('#scroll-end');
-    if (observerRef.current && scrollEndElement) {
-      observerRef.current.observe(scrollEndElement);
+    observerRef.current = new IntersectionObserver(handleObserver, {
+      threshold: 1.0,
+    });
+
+    if (scrollEndRef.current) {
+      observerRef.current.observe(scrollEndRef.current);
     }
 
     return () => observerRef.current?.disconnect();
@@ -61,9 +63,9 @@ export default function MyPrivatePostList() {
     setPosts((prevPosts) => prevPosts.filter((post) => post.privatePostId !== id));
     deleteMyPrivatePost(id)
       .catch((error) => {
-        if (error.response.data.code === "AUTH_001") {
+        if (error.response?.data?.code === "AUTH_001") {
           navigate('/login');
-        } else if (error.response.data.code === "AUTH_003") {
+        } else if (error.response?.data?.code === "AUTH_003") {
           const newAccessToken = refreshAccessToken();
           if (newAccessToken != null) {
             deletePost(id);
@@ -108,10 +110,8 @@ export default function MyPrivatePostList() {
             onDelete={deletePost}
           />
         ))}
-        <div id="scroll-end" style={{ height: '1px' }} />
-        {loading && (
-          <p className="text-center text-gray-500 py-4">Loading...</p>
-        )}
+        {loading && <p className="text-center text-gray-500 py-4">Loading...</p>}
+        <div ref={scrollEndRef} style={{ height: '1px' }} />
       </div>
     </div>
   );
