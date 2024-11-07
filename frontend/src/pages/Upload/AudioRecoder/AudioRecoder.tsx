@@ -4,11 +4,11 @@ import CancelButton from "@/components/Button/CancelButton.tsx";
 import PauseIcon from "@/assets/imgs/Pause.svg"; 
 import StopIcon from "@/assets/imgs/Stop.svg"; 
 import MicIcon from "@/assets/imgs/Mic.svg";
-
-interface AudioData {
-  dataArray: Float32Array;
-  analyser: AnalyserNode;
-}
+//
+// interface AudioData {
+//   dataArray: Float32Array;
+//   analyser: AnalyserNode;
+// }
 
 const AudioRecorder: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false); // 녹음 중 여부
@@ -181,7 +181,7 @@ const AudioRecorder: React.FC = () => {
     <div style={styles.container}>
       <Header 
         title="실시간 녹음" 
-        leftButton={<CancelButton url="/home" />}
+        leftButton={<CancelButton />}
         rightButton={
           <div className="relative p-2">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -263,7 +263,7 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     height: '300px', // 고정 높이 설정
-    position: 'fixed',
+    position: 'fixed' as const,
     top: '50%', // 화면 중앙
     transform: 'translateY(-50%)', // 정확한 중앙 정렬
     padding: '0 20px',
