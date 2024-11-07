@@ -10,7 +10,7 @@ import LikeLogo from "@/assets/imgs/Like.svg?react";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import ChildComment from "@/components/Post/ChildComment.tsx";
 import Comment from "@/components/Post/Comment.tsx";
-import VoteIcon from "@/assets/imgs/vote.svg?react";
+import VoteIcon from "@/assets/imgs/Vote.svg?react";
 import {PostCommentForm} from "@/types/commentForm.ts";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 import Body from "@/components/Body/Body.tsx";
