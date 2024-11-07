@@ -1,7 +1,7 @@
 import {CommentForm} from "@/types/commentForm.ts";
 
 export interface PostPreviewForm {
-  postId: number;
+  id: number;
   title: string;
   contentPreview: string;
   createdAt: string;

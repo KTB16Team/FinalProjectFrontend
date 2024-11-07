@@ -7,7 +7,7 @@ interface MyPublicItemProps {
 
 export default function MyPublicItem({ post }: MyPublicItemProps) {
   return (
-    <Link key={post.postId} className="block p-4" to={`/posts/${post.postId}`}>
+    <Link key={post.id} className="block p-4" to={`/posts/${post.id}`}>
       <div className="flex items-center mb-4">
         <span className="inline-block bg-gray-800 text-white text-xs px-2 py-1 rounded mr-2">
           커뮤니티

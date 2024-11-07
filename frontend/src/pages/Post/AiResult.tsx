@@ -78,7 +78,7 @@ export default function AiResultDetail() {
 
   return (
     <div>
-      <Header title="결과" leftButton={<GoBackButton/>}/>
+      <Header title="AI 판결문" leftButton={<GoBackButton/>}/>
       <div
         className="bg-background w-full p-3"
         style={{
