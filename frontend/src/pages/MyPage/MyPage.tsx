@@ -1,17 +1,20 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import Body from "@/components/Body/Body.tsx";
+import {AuthContext} from "@/contexts/AuthContext.tsx";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [nickname] = useState('닉네임');
   const [email] = useState('aimo@gamil.com');
   const [profileImage] = useState<string | null>(null);
+  const {logout} = useContext(AuthContext)!;
+
 
   const handleLogout = () => {
-    navigate('/login');
+    logout();
   };
 
   const handleWithdraw = () => {
@@ -22,7 +25,7 @@ const MyPage = () => {
     <div className="bg-gray-50 min-h-screen">
       <Header
         title="aimo"
-        leftButton={<GoBackButton />}
+        leftButton={<GoBackButton/>}
       />
 
       <Body>
@@ -30,9 +33,9 @@ const MyPage = () => {
         <div className="flex items-center p-6 bg-white mb-3">
           <div className="relative w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
             {profileImage ? (
-              <img 
-                src={profileImage} 
-                alt="Profile" 
+              <img
+                src={profileImage}
+                alt="Profile"
                 className="w-full h-full rounded-full object-cover"
               />
             ) : (
@@ -49,7 +52,7 @@ const MyPage = () => {
         <nav className="bg-white">
           <ul className="divide-y">
             <li>
-              <button 
+              <button
                 className="w-full px-6 py-4 text-left hover:bg-gray-50"
                 onClick={() => navigate('/profile-edit')}
               >
@@ -57,7 +60,7 @@ const MyPage = () => {
               </button>
             </li>
             <li>
-              <button 
+              <button
                 className="w-full px-6 py-4 text-left hover:bg-gray-50"
                 onClick={() => navigate('/password-change')}
               >
@@ -65,7 +68,7 @@ const MyPage = () => {
               </button>
             </li>
             <li>
-              <button 
+              <button
                 className="w-full px-6 py-4 text-left hover:bg-gray-50"
                 onClick={handleLogout}
               >
@@ -73,7 +76,7 @@ const MyPage = () => {
               </button>
             </li>
             <li>
-              <button 
+              <button
                 className="w-full px-6 py-4 text-left text-red-500 hover:bg-gray-50"
                 onClick={handleWithdraw}
               >
