@@ -53,7 +53,7 @@ jobs:
       # 빌드된 파일을 S3에 업로드
       - name: Deploy to S3
         run: |
-          aws s3 sync ./FinalProjectFrontend/build s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          aws s3 sync ./FinalProjectFrontend/frontend/dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
 
       # S3 업로드 성공 시 디스코드 알림 전송
       - name: Notify Discord
