@@ -42,6 +42,7 @@ export default function MyPrivatePostDetail() {
   const {postId} = useParams<{ postId: string }>();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [postData, setPostData] = useState<MyPrivatePostForm | null>(null);
+  const [isPublished, setIsPublished] = useState(true);
 
 
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function MyPrivatePostDetail() {
       getPrivatePost(parseInt(postId))
         .then((response) => {
           setPostData(response.data.data);
+          setIsPublished(response.data.data.published);
         })
         .catch(() => {
           console.error("서버에서 오류가 발생했습니다.");
@@ -108,6 +110,7 @@ export default function MyPrivatePostDetail() {
           overflowY: "scroll",
           marginTop: "15vh",
         }}
+
       >
         <div
           className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg"
@@ -203,18 +206,18 @@ export default function MyPrivatePostDetail() {
             <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
               <div className="p-4">
                 {postData && (
-                  <JudgementSlide myPrivatePost={postData} />
+                  <JudgementSlide myPrivatePost={postData}/>
                 )}
               </div>
             </div>
           </div>
         </Slider>
-
       </div>
-      {!postData?.published &&
+
+      {!isPublished &&
         <BottomButton
           label="발행"
-          disabled={postData?.published}  // isDone 상태에 따라 버튼 활성화
+          disabled={isPublished}
           onClick={handlePublish}  // 폼 제출
           className="bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
         />

@@ -87,7 +87,7 @@ const MyPrivatePostItem = ({ post, onDelete }: MyPrivatePostItemProps) => {
           <div className="flex-1">
             <div className="flex items-center mb-2">
               <h3 className="text-lg font-medium flex-1 text-left">{post.title}</h3>
-              {!post.published && (
+              {post.published && (
                 <span className="inline-block bg-red-500 text-white text-xs px-2 py-1 rounded">공개</span>
               )}
             </div>
