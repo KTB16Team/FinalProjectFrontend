@@ -80,6 +80,8 @@ export default function Home() {
       .then((response) => {
         setAllPosts((prevPosts) => [...prevPosts, ...response.data.data.content]); // 기존 데이터에 추가
         setTotalPages(response.data.data.totalPages);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };
