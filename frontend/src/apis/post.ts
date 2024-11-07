@@ -24,3 +24,7 @@ export const getPost = async (postId: number) => {
 export const postPostLike = async (postId: number, likeType: string) => {
   return await axiosInstance.post(`${BACKEND_URL}/api/v1/posts/${postId}/likes?likeType=${likeType}`);
 }
+
+export const postPostView = async (postId: number) => {
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/posts/${postId}/views`);
+}

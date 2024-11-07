@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {getPost, postPostLike} from "@/apis/post.ts";
+import {getPost, postPostLike, postPostView} from "@/apis/post.ts";
 import Header from "@/components/Header/Header.tsx";
 import {postChildComment, postComment} from "@/apis/comment.ts";
 import {postVote} from "@/apis/vote.ts";
@@ -26,6 +26,8 @@ export default function PostDetail() {
   const [showLikeModal, setShowLikeModal] = useState(false);
 
   const fetchPost = () => {
+    postPostView(parseInt(postId!));
+
     getPost(parseInt(postId!))
       .then((response) => setPost(response.data.data))
       .catch((error) => {
