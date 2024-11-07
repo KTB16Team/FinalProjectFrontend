@@ -1,7 +1,7 @@
-import { ThemeProvider } from "styled-components";
-import { theme } from "@/styles/shared/Theme.ts";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext.tsx";
+import {ThemeProvider} from "styled-components";
+import {theme} from "@/styles/shared/Theme.ts";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {AuthProvider} from "./contexts/AuthContext.tsx";
 import Home from "@/pages/Home/Home.tsx";
 import Login from "@/pages/Login/Login.tsx";
 import ProtectedRoute from "./components/Layout/ProtectedRoute.tsx";
@@ -22,6 +22,7 @@ import ChangePasswordPage from '@/pages/Password/PasswordChange.tsx'
 import FindPasswordPage from "@/pages/Password/FindPassword.tsx";
 import ResetPasswordPage from "@/pages/Password/ResetPassword.tsx";
 import ResetPasswordCompletePage from "@/pages/Password/ResetPasswordCompliete.tsx"
+import AiResultDetail from "@/pages/Post/AiResult.tsx";
 
 function App() {
   return (
@@ -31,13 +32,13 @@ function App() {
           <BrowserRouter>
             <Routes>
               {/* 로그인 페이지 */}
-              <Route path="/login" element={<Login />} />
-              
+              <Route path="/login" element={<Login/>}/>
+
               {/* 회원 가입 페이지 */}
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signup" element={<SignUp/>}/>
 
               {/* 500 에러 페이지 */}
-              <Route path="/500" element={<Page500/>} />
+              <Route path="/500" element={<Page500/>}/>
 
               {/* 인증이 필요한 경로 */}
               <Route
@@ -46,55 +47,58 @@ function App() {
                   <ProtectedRoute>
                     <Routes>
                       {/* 홈 페이지는 인증 필요 없음 */}
-                      <Route path="/" element={<Home />} />
-                      
+                      <Route path="/" element={<Home/>}/>
+
                       {/* 마이 페이지 */}
-                      <Route path="/my-page" element={<MyPage />} />
+                      <Route path="/my-page" element={<MyPage/>}/>
 
                       {/* 회원 탈퇴 페이지 */}
-                      <Route path="/profile-edit" element={<ProfileEdit />} />
+                      <Route path="/profile-edit" element={<ProfileEdit/>}/>
 
                       {/* 탈퇴 동의 페이지 */}
-                      <Route path="/agree" element={<WithdrawAgreementPage />} />
+                      <Route path="/agree" element={<WithdrawAgreementPage/>}/>
 
                       {/* 비밀번호 변경 페이지 */}
-                      <Route path="/password-change" element={<ChangePasswordPage />} />
+                      <Route path="/password-change" element={<ChangePasswordPage/>}/>
 
                       {/* 비밀번호 찾기 페이지 */}
-                      <Route path="/password-find" element={<FindPasswordPage />} />
+                      <Route path="/password-find" element={<FindPasswordPage/>}/>
 
                       {/* 비밀번호 재발급 페이지 */}
-                      <Route path="/password-reset" element={<ResetPasswordPage />} />
+                      <Route path="/password-reset" element={<ResetPasswordPage/>}/>
 
                       {/* 비밀번호 재발급완료 페이지 */}
-                      <Route path="/password-reset-complete" element={<ResetPasswordCompletePage />} />
+                      <Route path="/password-reset-complete" element={<ResetPasswordCompletePage/>}/>
 
                       {/* 프로필 편집 페이지 */}
-                      <Route path="/withdraw" element={<Withdraw />} />
+                      <Route path="/withdraw" element={<Withdraw/>}/>
 
                       {/* 글 목록 페이지 */}
-                      <Route path="/categories/:category" element={<PostList />} />
+                      <Route path="/categories/:category" element={<PostList/>}/>
 
                       {/* 음성녹음 페이지 */}
-                      <Route path="/audio-recorder" element={<AudioRecorder />} />
+                      <Route path="/audio-recorder" element={<AudioRecorder/>}/>
 
                       {/* 글 작성 페이지 */}
-                      <Route path="/text-upload" element={<TextUpload />} />
+                      <Route path="/text-upload" element={<TextUpload/>}/>
 
                       {/* 게시판 목록 페이지 */}
-                      <Route path="/categories" element={<PostCategory />} />
+                      <Route path="/categories" element={<PostCategory/>}/>
 
                       {/* 내 개인 글 목록 페이지 */}
-                      <Route path="/my-private-posts" element={<MyPrivatePostList />} />
+                      <Route path="/my-private-posts" element={<MyPrivatePostList/>}/>
 
                       {/* 내 개인 글 게시물 페이지 */}
-                      <Route path="/my-private-posts/:postId" element={<MyPrivatePostDetail />} />
+                      <Route path="/my-private-posts/:postId" element={<MyPrivatePostDetail/>}/>
 
                       {/* 포스트 디테일 페이지 */}
-                      <Route path="/posts/:postId" element={<PostDetail />} />
+                      <Route path="/posts/:postId" element={<PostDetail/>}/>
+
+                      {/*포스트 AiResult 페이지*/}
+                      <Route path="/posts/:postId/judgement" element={<AiResultDetail/>}/>
 
                       {/* 인증된 사용자만 접근할 수 있는 프로필 페이지 */}
-                      <Route path="/profile" element={<Home />} />
+                      <Route path="/profile" element={<Home/>}/>
                     </Routes>
                   </ProtectedRoute>
                 }

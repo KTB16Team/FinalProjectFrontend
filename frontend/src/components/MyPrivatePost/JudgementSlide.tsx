@@ -1,21 +1,21 @@
-import { PieChart, Pie, Cell } from 'recharts';
-import {MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
+import {Cell, Pie, PieChart} from 'recharts';
+import {JudgementSlideForm} from "@/types/myPrivatePostForm.ts";
 
 interface JudgementSlideProps {
-  myPrivatePost: MyPrivatePostForm;
+  judgementSlideForm: JudgementSlideForm;
 }
 
-export default function JudgementSlide({myPrivatePost}: JudgementSlideProps) {
+export default function JudgementSlide({judgementSlideForm}: JudgementSlideProps) {
 
   const data = [
-    { name: 'A입장', value: myPrivatePost.faultRatePlaintiff },
-    { name: 'B입장', value: myPrivatePost.faultRateDefendant },
+    { name: 'A입장', value: judgementSlideForm.faultRatePlaintiff },
+    { name: 'B입장', value: judgementSlideForm.faultRateDefendant },
   ];
 
   const COLORS = ['#9F7AEA', '#D6BCFA'];
 
   // 과실 비율이 높은 쪽 확인 -> 과실 비율 아래에 큰 쪽 입장이라고 써지도록!
-  const higherPartyLabel = myPrivatePost.faultRatePlaintiff > myPrivatePost.faultRateDefendant ? 'A입장' : 'B입장';
+  const higherPartyLabel = judgementSlideForm.faultRatePlaintiff > judgementSlideForm.faultRateDefendant ? 'A입장' : 'B입장';
 
   return (
     <div className="space-y-4">
@@ -46,7 +46,7 @@ export default function JudgementSlide({myPrivatePost}: JudgementSlideProps) {
             {/* Center Text */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
               <div className="ml-4 text-2xl font-bold text-gray-900">
-                {Math.max(myPrivatePost.faultRatePlaintiff, myPrivatePost.faultRateDefendant).toFixed(1)}%
+                {Math.max(judgementSlideForm.faultRatePlaintiff, judgementSlideForm.faultRateDefendant).toFixed(1)}%
               </div>
               <div className="ml-1 text-m text-gray-500">
                 {higherPartyLabel}
@@ -59,13 +59,13 @@ export default function JudgementSlide({myPrivatePost}: JudgementSlideProps) {
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-[#9F7AEA] mr-2" />
               <span className="text-sm text-gray-600">
-                A입장 ({myPrivatePost.faultRatePlaintiff.toFixed(1)}%)
+                A입장 ({judgementSlideForm.faultRatePlaintiff.toFixed(1)}%)
               </span>
             </div>
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-[#D6BCFA] mr-2" />
               <span className="text-sm text-gray-600">
-                B입장 ({myPrivatePost.faultRateDefendant.toFixed(1)}%)
+                B입장 ({judgementSlideForm.faultRateDefendant.toFixed(1)}%)
               </span>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function JudgementSlide({myPrivatePost}: JudgementSlideProps) {
       {/* Judgement Text Box */}
       <div className="bg-white rounded">
         <div className="p-4 font-light text-base text-gray-700">
-          {myPrivatePost.judgement}
+          {judgementSlideForm.judgement}
         </div>
       </div>
     </div>

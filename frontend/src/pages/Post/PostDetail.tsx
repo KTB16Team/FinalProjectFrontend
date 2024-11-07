@@ -122,9 +122,12 @@ export default function PostDetail() {
             </div>
           </div>
 
+          {/* 본문 */}
           <div className="bg-background text-gray-800 text-left mb-6 rounded-xl p-3">
             {post.content}
-            <Link to="/ai-results" className="text-right block no-underline text-sm font-bold" style={{ textDecoration: "underline", textDecorationStyle: "dotted" }}>
+
+            {/* AI 결과보기 */}
+            <Link to={`/posts/${postId}/judgement`} className="text-right block no-underline text-sm font-bold" style={{ textDecoration: "underline", textDecorationStyle: "dotted" }}>
               AI 결과보기
             </Link>
           </div>
@@ -169,6 +172,7 @@ export default function PostDetail() {
             </div>
           </div>
 
+          {/*포스트 좋아요, 댓글수*/}
           <div className="w-full text-right mb-2">
             <span className="mr-3">
               <button onClick={() => setShowLikeModal(true)}>
@@ -181,6 +185,7 @@ export default function PostDetail() {
           </div>
         </div>
 
+        {/*댓글*/}
         <div>
           {post.comments.map((comment, index) => (
             <React.Fragment key={index}>
@@ -193,6 +198,7 @@ export default function PostDetail() {
         </div>
       </div>
 
+      {/*댓글 달기*/}
       <div className="flex p-1 absolute bottom-0 w-full bg-white" style={{ height: "7vh" }}>
         <input
           type="text"
@@ -206,6 +212,7 @@ export default function PostDetail() {
         </button>
       </div>
 
+      {/*좋아요 모달*/}
       {showLikeModal && (
         <ConfirmModal
           message="좋아요를 누르시겠습니까?"
