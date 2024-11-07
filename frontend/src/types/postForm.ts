@@ -27,3 +27,13 @@ export interface PostForm {
   createdAt: string;
   comments: CommentForm[];
 }
+
+export interface PostPostForm {
+  privatePostId: number;
+  title: string;
+  stancePlaintiff: string;
+  stanceDefendant: string;
+  summaryAi: string;
+  judgement: string;
+  originType: 'VOICE' | 'TEXT' | 'CHAT';
+}

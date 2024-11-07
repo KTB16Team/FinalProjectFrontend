@@ -1,4 +1,6 @@
 import {axiosInstance} from "@/apis/index.ts";
+import {JudgementForm} from "@/types/myPrivatePostForm.ts";
+import {PostPostForm} from "@/types/postForm.ts";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const getMyPrivatePosts = async (page: number, size: number) => {
@@ -27,4 +29,12 @@ export const postPostLike = async (postId: number, likeType: string) => {
 
 export const postPostView = async (postId: number) => {
   return await axiosInstance.post(`${BACKEND_URL}/api/v1/posts/${postId}/views`);
+}
+
+export const postJudgement = async (request: JudgementForm) => {
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/private-posts/judgement`, request);
+}
+
+export const postPost = async (request: PostPostForm) => {
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/posts`, request);
 }
