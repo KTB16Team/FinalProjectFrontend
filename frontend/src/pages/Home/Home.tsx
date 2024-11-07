@@ -1,18 +1,18 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import HomepageSection from "@/components/Home/HomepageSection/HomepageSection.tsx";
 import AllItem from "@/components/Home/SliderItem/AllItem.tsx";
-import {PostPreviewForm} from "@/types/postPreviewForm.ts";
+import { PostPreviewForm } from "@/types/postPreviewForm.ts";
 import Header from "@/components/Header/Header.tsx";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MicIcon from "@/assets/imgs/Mic.svg";
 import MenuButton from "@/components/Button/MenuButton.tsx";
 import BellButton from "@/components/Button/BellButton.tsx";
 import PopularItem from "@/components/Home/SliderItem/PopularItem.tsx";
 import MyPublicItem from "@/components/Home/SliderItem/MyPublicItem.tsx";
-import {getPosts} from "@/apis/post.ts";
+import { getPosts } from "@/apis/post.ts";
 
 const settings = {
   dots: true,
@@ -23,14 +23,15 @@ const settings = {
   arrows: false,
 };
 
-export default function Home () {
+export default function Home() {
   const [popularPosts, setPopularPosts] = useState<PostPreviewForm[]>([]);
   const [allPosts, setAllPosts] = useState<PostPreviewForm[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const [showActions, setShowActions] = useState(false);
-  const [page, setPage] = useState(0);  // 현재 페이지
-  const [isLoading, setIsLoading] = useState(false);  // 로딩 상태
+  const [page, setPage] = useState(0); // 현재 페이지
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   const navigate = useNavigate();
-  const observerRef = useRef<HTMLDivElement | null>(null);  // 무한 스크롤 감지용 ref
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fetchMyPublicPosts();
@@ -38,54 +39,57 @@ export default function Home () {
   }, []);
 
   useEffect(() => {
-    // 페이지 변경 시마다 전체 글 데이터 로드
-    fetchAllPosts();
+    if (page == 0 || page < totalPages) {
+      fetchAllPosts();
+    }
   }, [page]);
+
+  useEffect(() => {
+    if (!targetRef.current || page >= totalPages) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoading) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      },
+      {
+        threshold: 1.0,
+      }
+    );
+
+    observer.observe(targetRef.current);
+
+    return () => {
+      if (targetRef.current) {
+        observer.unobserve(targetRef.current);
+      }
+    };
+  }, [isLoading, page, totalPages]);
 
   const fetchPopularPosts = () => {
     getPosts("POPULAR", 0, 3)
       .then((response) => {
         setPopularPosts(response.data.data.content);
       });
-  }
+  };
 
   const fetchAllPosts = () => {
     setIsLoading(true);
     getPosts("ANY", page, 10)
       .then((response) => {
-        setAllPosts((prevPosts) => [...prevPosts, ...response.data.data.content]);  // 기존 데이터에 추가
+        setAllPosts((prevPosts) => [...prevPosts, ...response.data.data.content]); // 기존 데이터에 추가
+        setTotalPages(response.data.data.totalPages);
         setIsLoading(false);
       });
-  }
+  };
 
   const fetchMyPublicPosts = () => {
     getPosts("MY", 0, 3)
       .then((response) => {
         setPopularPosts(response.data.data.content);
       });
-  }
-
-  useEffect(() => {
-    // IntersectionObserver를 사용하여 무한 스크롤 구현
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading) {
-          setPage((prevPage) => prevPage + 1);  // 페이지 번호 증가
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
-    };
-  }, [isLoading]);
+  };
 
   return (
     <div className={`relative ${showActions ? "bg-black bg-opacity-50" : ""}`}>
@@ -125,9 +129,10 @@ export default function Home () {
           {allPosts.map((post, index) => (
             <AllItem key={index} post={post} />
           ))}
-          {/* 무한 스크롤 감지용 div */}
-          <div ref={observerRef} className="w-full h-10" />
           {isLoading && <p className="text-center mt-4">로딩 중...</p>}
+          {!isLoading && page < totalPages && (
+            <div ref={targetRef} className="w-full h-10"></div>
+          )}
         </HomepageSection>
       </div>
 
