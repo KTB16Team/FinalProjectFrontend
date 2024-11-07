@@ -2,7 +2,7 @@ import {axiosInstance} from "@/apis/index.ts";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const getMyPrivatePosts = async (page: number, size: number) => {
-  return await axiosInstance.get(`${BACKEND_URL}/api/v1/private-posts?pageNumber=${page}&size=${size}`);
+  return await axiosInstance.get(`${BACKEND_URL}/api/v1/private-posts?page=${page}&size=${size}`);
 }
 
 export const deleteMyPrivatePost = async (postId: number) => {
