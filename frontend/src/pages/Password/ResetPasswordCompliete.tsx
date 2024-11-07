@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import BottomButton from "@/components/Button/BottomButton";
+import Body from "@/components/Body/Body.tsx";
 
 const ResetPasswordCompletePage = () => {
     const navigate = useNavigate();
@@ -12,19 +13,14 @@ const ResetPasswordCompletePage = () => {
     };
   
     return (
-      <div className="bg-gray-50 min-h-screen">
+      <div>
         <Header
           title="비밀번호 재발급"
           leftButton={<GoBackButton />}
         />
   
-        <div 
-          className="w-full px-4 pb-[10vh]"
-          style={{
-            marginTop: "15vh",
-            height: "85vh",
-            overflowY: 'auto',
-          }}
+        <Body
+          className="bg-background"
         >
           <div className="flex flex-col items-center justify-center p-6 text-center" style={{ marginTop: '30vh' }}>
             <h2 className="text-2xl mb-4">
@@ -37,7 +33,7 @@ const ResetPasswordCompletePage = () => {
               이메일 주소로 전송된 임시 비밀번호를 확인해 주세요.
             </p>
           </div>
-        </div>
+        </Body>
   
         <BottomButton
           label="확인"

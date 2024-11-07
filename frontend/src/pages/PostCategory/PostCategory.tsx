@@ -2,18 +2,15 @@ import PostCategoryItem from "@/components/PostCategory/PostCategoryItem.tsx";
 import Header from "@/components/Header/Header.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import BellButton from "@/components/Button/BellButton.tsx";
+import Body from "@/components/Body/Body.tsx";
 
 export default function PostCategory() {
 
   return (
     <div>
       <Header title={"메뉴"} leftButton={<GoBackButton/>} rightButton={<BellButton/>}/>
-      <div
-        className="bg-background w-full p-3"
-        style={{
-          marginTop: "15vh",
-          height: "85vh"
-        }}
+      <Body
+        className="bg-background"
       >
         {/*나와 관련된 글*/}
         <div className="mb-6 mt-6">
@@ -50,7 +47,7 @@ export default function PostCategory() {
             path={"/my-page"}
           />
         </div>
-      </div>
+      </Body>
     </div>
   );
 }

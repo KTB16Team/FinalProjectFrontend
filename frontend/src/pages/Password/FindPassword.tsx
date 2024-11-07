@@ -4,6 +4,7 @@ import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import BottomButton from "@/components/Button/BottomButton";
 import LoginIdLogo from "@/assets/imgs/LoginId.svg?react";
+import Body from "@/components/Body/Body.tsx";
 
 const FindPasswordPage = () => {
   const navigate = useNavigate();
@@ -20,14 +21,7 @@ const FindPasswordPage = () => {
         leftButton={<GoBackButton />}
       />
 
-      <div 
-        className="w-full px-4 pb-[10vh]"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: 'auto',
-        }}
-      >
+      <Body>
         <div className="p-4">
           <h2 className="text-xl font-medium mb-6 mt-10">이메일 인증</h2>
           
@@ -58,7 +52,7 @@ const FindPasswordPage = () => {
             </button>
           </p>
         </div>
-      </div>
+      </Body>
 
       <BottomButton
         label="다음"

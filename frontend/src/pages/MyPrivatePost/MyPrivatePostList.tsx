@@ -7,6 +7,7 @@ import { MyPrivatePostPreviewForm } from "@/types/myPrivatePostForm.ts";
 import MyPrivatePostItem from "@/components/MyPrivatePost/MyPrivatePostItem.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import MicIcon from "@/assets/imgs/Mic.svg";
+import Body from "@/components/Body/Body.tsx";
 
 export default function MyPrivatePostList() {
   const [posts, setPosts] = useState<MyPrivatePostPreviewForm[]>([]);
@@ -96,15 +97,7 @@ export default function MyPrivatePostList() {
         }
       />
 
-      <div
-        className="w-full px-4"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: 'auto',
-          padding: '20px 20px'
-        }}
-      >
+      <Body>
         {posts.map((post, index) => (
           <MyPrivatePostItem
             key={index}
@@ -114,7 +107,7 @@ export default function MyPrivatePostList() {
         ))}
         {loading && <p className="text-center text-gray-500 py-4">Loading...</p>}
         <div ref={scrollEndRef} style={{ height: '1px' }} />
-      </div>
+      </Body>
 
       {/* 오버레이 및 플로팅 버튼 */}
       {showActions && (

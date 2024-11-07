@@ -10,6 +10,7 @@ import {getAiResult} from "@/apis/post.ts";
 import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
 import {JudgementSlideForm} from "@/types/myPrivatePostForm.ts";
 import {AiResultForm} from "@/types/postForm.ts";
+import Body from "@/components/Body/Body.tsx";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -79,14 +80,8 @@ export default function AiResultDetail() {
   return (
     <div>
       <Header title="AI 판결문" leftButton={<GoBackButton/>}/>
-      <div
-        className="bg-background w-full p-3"
-        style={{
-          height: "80vh", // 메인 스크롤 영역의 높이 조정
-          overflowY: "scroll",
-          marginTop: "15vh",
-        }}
-
+      <Body
+        className="bg-background"
       >
         <div
           className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg"
@@ -188,7 +183,7 @@ export default function AiResultDetail() {
             </div>
           </div>
         </Slider>
-      </div>
+      </Body>
     </div>
   );
 }

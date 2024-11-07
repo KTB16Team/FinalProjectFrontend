@@ -4,6 +4,7 @@ import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import BottomButton from "@/components/Button/BottomButton";
 import LoginIdLogo from "@/assets/imgs/LoginId.svg?react";
+import Body from "@/components/Body/Body.tsx";
 
 const ResetPasswordPage = () => {
     const navigate = useNavigate();
@@ -15,19 +16,14 @@ const ResetPasswordPage = () => {
     };
   
     return (
-      <div className="bg-gray-50 min-h-screen">
+      <div>
         <Header
           title="비밀번호 재발급"
           leftButton={<GoBackButton />}
         />
   
-        <div 
-          className="w-full px-4 pb-[10vh]"
-          style={{
-            marginTop: "15vh",
-            height: "85vh",
-            overflowY: 'auto',
-          }}
+        <Body
+          className="bg-background"
         >
           <div className="p-4">
           <h2 className="text-xl font-medium mb-6 mt-10 text-left">
@@ -53,7 +49,7 @@ const ResetPasswordPage = () => {
               입력하신 정보로 임시 비밀번호가 발급됩니다.
             </p>
           </div>
-        </div>
+        </Body>
   
         <BottomButton
           label="다음"

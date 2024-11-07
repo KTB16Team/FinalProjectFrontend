@@ -13,6 +13,7 @@ import BellButton from "@/components/Button/BellButton.tsx";
 import PopularItem from "@/components/Home/SliderItem/PopularItem.tsx";
 import MyPublicItem from "@/components/Home/SliderItem/MyPublicItem.tsx";
 import { getPosts } from "@/apis/post.ts";
+import Body from "@/components/Body/Body.tsx";
 
 const settings = {
   dots: true,
@@ -94,20 +95,14 @@ export default function Home() {
   };
 
   return (
-    <div className={`relative ${showActions ? "bg-black bg-opacity-50" : ""}`}>
+    <div>
       {/* 커스텀 헤더 */}
       <Header
         title="aimo"
         leftButton={<MenuButton />}
         rightButton={<BellButton />}
       />
-      <div
-        className="bg-background w-full p-3"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-        }}
-      >
+      <Body className="bg-background">
         {/* 내 공개글 섹션 */}
         <HomepageSection title="내 공개글" url="/categories/my-public-posts">
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -136,7 +131,7 @@ export default function Home() {
             <div ref={targetRef} className="w-full h-10"></div>
           )}
         </HomepageSection>
-      </div>
+      </Body>
 
       {/* 오버레이 및 플로팅 버튼 */}
       {showActions && (

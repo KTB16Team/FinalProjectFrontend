@@ -13,6 +13,7 @@ import Comment from "@/components/Post/Comment.tsx";
 import VoteIcon from "@/assets/imgs/vote.svg?react";
 import {PostCommentForm} from "@/types/commentForm.ts";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
+import Body from "@/components/Body/Body.tsx";
 
 export default function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
@@ -111,7 +112,7 @@ export default function PostDetail() {
   return (
     <div>
       <Header title="게시판" leftButton={<GoBackButton />} />
-      <div className="p-4 bg-white" style={{ marginTop: "15vh", height: "80vh", overflowY: "scroll" }}>
+      <Body>
         <div className="border-b">
           <h1 className="text-2xl text-left font-bold mb-2">{post.title}</h1>
           <div className="flex justify-between text-sm text-gray-500 mb-4">
@@ -196,7 +197,7 @@ export default function PostDetail() {
             </React.Fragment>
           ))}
         </div>
-      </div>
+      </Body>
 
       {/*댓글 달기*/}
       <div className="flex p-1 absolute bottom-0 w-full bg-white" style={{ height: "7vh" }}>

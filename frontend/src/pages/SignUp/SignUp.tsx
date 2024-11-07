@@ -9,6 +9,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import CancelButton from "@/components/Button/CancelButton.tsx";
 import Header from "@/components/Header/Header.tsx";
+import Body from "@/components/Body/Body.tsx";
 
 export default function SignUp() {
   const {register, handleSubmit, formState: {errors}, watch} = useForm<SignUpForm>();
@@ -77,8 +78,8 @@ export default function SignUp() {
       />
 
       {/* 메인 컨텐츠 영역 */}
-      <div className="pt-48 px-5">
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <Body>
+        <form className="pt-5" onSubmit={handleSubmit(onSubmit)}>
           {/* 이메일 */}
           <Input
             label={"이메일"}
@@ -155,7 +156,7 @@ export default function SignUp() {
             </div>
           </div>
         </form>
-      </div>
+      </Body>
       <BottomButton
         label="회원 가입"
         disabled={!isDone} // 모든 필드가 채워지고 비밀번호가 일치할 때만 버튼 활성화

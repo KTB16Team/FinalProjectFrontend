@@ -4,6 +4,7 @@ import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import { Camera } from 'lucide-react';
 import BottomButton from "@/components/Button/BottomButton";
+import Body from "@/components/Body/Body.tsx";
 
 const ProfileEditPage = () => {
   const navigate = useNavigate();
@@ -51,14 +52,7 @@ const ProfileEditPage = () => {
         leftButton={<GoBackButton />}
       />
 
-      <div 
-        className="w-full px-4"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: 'auto',
-        }}
-      >
+      <Body>
         {/* Profile Image Section */}
         <div className="flex flex-col items-center mb-8 m mt-10">
           <div 
@@ -120,7 +114,7 @@ const ProfileEditPage = () => {
             />
           </div>
         </div>
-      </div>
+      </Body>
 
       <BottomButton
         label="저장"

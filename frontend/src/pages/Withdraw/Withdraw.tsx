@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import BottomButton from '@/components/Button/BottomButton';
+import Body from "@/components/Body/Body.tsx";
 
 const WithdrawPage = () => {
   const navigate = useNavigate();
@@ -32,17 +33,10 @@ const WithdrawPage = () => {
     <div className="pt-6 bg-gray-50 min-h-screen">
       <Header
         title="회원탈퇴"
-        leftButton={<GoBackButton />}
+        leftButton={<GoBackButton/>}
       />
 
-      <div 
-        className="w-full px-4"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: 'auto',
-        }}
-      >
+      <Body>
         <div className="p-4">
           <h2 className="text-xl mb-1">
             <span className="font-medium">aimo를</span>
@@ -53,14 +47,14 @@ const WithdrawPage = () => {
 
           <div className="space-y-2 p-4">
             {withdrawReasons.map((reason) => (
-              <div 
+              <div
                 key={reason}
                 className="bg-white rounded-lg"
               >
                 <button
                   className={`w-full p-4 text-left border rounded-lg ${
-                    selectedReason === reason 
-                      ? 'border-red-500 text-red-500' 
+                    selectedReason === reason
+                      ? 'border-red-500 text-red-500'
                       : 'border-gray-200 text-gray-700'
                   }`}
                   onClick={() => handleReasonSelect(reason)}
@@ -89,12 +83,12 @@ const WithdrawPage = () => {
         </div>
 
         <BottomButton
-        label="다음"
-        onClick={handleNext}
-        disabled={!selectedReason || (showCustomInput && !customReason)}
+          label="다음"
+          onClick={handleNext}
+          disabled={!selectedReason || (showCustomInput && !customReason)}
         />
-        </div>
-      </div>
+      </Body>
+    </div>
   );
 };
 

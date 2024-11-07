@@ -6,6 +6,7 @@ import {TextUploadForm} from "@/types/UploadForm.ts";
 import {useNavigate} from "react-router-dom";
 import {postJudgement} from "@/apis/post.ts";
 import {JudgementForm} from "@/types/myPrivatePostForm.ts";
+import Body from "@/components/Body/Body.tsx";
 
 const MIN_CONTENT_LENGTH = 10;
 
@@ -64,23 +65,24 @@ export default function TextUpload() {
         }
         leftButton={<CancelButton />}
       />
-
-      <div className="p-5">
-        <h2 className="text-sm font-medium text-gray-700 mb-2 mt-32 text-left">글 내용</h2>
-        <textarea
-          placeholder="사연을 입력해주세요."
-          value={content}
-          onChange={handleContentChange}
-          rows={10}
-          className="w-full h-80 p-4 text-gray-700 bg-gray-100 rounded-md focus:outline-none focus:border-mainColor"
-        />
-      </div>
-
-      {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <Body>
+        <div>
+          <h2 className="text-sm font-medium text-gray-700 mb-2 text-left">글 내용</h2>
+          <textarea
+            placeholder="사연을 입력해주세요."
+            value={content}
+            onChange={handleContentChange}
+            rows={10}
+            className="w-full h-80 p-4 text-gray-700 bg-gray-100 rounded-md focus:outline-none focus:border-mainColor"
+          />
         </div>
-      )}
+
+        {isLoading && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
+      </Body>
     </div>
   );
 }

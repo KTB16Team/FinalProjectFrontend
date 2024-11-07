@@ -7,6 +7,7 @@ import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
 import {getPosts} from "@/apis/post.ts";
 import {CATEGORY_NAMES} from "@/constants/categoryName.ts";
+import Body from "@/components/Body/Body.tsx";
 
 const FETCH_SIZE = 10;
 
@@ -92,20 +93,15 @@ export default function PostList() {
   return (
     <div>
       <Header title={categoryName} leftButton={<GoBackButton />} />
-      <div
-        className="bg-background w-full p-3"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: "scroll",
-        }}
+      <Body
+        className="bg-background"
       >
         {posts.map((post, index) => (
           <PostItem key={index} post={post} />
         ))}
         {loading && <p className="text-center">Loading...</p>}
         {!loading && page < totalPages && <div ref={targetRef} className="w-full h-10" />}
-      </div>
+      </Body>
     </div>
   );
 }

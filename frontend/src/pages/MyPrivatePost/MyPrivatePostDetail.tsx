@@ -11,6 +11,7 @@ import BottomButton from "@/components/Button/BottomButton.tsx";
 import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
 import {JudgementSlideForm, MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
 import {PostPostForm} from "@/types/postForm.ts";
+import Body from "@/components/Body/Body.tsx";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -112,15 +113,7 @@ export default function MyPrivatePostDetail() {
   return (
     <div>
       <Header title="결과" leftButton={<GoBackButton/>}/>
-      <div
-        className="bg-background w-full p-3"
-        style={{
-          height: "80vh", // 메인 스크롤 영역의 높이 조정
-          overflowY: "scroll",
-          marginTop: "15vh",
-        }}
-
-      >
+      <Body className="bg-background">
         <div
           className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg"
           style={{
@@ -221,7 +214,7 @@ export default function MyPrivatePostDetail() {
             </div>
           </div>
         </Slider>
-      </div>
+      </Body>
 
       {!isPublished &&
         <BottomButton

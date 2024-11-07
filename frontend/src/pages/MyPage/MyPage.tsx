@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
+import Body from "@/components/Body/Body.tsx";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -24,14 +25,7 @@ const MyPage = () => {
         leftButton={<GoBackButton />}
       />
 
-      <div 
-        className="w-full"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: 'auto',
-        }}
-      >
+      <Body>
         {/* Profile Section */}
         <div className="flex items-center p-6 bg-white mb-3">
           <div className="relative w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
@@ -88,7 +82,7 @@ const MyPage = () => {
             </li>
           </ul>
         </nav>
-      </div>
+      </Body>
     </div>
   );
 };

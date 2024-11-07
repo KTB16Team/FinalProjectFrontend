@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import BottomButton from "@/components/Button/BottomButton";
+import Body from "@/components/Body/Body.tsx";
 
 const ChangePasswordPage = () => {
   const navigate = useNavigate();
@@ -19,19 +20,14 @@ const ChangePasswordPage = () => {
                  && newPassword === confirmPassword;
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div>
       <Header
         title="비밀번호 변경"
         leftButton={<GoBackButton />}
       />
 
-      <div 
-        className="w-full px-4 pb-[10vh]"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: 'auto',
-        }}
+      <Body
+        className="bg-background"
       >
         <div className="space-y-6">
           {/* 현재 비밀번호 섹션 */}
@@ -73,7 +69,7 @@ const ChangePasswordPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Body>
 
       <BottomButton
         label="비밀번호 변경"

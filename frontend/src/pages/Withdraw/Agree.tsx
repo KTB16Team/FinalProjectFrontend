@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import BottomButton from "@/components/Button/BottomButton";
+import Body from "@/components/Body/Body.tsx";
 
 const WithdrawAgreementPage = () => {
   const navigate = useNavigate();
@@ -22,14 +23,7 @@ const WithdrawAgreementPage = () => {
         leftButton={<GoBackButton />}
       />
 
-      <div 
-        className="w-full px-4 pb-[10vh]"
-        style={{
-          marginTop: "15vh",
-          height: "85vh",
-          overflowY: 'auto',
-        }}
-      >
+      <Body>
         <div className="p-6 pt-10">
           <h2 className="font-medium text-xl mb-1">
             <span>aimo를 </span>
@@ -70,7 +64,7 @@ const WithdrawAgreementPage = () => {
             </label>
           </div>
         </div>
-      </div>
+      </Body>
 
       <BottomButton
         label="탈퇴하기"
