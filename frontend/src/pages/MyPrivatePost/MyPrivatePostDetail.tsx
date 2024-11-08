@@ -12,6 +12,8 @@ import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
 import {JudgementSlideForm, MyPrivatePostForm} from "@/types/myPrivatePostForm.ts";
 import {PostPostForm} from "@/types/postForm.ts";
 import Body from "@/components/Body/Body.tsx";
+import MyPrivatePostDetailTitle from "@/components/MyPrivatePostDetail/MyPrivatePostDetailTitle.tsx";
+import MyPrivatePostDetailContent from "@/components/MyPrivatePostDetail/MyPrivatePostDetailContent.tsx";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -55,7 +57,7 @@ export default function MyPrivatePostDetail() {
           setIsPublished(response.data.data.published);
 
 
-          const judgementSlideForm : JudgementSlideForm = {
+          const judgementSlideForm: JudgementSlideForm = {
             judgement: response.data.data.judgement,
             faultRateDefendant: response.data.data.faultRateDefendant,
             faultRatePlaintiff: response.data.data.faultRatePlaintiff
@@ -88,15 +90,15 @@ export default function MyPrivatePostDetail() {
       .then(() => {
         alert("대화록이 발행되었습니다.");
       }).catch((error) => {
-        const response = error.response.data;
+      const response = error.response.data;
 
-        if (response.code === "PRIVATEPOST-001") {
-          alert("대화록을 찾을 수 없습니다.");
-        } else if (response.code === "PRIVATEPOST-002") {
-          alert("이미 발행된 대화록입니다.");  
-        } else {
-          alert("서버에서 오류가 발생했습니다.");
-        }
+      if (response.code === "PRIVATEPOST-001") {
+        alert("대화록을 찾을 수 없습니다.");
+      } else if (response.code === "PRIVATEPOST-002") {
+        alert("이미 발행된 대화록입니다.");
+      } else {
+        alert("서버에서 오류가 발생했습니다.");
+      }
     });
   };
 
@@ -115,9 +117,9 @@ export default function MyPrivatePostDetail() {
   return (
     <div>
       <Header title="결과" leftButton={<GoBackButton/>}/>
-      <Body className="bg-background">
+      <Body className="bg-background pb-20">
         <div
-          className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg"
+          className="bg-white flex items-center justify-center font-semibold text-lg"
           style={{
             height: "7vh",
           }}
@@ -130,100 +132,72 @@ export default function MyPrivatePostDetail() {
           {/* AI 요약문 슬라이드 */}
           <div>
             {/* AI 요약문 제목 박스 */}
-            <div
-              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-              style={{
-                height: "7vh",
-              }}
-            >
+            <MyPrivatePostDetailTitle>
               AI 요약문
               <NextArrow
                 onClick={() => setCurrentSlide(currentSlide + 1)}
                 currentSlide={currentSlide}
                 slideCount={SLIDE_COUNT}
               />
-            </div>
+            </MyPrivatePostDetailTitle>
 
             {/* summary_ai 내용 박스 - 완전히 분리된 새로운 박스 */}
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
-                {postData?.summaryAi}
-              </div>
-            </div>
+            <MyPrivatePostDetailContent>
+              {postData?.summaryAi}
+            </MyPrivatePostDetailContent>
           </div>
 
           {/* A의 입장 */}
           <div>
-            <div
-              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-              style={{
-                height: "7vh",
-              }}
-            >
+            <MyPrivatePostDetailTitle>
               A의 입장
               <NextArrow
                 onClick={() => setCurrentSlide(currentSlide + 1)}
                 currentSlide={currentSlide}
                 slideCount={SLIDE_COUNT}
               />
-            </div>
+            </MyPrivatePostDetailTitle>
 
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
-                {postData?.stancePlaintiff}
-              </div>
-            </div>
+            <MyPrivatePostDetailContent>
+              {postData?.stancePlaintiff}
+            </MyPrivatePostDetailContent>
           </div>
 
           {/* B의 입장 */}
           <div>
-            <div
-              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-              style={{
-                height: "7vh",
-              }}
-            >
+            <MyPrivatePostDetailTitle>
               B의 입장
               <NextArrow
                 onClick={() => setCurrentSlide(currentSlide + 1)}
                 currentSlide={currentSlide}
                 slideCount={SLIDE_COUNT}
               />
-            </div>
+            </MyPrivatePostDetailTitle>
 
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
-                {postData?.stanceDefendant}
-              </div>
-            </div>
+            <MyPrivatePostDetailContent>
+              {postData?.stanceDefendant}
+            </MyPrivatePostDetailContent>
           </div>
 
           {/* 판결 */}
           <div>
-            <div className="bg-white mb-2 p-4 flex items-center justify-center font-light text-m text-left rounded"
-                 style={{
-                   height: "7vh",
-                 }}
-            >
+            <MyPrivatePostDetailTitle>
               판결
-            </div>
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
+            </MyPrivatePostDetailTitle>
+            <MyPrivatePostDetailContent>
                 {judgementSlideForm && (
                   <JudgementSlide judgementSlideForm={judgementSlideForm}/>
                 )}
-              </div>
-            </div>
+            </MyPrivatePostDetailContent>
           </div>
         </Slider>
       </Body>
-
       {!isPublished &&
         <BottomButton
           label="발행"
           disabled={isPublished}
           onClick={handlePublish}  // 폼 제출
-          className="bg-red-400 text-white text-xl py-4 font-bold w-full pt-6"
+          className="bg-red-400 text-white text-xl py-4 font-bold h-18"
         />
       }
     </div>

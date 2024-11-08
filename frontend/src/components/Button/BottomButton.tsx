@@ -12,9 +12,9 @@ const BottomButton = ({
   className = "",
 }: BottomButtonProps) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
+    <div className="fixed bottom-0 left-0 right-0 p-2 border-t bg-white z-10">
       <button
-        className={`w-full py-4 rounded-lg ${
+        className={`w-full rounded-lg flex items-center justify-center ${
           disabled 
             ? 'bg-gray-200 text-gray-500' 
             : 'bg-red-500 text-white hover:bg-red-600'

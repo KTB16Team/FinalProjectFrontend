@@ -112,7 +112,9 @@ export default function PostDetail() {
   return (
     <div>
       <Header title="게시판" leftButton={<GoBackButton />} />
-      <Body>
+      <Body style={{
+        paddingBottom: "7vh",
+      }}>
         <div className="border-b">
           <h1 className="text-2xl text-left font-bold mb-2">{post.title}</h1>
           <div className="flex justify-between text-sm text-gray-500 mb-4">
