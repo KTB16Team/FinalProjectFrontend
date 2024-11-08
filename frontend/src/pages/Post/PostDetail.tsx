@@ -201,7 +201,7 @@ export default function PostDetail() {
             {/*투표 현황 및 입장 선택*/}
             <div>
               <VoteButton
-                label="입장 A"
+                label="A의 잘못"
                 selected={selectedVote === "PLAINTIFF"}
                 isVotingEnabled={isVotingEnabled}
                 onClick={() => handleVoteSelection("PLAINTIFF")}
@@ -210,7 +210,7 @@ export default function PostDetail() {
               />
 
               <VoteButton
-                label="입장 B"
+                label="B의 잘못"
                 selected={selectedVote === "DEFENDANT"}
                 isVotingEnabled={isVotingEnabled}
                 onClick={() => handleVoteSelection("DEFENDANT")}

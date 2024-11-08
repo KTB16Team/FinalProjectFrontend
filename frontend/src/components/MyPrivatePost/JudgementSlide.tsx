@@ -8,14 +8,13 @@ interface JudgementSlideProps {
 export default function JudgementSlide({judgementSlideForm}: JudgementSlideProps) {
 
   const data = [
-    { name: 'A입장', value: judgementSlideForm.faultRatePlaintiff },
-    { name: 'B입장', value: judgementSlideForm.faultRateDefendant },
+    { name: 'A 과실', value: judgementSlideForm.faultRatePlaintiff },
+    { name: 'B 과실', value: judgementSlideForm.faultRateDefendant },
   ];
 
   const COLORS = ['#9F7AEA', '#D6BCFA'];
 
-  // 과실 비율이 높은 쪽 확인 -> 과실 비율 아래에 큰 쪽 입장이라고 써지도록!
-  const higherPartyLabel = judgementSlideForm.faultRatePlaintiff > judgementSlideForm.faultRateDefendant ? 'A입장' : 'B입장';
+  const higherPartyLabel = judgementSlideForm.faultRatePlaintiff > judgementSlideForm.faultRateDefendant ? 'A 과실' : 'B 과실';
 
   return (
     <div className="space-y-4">
@@ -59,13 +58,13 @@ export default function JudgementSlide({judgementSlideForm}: JudgementSlideProps
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-[#9F7AEA] mr-2" />
               <span className="text-sm text-gray-600">
-                A입장 ({judgementSlideForm.faultRatePlaintiff.toFixed(1)}%)
+                A 과실 ({judgementSlideForm.faultRatePlaintiff.toFixed(1)}%)
               </span>
             </div>
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-[#D6BCFA] mr-2" />
               <span className="text-sm text-gray-600">
-                B입장 ({judgementSlideForm.faultRateDefendant.toFixed(1)}%)
+                B 과실 ({judgementSlideForm.faultRateDefendant.toFixed(1)}%)
               </span>
             </div>
           </div>
