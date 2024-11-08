@@ -176,7 +176,6 @@ export default function PostDetail() {
 
           {/* 투표 섹션 */}
           <div className="bg-background rounded-2xl p-4 mb-6">
-
             {/*메타 정보*/}
             <div className="flex justify-between mb-4">
               <div className="text-left">
@@ -225,7 +224,6 @@ export default function PostDetail() {
                   확인
                 </button>
               </div>
-
             )}
           </div>
 
@@ -254,21 +252,23 @@ export default function PostDetail() {
             </React.Fragment>
           ))}
         </div>
-      </Body>
 
-      {/*댓글 달기*/}
-      <div className="flex p-1 absolute bottom-0 w-full bg-white" style={{height: "7vh"}}>
-        <input
-          type="text"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="댓글을 남겨주세요."
-          className="border rounded p-2 flex-grow"
-        />
-        <button onClick={handleAddComment} className="px-4 py-2 bg-blue-500 text-white rounded flex-shrink-0">
-          입력
-        </button>
-      </div>
+        {/*댓글 달기*/}
+        <div className="fixed bottom-0 left-0 w-full bg-white p-1" style={{height: "7vh"}}>
+          <div className="flex">
+            <input
+              type="text"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="댓글을 남겨주세요."
+              className="border rounded p-2 flex-grow"
+            />
+            <button onClick={handleAddComment} className="px-4 py-2 bg-blue-500 text-white rounded flex-shrink-0">
+              입력
+            </button>
+          </div>
+        </div>
+      </Body>
 
       {/*좋아요 모달*/}
       {showLikeModal && (
