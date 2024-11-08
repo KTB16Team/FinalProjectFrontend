@@ -41,9 +41,10 @@ export default function TextUpload() {
     uploadText(request)
       .then(() => {
         postJudgement(judgementRequest)
-          .then(() => {
+          .then((response) => {
+            const data = response.data.data;
             alert('글이 등록되었습니다.');
-            navigate(-1);
+            navigate(`/my-private-posts/${data.myPrivatePostId}`);
           })
           .finally(() => {
             setIsLoading(false);

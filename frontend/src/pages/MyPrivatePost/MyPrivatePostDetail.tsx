@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Header from "@/components/Header/Header.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import PrevButton from "@/assets/imgs/PrevButton.svg?react";
 import NextButton from "@/assets/imgs/NextButton.svg?react";
 import JudgementSlide from "@/components/MyPrivatePost/JudgementSlide.tsx";
@@ -51,6 +51,7 @@ export default function MyPrivatePostDetail() {
   const [judgementSlideForm, setJudgementSlideForm] = useState<JudgementSlideForm | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false); // 모달 표시 상태
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (postId) {
@@ -95,8 +96,11 @@ export default function MyPrivatePostDetail() {
     };
 
     postPost(request)
-      .then(() => {
+      .then((response) => {
+        const data = response.data.data;
+
         alert("대화록이 발행되었습니다.");
+        navigate(`/posts/${data.postId}`)
       })
       .catch((error) => {
         const response = error.response.data;
