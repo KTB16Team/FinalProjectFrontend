@@ -100,59 +100,25 @@ export default function AiResultDetail() {
         <Slider {...settings}>
           {/* AI 요약문 슬라이드 */}
           <div>
-            {/* AI 요약문 제목 박스 */}
-            <MyPrivatePostDetailTitle>
-              AI 요약문
-              <NextArrow
-                onClick={() => setCurrentSlide(currentSlide + 1)}
-                currentSlide={currentSlide}
-                slideCount={SLIDE_COUNT}
-              />
-            </MyPrivatePostDetailTitle>
-
-            {/* summary_ai 내용 박스 - 완전히 분리된 새로운 박스 */}
-            <MyPrivatePostDetailContent>
-              {postData?.summary}
-            </MyPrivatePostDetailContent>
+            <MyPrivatePostDetailTitle>AI 요약문</MyPrivatePostDetailTitle>
+            <MyPrivatePostDetailContent>{postData?.summary}</MyPrivatePostDetailContent>
           </div>
 
           {/* A의 입장 */}
           <div>
-            <MyPrivatePostDetailTitle>
-              A의 입장
-              <NextArrow
-                onClick={() => setCurrentSlide(currentSlide + 1)}
-                currentSlide={currentSlide}
-                slideCount={SLIDE_COUNT}
-              />
-            </MyPrivatePostDetailTitle>
-
-            <MyPrivatePostDetailContent>
-              {postData?.stancePlaintiff}
-            </MyPrivatePostDetailContent>
+            <MyPrivatePostDetailTitle>A의 입장</MyPrivatePostDetailTitle>
+            <MyPrivatePostDetailContent>{postData?.stancePlaintiff}</MyPrivatePostDetailContent>
           </div>
 
           {/* B의 입장 */}
           <div>
-            <MyPrivatePostDetailTitle>
-              B의 입장
-              <NextArrow
-                onClick={() => setCurrentSlide(currentSlide + 1)}
-                currentSlide={currentSlide}
-                slideCount={SLIDE_COUNT}
-              />
-            </MyPrivatePostDetailTitle>
-
-            <MyPrivatePostDetailContent>
-              {postData?.stanceDefendant}
-            </MyPrivatePostDetailContent>
+            <MyPrivatePostDetailTitle>B의 입장</MyPrivatePostDetailTitle>
+            <MyPrivatePostDetailContent>{postData?.stanceDefendant}</MyPrivatePostDetailContent>
           </div>
 
           {/* 판결 */}
           <div>
-            <MyPrivatePostDetailTitle>
-              판결
-            </MyPrivatePostDetailTitle>
+            <MyPrivatePostDetailTitle>판결</MyPrivatePostDetailTitle>
             <MyPrivatePostDetailContent>
               {judgementSlideForm && (
                 <JudgementSlide judgementSlideForm={judgementSlideForm}/>
