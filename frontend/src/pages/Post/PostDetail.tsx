@@ -21,7 +21,7 @@ export default function PostDetail() {
   const {postId} = useParams<{ postId: string }>();
   const [post, setPost] = useState<PostForm | null>(null);
   const [likeType, setLikeType] = useState<string>("LIKE");
-  const [selectedVote, setSelectedVote] = useState<"PLAINTIFF" | "DEFENDANT">("PLAINTIFF");
+  const [selectedVote, setSelectedVote] = useState<"PLAINTIFF" | "DEFENDANT" | "NONE">("NONE");
   const [isVoted, setIsVoted] = useState(false);
   const [isVotingEnabled, setIsVotingEnabled] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -32,15 +32,20 @@ export default function PostDetail() {
   const [showLikeModal, setShowLikeModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // 게시글 정보 가져오기
   const fetchPost = () => {
-    postPostView(parseInt(postId!));
-
     setIsLoading(true);
+
+    postPostView(parseInt(postId!));
 
     getPost(parseInt(postId!))
       .then((response) => {
         const postData = response.data.data;
         setPost(postData);
+
+        // 투표 여부 확인
+        setSelectedVote(postData.side);
+        setIsVoted(postData.side !== "NONE");
 
         // 비율 계산 후 상태 업데이트
         if (postData.votesCount > 0) {
@@ -62,6 +67,7 @@ export default function PostDetail() {
       });
   };
 
+  // 투표하기
   const handleVote = () => {
     postVote(parseInt(postId!), selectedVote)
       .then(() => {
@@ -75,23 +81,27 @@ export default function PostDetail() {
       });
   };
 
+  // 투표 활성화
   const enableVoting = () => {
     setIsVotingEnabled(true);
     setSelectedVote("PLAINTIFF"); // 기본 포커스 A로 설정
   };
 
+  // 투표 초기화
   const resetVote = () => {
     setSelectedVote("PLAINTIFF");
     setIsVoted(false);
     setIsVotingEnabled(true);
   };
 
+  // 투표 선택
   const handleVoteSelection = (side: "PLAINTIFF" | "DEFENDANT") => {
     if (isVotingEnabled) {
       setSelectedVote(side);
     }
   };
 
+  // 댓글 달기
   const handleAddComment = () => {
     if (!newComment.trim()) return;
     const request: PostCommentForm = {content: newComment};
@@ -120,6 +130,7 @@ export default function PostDetail() {
     }
   };
 
+  // 좋아요
   const handleLike = () => {
     postPostLike(parseInt(postId!), likeType)
       .then(() => {
@@ -135,7 +146,7 @@ export default function PostDetail() {
     fetchPost();
   }, [postId]);
 
-  if (!post) return <div>Loading...</div>;
+  if (!post) return <LoadingWithBackgroundGray/>;
 
   return (
     <div>

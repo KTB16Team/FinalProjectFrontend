@@ -16,6 +16,7 @@ export interface PostForm {
   isMine: boolean;
   postId: number;
   title: string;
+  side: 'PLAINTIFF' | 'DEFENDANT' | 'NONE';
   nickname: string;
   content: string;
   votesPlaintiff: number;
