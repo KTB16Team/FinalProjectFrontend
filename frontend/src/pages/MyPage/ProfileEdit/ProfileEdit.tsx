@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from "@/components/Header/Header";
-import GoBackButton from "@/components/Button/GoBackButton";
+import Header from "@/components/Header/Header.tsx";
+import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import { Camera } from 'lucide-react';
-import BottomButton from "@/components/Button/BottomButton";
+import BottomButton from "@/components/Button/BottomButton.tsx";
 import Body from "@/components/Body/Body.tsx";
+import {updateNickname} from "@/apis/member.ts";
+import {UpdateNicknameForm} from "@/types/member.ts";
+import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
 
 const ProfileEditPage = () => {
   const navigate = useNavigate();
@@ -13,6 +16,7 @@ const ProfileEditPage = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isEdited, setIsEdited] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleImageClick = () => {
     fileInputRef.current?.click();
@@ -40,9 +44,26 @@ const ProfileEditPage = () => {
     setIsEdited(true);
   };
 
-  const handleSave = () => {
-    // 프로필 저장 로직
-    navigate('/my-page');
+  const handleUpdateProfile = () => {
+    setIsLoading(true);
+
+    const request : UpdateNicknameForm = {
+      newNickname: nickname,
+    }
+
+    updateNickname(request)
+      .then(() => {
+        alert("프로필이 변경되었습니다.");
+        navigate('/my-page');
+
+      })
+      .catch(() => {
+        navigate("/500");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+
   };
 
   return (
@@ -114,11 +135,13 @@ const ProfileEditPage = () => {
             />
           </div>
         </div>
+
+        {isLoading && <LoadingWithBackgroundGray/>}
       </Body>
 
       <BottomButton
         label="저장"
-        onClick={handleSave}
+        onClick={handleUpdateProfile}
         disabled={!isEdited}
       />
     </div>

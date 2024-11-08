@@ -173,7 +173,6 @@ export default function MyPrivatePostDetail() {
           label="발행"
           disabled={isPublished}
           onClick={() => setShowModal(true)} // 모달 표시
-          className="bg-red-400 text-white text-xl py-4 font-bold h-18"
         />
       )}
 
