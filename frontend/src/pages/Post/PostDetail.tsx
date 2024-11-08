@@ -14,23 +14,40 @@ import VoteIcon from "@/assets/imgs/Vote.svg?react";
 import {PostCommentForm} from "@/types/commentForm.ts";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 import Body from "@/components/Body/Body.tsx";
+import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
+import VoteButton from "@/components/Vote/VoteButton.tsx";
 
 export default function PostDetail() {
-  const { postId } = useParams<{ postId: string }>();
+  const {postId} = useParams<{ postId: string }>();
   const [post, setPost] = useState<PostForm | null>(null);
   const [likeType, setLikeType] = useState<string>("LIKE");
-  const [selectedVote, setSelectedVote] = useState<"PLAINTIFF" | "DEFENDANT" | null>(null);
+  const [selectedVote, setSelectedVote] = useState<"PLAINTIFF" | "DEFENDANT">("PLAINTIFF");
   const [isVoted, setIsVoted] = useState(false);
+  const [isVotingEnabled, setIsVotingEnabled] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
+  const [plaintiffPercentage, setPlaintiffPercentage] = useState<string>("0.0");
+  const [defendantPercentage, setDefendantPercentage] = useState<string>("0.0");
   const navigate = useNavigate();
   const [showLikeModal, setShowLikeModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchPost = () => {
     postPostView(parseInt(postId!));
 
+    setIsLoading(true);
+
     getPost(parseInt(postId!))
-      .then((response) => setPost(response.data.data))
+      .then((response) => {
+        const postData = response.data.data;
+        setPost(postData);
+
+        // 비율 계산 후 상태 업데이트
+        if (postData.votesCount > 0) {
+          setPlaintiffPercentage(((postData.votesPlaintiff / postData.votesCount) * 100).toFixed(1));
+          setDefendantPercentage(((postData.votesDefendant / postData.votesCount) * 100).toFixed(1));
+        }
+      })
       .catch((error) => {
         const data = error.response.data;
         if (data.code === "POST-001") {
@@ -39,14 +56,17 @@ export default function PostDetail() {
         } else {
           navigate("/500");
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
-  const handleVote = (side: "PLAINTIFF" | "DEFENDANT") => {
-    postVote(parseInt(postId!), side)
+  const handleVote = () => {
+    postVote(parseInt(postId!), selectedVote)
       .then(() => {
         setIsVoted(true);
-        setSelectedVote(side);
+        setIsVotingEnabled(false);
         fetchPost();
       })
       .catch((error) => {
@@ -55,14 +75,26 @@ export default function PostDetail() {
       });
   };
 
+  const enableVoting = () => {
+    setIsVotingEnabled(true);
+    setSelectedVote("PLAINTIFF"); // 기본 포커스 A로 설정
+  };
+
   const resetVote = () => {
-    setSelectedVote(null);
+    setSelectedVote("PLAINTIFF");
     setIsVoted(false);
+    setIsVotingEnabled(true);
+  };
+
+  const handleVoteSelection = (side: "PLAINTIFF" | "DEFENDANT") => {
+    if (isVotingEnabled) {
+      setSelectedVote(side);
+    }
   };
 
   const handleAddComment = () => {
     if (!newComment.trim()) return;
-    const request: PostCommentForm = { content: newComment };
+    const request: PostCommentForm = {content: newComment};
 
     if (replyingTo) {
       postChildComment(parseInt(postId!), replyingTo, request)
@@ -105,17 +137,12 @@ export default function PostDetail() {
 
   if (!post) return <div>Loading...</div>;
 
-  const totalVotes = post.votesCount;
-  const plaintiffPercentage = ((post.votesPlaintiff / totalVotes) * 100).toFixed(1);
-  const defendantPercentage = ((post.votesDefendant / totalVotes) * 100).toFixed(1);
-
   return (
     <div>
-      <Header title="게시판" leftButton={<GoBackButton />} />
-      <Body style={{
-        paddingBottom: "7vh",
-      }}>
+      <Header title="게시판" leftButton={<GoBackButton/>}/>
+      <Body style={{paddingBottom: "15vh"}}>
         <div className="border-b">
+          {/*메타정보*/}
           <h1 className="text-2xl text-left font-bold mb-2">{post.title}</h1>
           <div className="flex justify-between text-sm text-gray-500 mb-4">
             <span>작성자: {post.nickname}</span>
@@ -130,60 +157,76 @@ export default function PostDetail() {
             {post.content}
 
             {/* AI 결과보기 */}
-            <Link to={`/posts/${postId}/judgement`} className="text-right block no-underline text-sm font-bold" style={{ textDecoration: "underline", textDecorationStyle: "dotted" }}>
+            <Link to={`/posts/${postId}/judgement`} className="text-right block no-underline text-sm font-bold"
+                  style={{textDecoration: "underline", textDecorationStyle: "dotted"}}>
               AI 결과보기
             </Link>
           </div>
 
           {/* 투표 섹션 */}
-          <div className="bg-background rounded-2xl p-2 mb-6 mt-4">
+          <div className="bg-background rounded-2xl p-4 mb-6">
+
+            {/*메타 정보*/}
             <div className="flex justify-between mb-4">
               <div className="text-left">
-                <VoteIcon className="inline-block mr-1" />
+                <VoteIcon className="inline-block mr-1"/>
                 <span className="text-lg font-semibold mr-2">투표</span>
                 <span className="text-lg font-semibold mr-2">|</span>
-                <span className="text-sm font-semibold">{totalVotes}명 참여중...</span>
+                <span className="text-sm font-semibold">{post.votesCount}명 참여중...</span>
               </div>
-              {isVoted && (
-                <button onClick={resetVote} className="text-xs px-4 py-2 bg-mainColor text-white rounded-lg mr-4">
+              {isVoted ? (
+                <button onClick={resetVote} className="text-xs px-4 py-2 bg-mainColor text-white rounded-lg">
                   재투표하기
                 </button>
+              ) : (
+                !isVotingEnabled && (
+                  <button onClick={enableVoting} className="text-xs px-4 py-2 bg-mainColor text-white rounded-lg">
+                    투표하기
+                  </button>
+                )
               )}
             </div>
 
-            <div className="flex flex-col items-center">
-              <button
-                onClick={() => !isVoted && handleVote("PLAINTIFF")}
-                className={`w-11/12 text-left py-2 rounded-xl mb-2 text-sm ml-2 mr-2 relative p-2 bg-white`}
-                style={{
-                  background: `linear-gradient(to right, #E55958 ${plaintiffPercentage}%, #FFFFFF ${plaintiffPercentage}%)`,
-                  color: selectedVote === "PLAINTIFF" || isVoted ? "black" : "black",
-                }}
-              >
-                입장 A {isVoted && `(${plaintiffPercentage}% | ${post.votesPlaintiff})`}
-              </button>
-              <button
-                onClick={() => !isVoted && handleVote("DEFENDANT")}
-                className={`w-11/12 text-left py-2 rounded-xl mb-2 text-sm ml-2 mr-2 relative p-2 bg-white`}
-                style={{
-                  background: `linear-gradient(to right, #E55958 ${defendantPercentage}%, #FFFFFF ${defendantPercentage}%)`,
-                  color: selectedVote === "DEFENDANT" || isVoted ? "black" : "black",
-                }}
-              >
-                입장 B {isVoted && `(${defendantPercentage}% | ${post.votesDefendant})`}
-              </button>
+            {/*투표 현황 및 입장 선택*/}
+            <div>
+              <VoteButton
+                label="입장 A"
+                selected={selectedVote === "PLAINTIFF"}
+                isVotingEnabled={isVotingEnabled}
+                onClick={() => handleVoteSelection("PLAINTIFF")}
+                percentage={plaintiffPercentage}
+                votes={post.votesPlaintiff}
+              />
+
+              <VoteButton
+                label="입장 B"
+                selected={selectedVote === "DEFENDANT"}
+                isVotingEnabled={isVotingEnabled}
+                onClick={() => handleVoteSelection("DEFENDANT")}
+                percentage={defendantPercentage}
+                votes={post.votesDefendant}
+              />
             </div>
+
+            {isVotingEnabled && (
+              <div className="w-full flex justify-end">
+                <button onClick={handleVote} className="text-xs px-4 py-2 bg-mainColor text-white rounded-lg">
+                  확인
+                </button>
+              </div>
+
+            )}
           </div>
 
           {/*포스트 좋아요, 댓글수*/}
           <div className="w-full text-right mb-2">
             <span className="mr-3">
               <button onClick={() => setShowLikeModal(true)}>
-                <LikeLogo className="inline-block" /> {post.likesCount}
+                <LikeLogo className="inline-block"/> {post.likesCount}
               </button>
             </span>
             <span>
-              <CommentLogo className="inline-block" /> {post.commentsCount}
+              <CommentLogo className="inline-block"/> {post.commentsCount}
             </span>
           </div>
         </div>
@@ -192,9 +235,10 @@ export default function PostDetail() {
         <div>
           {post.comments.map((comment, index) => (
             <React.Fragment key={index}>
-              <Comment comment={comment} onReply={setReplyingTo} refreshComments={fetchPost} />
+              <Comment comment={comment} onReply={setReplyingTo} refreshComments={fetchPost}/>
               {comment.childComments.map((child) => (
-                <ChildComment key={child.childCommentId} child={child} onReply={setReplyingTo} refreshComments={fetchPost} />
+                <ChildComment key={child.childCommentId} child={child} onReply={setReplyingTo}
+                              refreshComments={fetchPost}/>
               ))}
             </React.Fragment>
           ))}
@@ -202,7 +246,7 @@ export default function PostDetail() {
       </Body>
 
       {/*댓글 달기*/}
-      <div className="flex p-1 absolute bottom-0 w-full bg-white" style={{ height: "7vh" }}>
+      <div className="flex p-1 absolute bottom-0 w-full bg-white" style={{height: "7vh"}}>
         <input
           type="text"
           value={newComment}
@@ -226,6 +270,8 @@ export default function PostDetail() {
           onCancel={() => setShowLikeModal(false)}
         />
       )}
+
+      {isLoading && <LoadingWithBackgroundGray/>}
     </div>
   );
 }
