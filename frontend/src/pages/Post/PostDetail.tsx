@@ -151,8 +151,8 @@ export default function PostDetail() {
   return (
     <div>
       <Header title="게시판" leftButton={<GoBackButton/>}/>
-      <Body style={{paddingBottom: "15vh"}}>
-        <div className="border-b">
+      <Body className="px-8" style={{paddingBottom: "15vh"}}>
+        <div className="border-b mt-4">
           {/*메타정보*/}
           <h1 className="text-2xl text-left font-bold mb-2">{post.title}</h1>
           <div className="flex justify-between text-sm text-gray-500 mb-4">
