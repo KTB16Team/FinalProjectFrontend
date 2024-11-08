@@ -13,7 +13,7 @@ import TextUpload from "@/pages/Upload/TextUpload/TextUpload.tsx";
 import MyPrivatePostList from "@/pages/MyPrivatePost/MyPrivatePostList.tsx";
 import MyPrivatePostDetail from "@/pages/MyPrivatePost/MyPrivatePostDetail.tsx";
 import PostDetail from "@/pages/Post/PostDetail.tsx";
-import Page500 from "@/pages/error/Page500/Page500.tsx";
+import Page500 from "@/pages/error/Error500.tsx";
 import MyPage from "@/pages/MyPage/MyPage.tsx";
 import Withdraw from "@/pages/Withdraw/Withdraw.tsx";
 import ProfileEdit from "@/pages/ProfileEdit/ProfileEdit.tsx";
