@@ -15,8 +15,7 @@ export const refreshAccessToken = async (): Promise<string | null> => {
     const { accessToken: newAccessToken } = response.data;
     localStorage.setItem('accessToken', newAccessToken);
     return newAccessToken;
-  } catch (error) {
-    console.error('Failed to refresh access token:', error);
+  } catch  {
     logout();
     return null;
   }

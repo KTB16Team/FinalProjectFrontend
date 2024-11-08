@@ -23,12 +23,15 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
 
-    if (response?.data?.code === 'AUTH-001') {
+    // AccessToken이 없음
+    if (response?.data?.code === 'AUTH-004') {
+      alert("로그인이 필요합니다.");
       logout();
       return Promise.reject(error);
     }
 
-    if (response?.data?.code === 'AUTH-003' && !config._retry) {
+    // AccessToken 만료
+    if (response?.data?.code === 'AUTH-001' && !config._retry) {
       config._retry = true;
       const newAccessToken = await refreshAccessToken();
 

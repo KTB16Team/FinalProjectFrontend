@@ -59,8 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
       setAccessToken(newAccessToken);
       localStorage.setItem('accessToken', newAccessToken);
       return newAccessToken;
-    } catch (error) {
-      console.error('Failed to refresh access token:', error);
+    } catch {
       logout();
       return null;
     }
