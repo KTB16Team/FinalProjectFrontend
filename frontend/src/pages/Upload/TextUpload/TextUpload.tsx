@@ -1,14 +1,15 @@
 import Header from '@/components/Header/Header';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CancelButton from "@/components/Button/CancelButton.tsx";
-import {uploadText} from "@/apis/upload.ts";
-import {TextUploadForm} from "@/types/UploadForm.ts";
-import {useNavigate} from "react-router-dom";
-import {postJudgement} from "@/apis/post.ts";
-import {JudgementForm} from "@/types/myPrivatePostForm.ts";
+import { uploadText } from "@/apis/upload.ts";
+import { TextUploadForm } from "@/types/UploadForm.ts";
+import { useNavigate } from "react-router-dom";
+import { postJudgement } from "@/apis/post.ts";
+import { JudgementForm } from "@/types/myPrivatePostForm.ts";
 import Body from "@/components/Body/Body.tsx";
 
 const MIN_CONTENT_LENGTH = 10;
+const MAX_CONTENT_LENGTH = 2500; // 최대 글자 수 제한
 
 export default function TextUpload() {
   const [content, setContent] = useState<string>('');
@@ -17,7 +18,9 @@ export default function TextUpload() {
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    setContent(value);
+    if (value.length <= MAX_CONTENT_LENGTH) {
+      setContent(value);
+    }
   };
 
   const handleRegisterClick = () => {
@@ -49,7 +52,7 @@ export default function TextUpload() {
           .finally(() => {
             setIsLoading(false);
           });
-      })
+      });
   };
 
   return (
@@ -64,7 +67,7 @@ export default function TextUpload() {
             등록
           </button>
         }
-        leftButton={<CancelButton/>}
+        leftButton={<CancelButton />}
       />
       <Body>
         <div>
@@ -76,6 +79,9 @@ export default function TextUpload() {
             rows={10}
             className="w-full h-80 p-4 text-gray-700 bg-gray-100 rounded-md focus:outline-none focus:border-mainColor"
           />
+          <div className="text-right text-gray-500 mt-1">
+            {content.length}/{MAX_CONTENT_LENGTH}자
+          </div>
         </div>
 
         {isLoading && (
