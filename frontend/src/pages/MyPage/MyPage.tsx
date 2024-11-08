@@ -1,16 +1,18 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Header from "@/components/Header/Header";
 import GoBackButton from "@/components/Button/GoBackButton";
 import Body from "@/components/Body/Body.tsx";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
+import {getProfile} from "@/apis/member.ts";
+import {GetProfileForm} from "@/types/member.ts";
+import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const [nickname] = useState('닉네임');
-  const [email] = useState('aimo@gamil.com');
-  const [profileImage] = useState<string | null>(null);
+  const [profile, setProfile] = useState<GetProfileForm | null>(null);
   const {logout} = useContext(AuthContext)!;
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const handleLogout = () => {
@@ -21,6 +23,31 @@ const MyPage = () => {
     navigate('/withdraw');
   };
 
+  const fetchProfile = () => {
+    setIsLoading(true);
+
+    getProfile()
+      .then((response) => {
+        const data = response.data.data;
+
+        const profile: GetProfileForm = {
+          nickname: data.nickname,
+          email: data.email,
+          profileImage: "",
+        };
+
+        setProfile(profile);
+      }).catch(() => {
+        navigate('/500');
+      }).finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <Header
@@ -29,22 +56,23 @@ const MyPage = () => {
       />
 
       <Body>
-        {/* Profile Section */}
+        {/*프로필*/}
         <div className="flex items-center p-6 bg-white mb-3">
           <div className="relative w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-            {profileImage ? (
-              <img
-                src={profileImage}
-                alt="Profile"
-                className="w-full h-full rounded-full object-cover"
-              />
+            {profile?.profileImage ? (
+              // <img
+              //   src={profile.profileImage}
+              //   alt="Profile"
+              //   className="w-full h-full rounded-full object-cover"
+              // />
+              <span className="text-gray-600 text-2xl">{'M'}</span>
             ) : (
               <span className="text-gray-600 text-2xl">{'M'}</span>
             )}
           </div>
           <div className="ml-4 flex-1">
-            <h2 className="text-lg font-medium text-left">{nickname}</h2>
-            <p className="text-gray-500 text-sm text-left">{email}</p>
+            <h2 className="text-lg font-medium text-left">{profile?.nickname}</h2>
+            <p className="text-gray-500 text-sm text-left">{profile?.nickname}</p>
           </div>
         </div>
 
@@ -85,6 +113,8 @@ const MyPage = () => {
             </li>
           </ul>
         </nav>
+
+        {isLoading && <LoadingWithBackgroundGray/>}
       </Body>
     </div>
   );
