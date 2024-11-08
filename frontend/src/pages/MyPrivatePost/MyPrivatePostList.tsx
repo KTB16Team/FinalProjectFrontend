@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState, useRef, useCallback } from 'react';
+import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import Header from "@/components/Header/Header.tsx";
-import { deleteMyPrivatePost, getMyPrivatePosts } from "@/apis/post.ts";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "@/contexts/AuthContext.tsx";
-import { MyPrivatePostPreviewForm } from "@/types/myPrivatePostForm.ts";
+import {deleteMyPrivatePost, getMyPrivatePosts} from "@/apis/post.ts";
+import {useNavigate} from "react-router-dom";
+import {AuthContext} from "@/contexts/AuthContext.tsx";
+import {MyPrivatePostPreviewForm} from "@/types/myPrivatePostForm.ts";
 import MyPrivatePostItem from "@/components/MyPrivatePost/MyPrivatePostItem.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import MicIcon from "@/assets/imgs/Mic.svg";
 import Body from "@/components/Body/Body.tsx";
+import Loading from "@/components/Loading/Loading.tsx";
 
 export default function MyPrivatePostList() {
   const [posts, setPosts] = useState<MyPrivatePostPreviewForm[]>([]);
@@ -105,8 +106,8 @@ export default function MyPrivatePostList() {
             onDelete={deletePost}
           />
         ))}
-        {loading && <p className="text-center text-gray-500 py-4">Loading...</p>}
-        <div ref={scrollEndRef} style={{ height: '1px' }} />
+        {loading && <Loading/>}
+        <div ref={scrollEndRef} style={{height: '1px'}}/>
       </Body>
 
       {/* 오버레이 및 플로팅 버튼 */}

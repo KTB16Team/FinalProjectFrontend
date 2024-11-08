@@ -8,6 +8,7 @@ import {AuthContext} from "@/contexts/AuthContext.tsx";
 import {getPosts} from "@/apis/post.ts";
 import {CATEGORY_NAMES} from "@/constants/categoryName.ts";
 import Body from "@/components/Body/Body.tsx";
+import Loading from "@/components/Loading/Loading.tsx";
 
 const FETCH_SIZE = 10;
 
@@ -27,7 +28,7 @@ export default function PostList() {
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const { refreshAccessToken, logout } = useContext(AuthContext)!;
+  const {refreshAccessToken, logout} = useContext(AuthContext)!;
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -92,15 +93,15 @@ export default function PostList() {
 
   return (
     <div>
-      <Header title={categoryName} leftButton={<GoBackButton />} />
+      <Header title={categoryName} leftButton={<GoBackButton/>}/>
       <Body
         className="bg-background"
       >
         {posts.map((post, index) => (
-          <PostItem key={index} post={post} />
+          <PostItem key={index} post={post}/>
         ))}
-        {loading && <p className="text-center">Loading...</p>}
-        {!loading && page < totalPages && <div ref={targetRef} className="w-full h-10" />}
+        {loading && <Loading/>}
+        {!loading && page < totalPages && <div ref={targetRef} className="w-full h-10"/>}
       </Body>
     </div>
   );

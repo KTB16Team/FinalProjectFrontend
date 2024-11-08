@@ -1,19 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import HomepageSection from "@/components/Home/HomepageSection/HomepageSection.tsx";
 import AllItem from "@/components/Home/SliderItem/AllItem.tsx";
-import { PostPreviewForm } from "@/types/postForm.ts";
+import {PostPreviewForm} from "@/types/postForm.ts";
 import Header from "@/components/Header/Header.tsx";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import MicIcon from "@/assets/imgs/Mic.svg";
 import MenuButton from "@/components/Button/MenuButton.tsx";
 import BellButton from "@/components/Button/BellButton.tsx";
 import PopularItem from "@/components/Home/SliderItem/PopularItem.tsx";
 import MyPublicItem from "@/components/Home/SliderItem/MyPublicItem.tsx";
-import { getPosts } from "@/apis/post.ts";
+import {getPosts} from "@/apis/post.ts";
 import Body from "@/components/Body/Body.tsx";
+import Loading from "@/components/Loading/Loading.tsx";
 
 const settings = {
   dots: true,
@@ -126,7 +127,7 @@ export default function Home() {
           {allPosts.map((post, index) => (
             <AllItem key={index} post={post} />
           ))}
-          {isLoading && <p className="text-center mt-4">로딩 중...</p>}
+          {isLoading && <Loading/>}
           {!isLoading && page < totalPages && (
             <div ref={targetRef} className="w-full h-10"></div>
           )}

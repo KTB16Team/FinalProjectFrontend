@@ -44,11 +44,11 @@ export default function TextUpload() {
           .then(() => {
             alert('글이 등록되었습니다.');
             navigate(-1);
+          })
+          .finally(() => {
+            setIsLoading(false);
           });
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
   };
 
   return (
@@ -63,7 +63,7 @@ export default function TextUpload() {
             등록
           </button>
         }
-        leftButton={<CancelButton />}
+        leftButton={<CancelButton/>}
       />
       <Body>
         <div>
