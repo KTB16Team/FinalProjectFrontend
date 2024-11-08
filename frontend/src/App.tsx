@@ -15,13 +15,13 @@ import MyPrivatePostDetail from "@/pages/MyPrivatePost/MyPrivatePostDetail.tsx";
 import PostDetail from "@/pages/Post/PostDetail.tsx";
 import Page500 from "@/pages/error/Error500.tsx";
 import MyPage from "@/pages/MyPage/MyPage.tsx";
-import Withdraw from "@/pages/Withdraw/Withdraw.tsx";
-import ProfileEdit from "@/pages/ProfileEdit/ProfileEdit.tsx";
-import WithdrawAgreementPage from "@/pages/Withdraw/Agree.tsx"
-import ChangePasswordPage from '@/pages/Password/PasswordChange.tsx'
-import FindPasswordPage from "@/pages/Password/FindPassword.tsx";
-import ResetPasswordPage from "@/pages/Password/ResetPassword.tsx";
-import ResetPasswordCompletePage from "@/pages/Password/ResetPasswordCompliete.tsx"
+import Withdraw from "@/pages/MyPage/Withdraw/Withdraw.tsx";
+import ProfileEdit from "@/pages/MyPage/ProfileEdit/ProfileEdit.tsx";
+import WithdrawAgreementPage from "@/pages/MyPage/Withdraw/Agree.tsx"
+import ChangePasswordPage from '@/pages/MyPage/Password/PasswordChange.tsx'
+import FindPasswordPage from "@/pages/MyPage/Password/FindPassword.tsx";
+import ResetPasswordPage from "@/pages/MyPage/Password/ResetPassword.tsx";
+import ResetPasswordCompletePage from "@/pages/MyPage/Password/ResetPasswordCompliete.tsx"
 import AiResultDetail from "@/pages/Post/AiResult.tsx";
 
 function App() {
@@ -36,6 +36,9 @@ function App() {
 
               {/* 회원 가입 페이지 */}
               <Route path="/signup" element={<SignUp/>}/>
+
+              {/* 비밀번호 찾기 페이지 */}
+              <Route path="/password-find" element={<FindPasswordPage/>}/>
 
               {/* 500 에러 페이지 */}
               <Route path="/500" element={<Page500/>}/>
@@ -60,9 +63,6 @@ function App() {
 
                       {/* 비밀번호 변경 페이지 */}
                       <Route path="/password-change" element={<ChangePasswordPage/>}/>
-
-                      {/* 비밀번호 찾기 페이지 */}
-                      <Route path="/password-find" element={<FindPasswordPage/>}/>
 
                       {/* 비밀번호 재발급 페이지 */}
                       <Route path="/password-reset" element={<ResetPasswordPage/>}/>

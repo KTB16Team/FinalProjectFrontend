@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import Header from "@/components/Header/Header";
-import GoBackButton from "@/components/Button/GoBackButton";
-import BottomButton from '@/components/Button/BottomButton';
+import Header from "@/components/Header/Header.tsx";
+import GoBackButton from "@/components/Button/GoBackButton.tsx";
+import BottomButton from '@/components/Button/BottomButton.tsx';
 import Body from "@/components/Body/Body.tsx";
 
 const WithdrawPage = () => {
