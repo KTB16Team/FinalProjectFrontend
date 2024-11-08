@@ -47,7 +47,7 @@ export default function TextUpload() {
           .then((response) => {
             const data = response.data.data;
             alert('글이 등록되었습니다.');
-            navigate(`/my-private-posts/${data.myPrivatePostId}`);
+            navigate(`/my-private-posts/${data.privatePostId}`);
           })
           .finally(() => {
             setIsLoading(false);
