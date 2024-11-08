@@ -11,8 +11,7 @@ import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroun
 
 const ProfileEditPage = () => {
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState('닉네임');
-  const [email, setEmail] = useState('aimo@naver.com');
+  const [nickname, setNickname] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isEdited, setIsEdited] = useState(false);
@@ -36,11 +35,6 @@ const ProfileEditPage = () => {
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(event.target.value);
-    setIsEdited(true);
-  };
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
     setIsEdited(true);
   };
 
@@ -119,19 +113,7 @@ const ProfileEditPage = () => {
               value={nickname}
               onChange={handleNicknameChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="닉네임을 입력하세요"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 text-left">
-              이메일
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="이메일을 입력하세요"
+              placeholder="변경할 닉네임을 입력하세요"
             />
           </div>
         </div>
