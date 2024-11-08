@@ -11,6 +11,9 @@ import TitleIcon from "@/assets/imgs/TitleIcon.svg?react";
 import {JudgementSlideForm} from "@/types/myPrivatePostForm.ts";
 import {AiResultForm} from "@/types/postForm.ts";
 import Body from "@/components/Body/Body.tsx";
+import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
+import MyPrivatePostDetailTitle from "@/components/MyPrivatePostDetail/MyPrivatePostDetailTitle.tsx";
+import MyPrivatePostDetailContent from "@/components/MyPrivatePostDetail/MyPrivatePostDetailContent.tsx";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -43,15 +46,18 @@ export default function AiResultDetail() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [postData, setPostData] = useState<AiResultForm | null>(null);
   const [judgementSlideForm, setJudgementSlideForm] = useState<JudgementSlideForm | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     // postId가 유효할 때에만 getPrivatePost 호출
     if (postId) {
+      setIsLoading(true);
       getAiResult(parseInt(postId))
         .then((response) => {
           setPostData(response.data.data);
 
-          const judgementSlideForm : JudgementSlideForm = {
+          const judgementSlideForm: JudgementSlideForm = {
             judgement: response.data.data.judgement,
             faultRateDefendant: response.data.data.faultRateDefendant,
             faultRatePlaintiff: response.data.data.faultRatePlaintiff
@@ -61,7 +67,10 @@ export default function AiResultDetail() {
         })
         .catch(() => {
           console.error("서버에서 오류가 발생했습니다.");
-        });
+        }).finally(() => {
+          setIsLoading(false);
+        }
+      )
     }
   }, [postId]);
 
@@ -83,106 +92,76 @@ export default function AiResultDetail() {
       <Body
         className="bg-background"
       >
-        <div
-          className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg"
-          style={{
-            height: "7vh",
-          }}
-        >
+        <MyPrivatePostDetailTitle>
           <TitleIcon className="mr-2"/>
           {postData?.title}
-        </div>
+        </MyPrivatePostDetailTitle>
 
         <Slider {...settings}>
           {/* AI 요약문 슬라이드 */}
           <div>
             {/* AI 요약문 제목 박스 */}
-            <div
-              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-              style={{
-                height: "7vh",
-              }}
-            >
+            <MyPrivatePostDetailTitle>
               AI 요약문
               <NextArrow
                 onClick={() => setCurrentSlide(currentSlide + 1)}
                 currentSlide={currentSlide}
                 slideCount={SLIDE_COUNT}
               />
-            </div>
+            </MyPrivatePostDetailTitle>
 
             {/* summary_ai 내용 박스 - 완전히 분리된 새로운 박스 */}
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
-                {postData?.summary}
-              </div>
-            </div>
+            <MyPrivatePostDetailContent>
+              {postData?.summary}
+            </MyPrivatePostDetailContent>
           </div>
 
           {/* A의 입장 */}
           <div>
-            <div
-              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-              style={{
-                height: "7vh",
-              }}
-            >
+            <MyPrivatePostDetailTitle>
               A의 입장
               <NextArrow
                 onClick={() => setCurrentSlide(currentSlide + 1)}
                 currentSlide={currentSlide}
                 slideCount={SLIDE_COUNT}
               />
-            </div>
+            </MyPrivatePostDetailTitle>
 
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
-                {postData?.stancePlaintiff}
-              </div>
-            </div>
+            <MyPrivatePostDetailContent>
+              {postData?.stancePlaintiff}
+            </MyPrivatePostDetailContent>
           </div>
 
           {/* B의 입장 */}
           <div>
-            <div
-              className="bg-white mb-2 p-4 flex items-center justify-center font-semibold text-lg rounded"
-              style={{
-                height: "7vh",
-              }}
-            >
+            <MyPrivatePostDetailTitle>
               B의 입장
               <NextArrow
                 onClick={() => setCurrentSlide(currentSlide + 1)}
                 currentSlide={currentSlide}
                 slideCount={SLIDE_COUNT}
               />
-            </div>
+            </MyPrivatePostDetailTitle>
 
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
-                {postData?.stanceDefendant}
-              </div>
-            </div>
+            <MyPrivatePostDetailContent>
+              {postData?.stanceDefendant}
+            </MyPrivatePostDetailContent>
           </div>
 
           {/* 판결 */}
           <div>
-            <div className="bg-white mb-2 p-4 flex items-center justify-center font-light text-m text-left rounded"
-                 style={{
-                   height: "7vh",
-                 }}
-            >
+            <MyPrivatePostDetailTitle>
               판결
-            </div>
-            <div className="bg-white mb-4 p-4 flex items-center justify-center font-light text-m text-left rounded">
-              <div className="p-4">
-                {judgementSlideForm && (
-                  <JudgementSlide judgementSlideForm={judgementSlideForm}/>
-                )}
-              </div>
-            </div>
+            </MyPrivatePostDetailTitle>
+            <MyPrivatePostDetailContent>
+              {judgementSlideForm && (
+                <JudgementSlide judgementSlideForm={judgementSlideForm}/>
+              )}
+            </MyPrivatePostDetailContent>
           </div>
         </Slider>
+        {/*로딩 창*/}
+        {isLoading && (<LoadingWithBackgroundGray/>)}
       </Body>
     </div>
   );
