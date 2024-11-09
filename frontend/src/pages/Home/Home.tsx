@@ -27,6 +27,7 @@ const settings = {
 export default function Home() {
   const [popularPosts, setPopularPosts] = useState<PostPreviewForm[]>([]);
   const [allPosts, setAllPosts] = useState<PostPreviewForm[]>([]);
+  const [myPublicPosts, setMyPublicPosts] = useState<PostPreviewForm[]>([]);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [showActions, setShowActions] = useState(false);
   const [page, setPage] = useState(0); // 현재 페이지
@@ -93,7 +94,7 @@ export default function Home() {
   const fetchMyPublicPosts = () => {
     getPosts("MY", 0, 3)
       .then((response) => {
-        setPopularPosts(response.data.data.content);
+        setMyPublicPosts(response.data.data.content);
       });
   };
 
@@ -109,7 +110,7 @@ export default function Home() {
         {/* 내 공개글 섹션 */}
         <HomepageSection title="내 공개글" url="/categories/my-public-posts">
           <Slider {...settings}>
-            {allPosts.slice(0, 3).map((post) => (
+            {myPublicPosts.slice(0, 3).map((post) => (
               <MyPublicItem post={post} key={post.id}/>
             ))}
           </Slider>
