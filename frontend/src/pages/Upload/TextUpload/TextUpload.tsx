@@ -1,11 +1,11 @@
 import Header from '@/components/Header/Header';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import CancelButton from "@/components/Button/CancelButton.tsx";
-import { uploadText } from "@/apis/upload.ts";
-import { TextUploadForm } from "@/types/UploadForm.ts";
-import { useNavigate } from "react-router-dom";
-import { postJudgement } from "@/apis/post.ts";
-import { JudgementForm } from "@/types/myPrivatePostForm.ts";
+import {uploadText} from "@/apis/upload.ts";
+import {TextUploadForm} from "@/types/UploadForm.ts";
+import {useNavigate} from "react-router-dom";
+import {postJudgement} from "@/apis/post.ts";
+import {JudgementForm} from "@/types/myPrivatePostForm.ts";
 import Body from "@/components/Body/Body.tsx";
 
 const MIN_CONTENT_LENGTH = 10;
@@ -24,7 +24,6 @@ export default function TextUpload() {
   };
 
   const handleRegisterClick = () => {
-    setIsLoading(true);
 
     if (content.length < MIN_CONTENT_LENGTH) {
       alert('글은 최소 10자 이상이어야 합니다.');
@@ -41,17 +40,27 @@ export default function TextUpload() {
       originType: 'TEXT'
     };
 
+    setIsLoading(true);
     uploadText(request)
-      .then(() => {
-        postJudgement(judgementRequest)
-          .then((response) => {
-            const data = response.data.data;
-            alert('글이 등록되었습니다.');
-            navigate(`/my-private-posts/${data.privatePostId}`);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
+      .catch(() => {
+        alert('에러가 발생했습니다.');
+        setIsLoading(false);
+
+        return;
+      });
+
+    setIsLoading(true);
+    postJudgement(judgementRequest)
+      .then((response) => {
+        const data = response.data.data;
+        alert('글이 등록되었습니다.');
+        navigate(`/my-private-posts/${data.privatePostId}`);
+      })
+      .catch(() => {
+        alert('에러가 발생했습니다.');
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -67,7 +76,7 @@ export default function TextUpload() {
             등록
           </button>
         }
-        leftButton={<CancelButton />}
+        leftButton={<CancelButton/>}
       />
       <Body>
         <div>
