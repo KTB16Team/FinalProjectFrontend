@@ -19,11 +19,6 @@ export interface MyPrivatePostForm {
   published: boolean;
 }
 
-export interface JudgementForm {
-  content: string;
-  originType: 'VOICE' | 'TEXT' | 'CHAT';
-}
-
 export interface JudgementSlideForm {
   judgement: string;
   faultRatePlaintiff: number;

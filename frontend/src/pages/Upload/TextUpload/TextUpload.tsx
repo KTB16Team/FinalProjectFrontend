@@ -4,8 +4,6 @@ import CancelButton from "@/components/Button/CancelButton.tsx";
 import {uploadText} from "@/apis/upload.ts";
 import {TextUploadForm} from "@/types/UploadForm.ts";
 import {useNavigate} from "react-router-dom";
-import {postJudgement} from "@/apis/post.ts";
-import {JudgementForm} from "@/types/myPrivatePostForm.ts";
 import Body from "@/components/Body/Body.tsx";
 
 const MIN_CONTENT_LENGTH = 10;
@@ -32,25 +30,11 @@ export default function TextUpload() {
     }
 
     const request: TextUploadForm = {
-      script: content
-    };
-
-    const judgementRequest: JudgementForm = {
-      content: content,
-      originType: 'TEXT'
+      content: content
     };
 
     setIsLoading(true);
     uploadText(request)
-      .catch(() => {
-        alert('에러가 발생했습니다.');
-        setIsLoading(false);
-
-        return;
-      });
-
-    setIsLoading(true);
-    postJudgement(judgementRequest)
       .then((response) => {
         const data = response.data.data;
         alert('글이 등록되었습니다.');
@@ -60,8 +44,8 @@ export default function TextUpload() {
         alert('에러가 발생했습니다.');
       })
       .finally(() => {
-        setIsLoading(false);
-      });
+      setIsLoading(false);
+    });
   };
 
   return (

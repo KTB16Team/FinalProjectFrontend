@@ -1,3 +1,3 @@
 export interface TextUploadForm {
-  script: string;
+  content: string;
 }
