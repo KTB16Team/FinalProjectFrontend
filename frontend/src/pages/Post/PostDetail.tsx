@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {getPost, postPostLike, postPostView} from "@/apis/post.ts";
 import Header from "@/components/Header/Header.tsx";
@@ -31,6 +31,7 @@ export default function PostDetail() {
   const navigate = useNavigate();
   const [showLikeModal, setShowLikeModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const commentInputRef = useRef<HTMLInputElement>(null);
 
   // 게시글 정보 가져오기
   const fetchPost = () => {
@@ -142,6 +143,32 @@ export default function PostDetail() {
       });
   };
 
+  // 대댓글 달기 클릭
+  const handleReply = (commentId: number) => {
+    setReplyingTo(commentId);
+    if (commentInputRef.current) {
+      commentInputRef.current.focus();
+    }
+  };
+
+  // 외부 클릭을 감지하여 댓글 상태 초기화
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        commentInputRef.current &&
+        !commentInputRef.current.contains(event.target as Node) &&
+        !(event.target as HTMLElement).closest(".comment-input")
+      ) {
+        setReplyingTo(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   useEffect(() => {
     fetchPost();
   }, [postId]);
@@ -244,23 +271,23 @@ export default function PostDetail() {
         <div>
           {post.comments.map((comment, index) => (
             <React.Fragment key={index}>
-              <Comment comment={comment} onReply={setReplyingTo} refreshComments={fetchPost}/>
+              <Comment comment={comment} onReply={handleReply} isSelected={replyingTo === comment.commentId} refreshComments={fetchPost}/>
               {comment.childComments.map((child) => (
-                <ChildComment key={child.childCommentId} child={child} onReply={setReplyingTo}
-                              refreshComments={fetchPost}/>
+                <ChildComment key={child.childCommentId} child={child} refreshComments={fetchPost}/>
               ))}
             </React.Fragment>
           ))}
         </div>
 
         {/*댓글 달기*/}
-        <div className="fixed bottom-0 left-0 w-full bg-white p-1" style={{height: "7vh"}}>
+        <div className="comment-input fixed bottom-0 left-0 w-full bg-white p-1" style={{height: "7vh"}}>
           <div className="flex">
             <input
+              ref={commentInputRef}
               type="text"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              placeholder="댓글을 남겨주세요."
+              placeholder={replyingTo === null ? "댓글을 남겨주세요." : "대댓글을 남겨주세요."}
               className="border rounded p-2 flex-grow"
             />
             <button onClick={handleAddComment} className="px-4 py-2 bg-blue-500 text-white rounded flex-shrink-0">

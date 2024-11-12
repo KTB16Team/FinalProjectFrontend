@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import LVectorLogo from "@/assets/imgs/LVector.svg?react";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
-import CommentLogo from "@/assets/imgs/Comment.svg?react";
 import MenuVertical from "@/assets/imgs/MenuVertical.svg?react";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx"; // ConfirmModal 추가
 import { postChildCommentLike, deleteChildComment } from "@/apis/comment.ts";
@@ -9,15 +8,13 @@ import { ChildCommentForm } from "@/types/commentForm.ts";
 
 interface ChildCommentProps {
   child: ChildCommentForm;
-  onReply: (commentId: number) => void;
   refreshComments: () => void;
 }
 
-export default function ChildComment({ child, onReply, refreshComments }: ChildCommentProps) {
+export default function ChildComment({ child, refreshComments }: ChildCommentProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [likeType, setLikeType] = useState<string>("LIKE");
   const [showLikeModal, setShowLikeModal] = useState(false);
-  const [showReplyModal, setShowReplyModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -78,12 +75,6 @@ export default function ChildComment({ child, onReply, refreshComments }: ChildC
             <button onClick={() => setShowLikeModal(true)}>
               <LikeLogo/>
             </button>
-            <span>|</span>
-
-            {/* 대댓글 작성 */}
-            <button onClick={() => setShowReplyModal(true)}>
-              <CommentLogo/>
-            </button>
 
             {/*댓글 삭제*/}
             {child.isMine && (
@@ -127,18 +118,6 @@ export default function ChildComment({ child, onReply, refreshComments }: ChildC
             setShowLikeModal(false);
           }}
           onCancel={() => setShowLikeModal(false)}
-        />
-      )}
-
-      {/* 대댓글 작성 확인 팝업 */}
-      {showReplyModal && (
-        <ConfirmModal
-          message="대댓글을 작성하시겠습니까?"
-          onConfirm={() => {
-            onReply(child.childCommentId);
-            setShowReplyModal(false);
-          }}
-          onCancel={() => setShowReplyModal(false)}
         />
       )}
 

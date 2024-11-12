@@ -9,10 +9,11 @@ import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 interface CommentProps {
   comment: CommentForm;
   onReply: (commentId: number) => void;
+  isSelected: boolean;
   refreshComments: () => void;
 }
 
-export default function Comment({ comment, onReply, refreshComments }: CommentProps) {
+export default function Comment({ comment, onReply, isSelected, refreshComments }: CommentProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [likeType, setLikeType] = useState<string>("LIKE");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -64,7 +65,7 @@ export default function Comment({ comment, onReply, refreshComments }: CommentPr
   }, []);
 
   return (
-    <div className="border-b p-3">
+    <div className={`border-b p-3 ${isSelected ? "bg-gray-200" : ""}`}>
       <div className="flex flex-row justify-between">
         <div className="text-left font-bold">{comment.nickname}</div>
         <div className="flex space-x-2 items-center">
