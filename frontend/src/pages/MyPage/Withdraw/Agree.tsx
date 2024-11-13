@@ -110,7 +110,7 @@ const WithdrawAgreementPage = () => {
       />
 
       {showModal && (
-        <Modal onClose={handleCloseModal}>
+        <Modal onConfirm={handleCloseModal}>
           <div className="p-6">
             <h3 className="text-lg font-medium mb-4">비밀번호 확인</h3>
             <input
