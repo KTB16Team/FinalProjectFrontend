@@ -5,6 +5,7 @@ import {uploadText} from "@/apis/upload.ts";
 import {TextUploadForm} from "@/types/UploadForm.ts";
 import {useNavigate} from "react-router-dom";
 import Body from "@/components/Body/Body.tsx";
+import Modal from "@/components/Modal/Modal.tsx";
 
 const MIN_CONTENT_LENGTH = 10;
 const MAX_CONTENT_LENGTH = 2500; // 최대 글자 수 제한
@@ -13,6 +14,8 @@ export default function TextUpload() {
   const [content, setContent] = useState<string>('');
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState({privatePostId: 0});
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -37,8 +40,9 @@ export default function TextUpload() {
     uploadText(request)
       .then((response) => {
         const data = response.data.data;
-        alert('글이 등록되었습니다.');
-        navigate(`/my-private-posts/${data.privatePostId}`);
+        setData(data);
+
+        setShowModal(true);
       })
       .catch(() => {
         alert('에러가 발생했습니다.');
@@ -81,6 +85,17 @@ export default function TextUpload() {
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
+        )}
+
+        {/*좋아요 모달*/}
+        {showModal && (
+          <Modal
+            children="텍스트가 업로드 되었습니다."
+            onConfirm={() => {
+              setShowModal(false);
+              navigate(`/my-private-posts/${data.privatePostId}`);
+            }}
+          />
         )}
       </Body>
     </div>
