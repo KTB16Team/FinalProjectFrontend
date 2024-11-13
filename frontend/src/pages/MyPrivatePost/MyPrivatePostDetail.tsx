@@ -15,7 +15,8 @@ import Body from "@/components/Body/Body.tsx";
 import MyPrivatePostDetailTitle from "@/components/MyPrivatePostDetail/MyPrivatePostDetailTitle.tsx";
 import MyPrivatePostDetailContent from "@/components/MyPrivatePostDetail/MyPrivatePostDetailContent.tsx";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
-import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx"; // 추가된 부분
+import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
+import Modal from "@/components/Modal/Modal.tsx"; // 추가된 부분
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -52,6 +53,8 @@ export default function MyPrivatePostDetail() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false); // 모달 표시 상태
   const navigate = useNavigate();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [savedPostId, setSavedPostId] = useState({savedPostId: 0});
 
   useEffect(() => {
     if (postId) {
@@ -84,7 +87,7 @@ export default function MyPrivatePostDetail() {
 
     setIsLoading(true);
     const request: PostPostForm = {
-      privatePostId: postData.privatePostId,
+      privatePostId: parseInt(postId!),
       title: postData.title,
       stancePlaintiff: postData.stancePlaintiff,
       stanceDefendant: postData.stanceDefendant,
@@ -98,9 +101,8 @@ export default function MyPrivatePostDetail() {
     postPost(request)
       .then((response) => {
         const data = response.data.data;
-
-        alert("대화록이 발행되었습니다.");
-        navigate(`/posts/${data.postId}`)
+        setSavedPostId(data.postId);
+        setShowConfirmModal(true);
       })
       .catch((error) => {
         const response = error.response.data;
@@ -189,6 +191,17 @@ export default function MyPrivatePostDetail() {
             handlePublish();
           }}
           onCancel={() => setShowModal(false)}
+        />
+      )}
+
+      {/*확인 모달*/}
+      {showConfirmModal && (
+        <Modal
+          children="대화록이 발행되었습니다."
+          onConfirm={() => {
+            setShowConfirmModal(false);
+            navigate(`/posts/${savedPostId}`);
+          }}
         />
       )}
     </div>

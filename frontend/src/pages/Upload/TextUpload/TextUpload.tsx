@@ -87,7 +87,7 @@ export default function TextUpload() {
           </div>
         )}
 
-        {/*좋아요 모달*/}
+        {/*확인 모달*/}
         {showModal && (
           <Modal
             children="텍스트가 업로드 되었습니다."
