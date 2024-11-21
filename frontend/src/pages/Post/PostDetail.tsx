@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {getPost, postPostLike, postPostView} from "@/apis/post.ts";
+import {deletePost, getPost, postPostLike, postPostView} from "@/apis/post.ts";
 import Header from "@/components/Header/Header.tsx";
 import {postChildComment, postComment} from "@/apis/comment.ts";
 import {postVote} from "@/apis/vote.ts";
@@ -16,6 +16,8 @@ import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 import Body from "@/components/Body/Body.tsx";
 import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
 import VoteButton from "@/components/Vote/VoteButton.tsx";
+import VerticalMenu from "@/components/Menu/VerticalMenu.tsx";
+import {MenuItem} from "@/types/menuForm.ts";
 
 export default function PostDetail() {
   const {postId} = useParams<{ postId: string }>();
@@ -32,6 +34,7 @@ export default function PostDetail() {
   const [showLikeModal, setShowLikeModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const commentInputRef = useRef<HTMLInputElement>(null);
+  const [showDeletePostModal, setShowDeletePostModal] = useState(false);
 
   // 게시글 정보 가져오기
   const fetchPost = () => {
@@ -173,11 +176,36 @@ export default function PostDetail() {
     fetchPost();
   }, [postId]);
 
+  // 글 삭제
+  const handleDeletePost = () => {
+    setIsLoading(true);
+
+    deletePost(parseInt(postId!))
+      .then(() => {
+        navigate(-1);
+      })
+      .catch(() => {
+        alert("서버 오류가 발생했습니다.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  // 메뉴 리스트
+  const menuItems : MenuItem[] = [
+    {label: "글 삭제", action: handleDeletePost}
+  ];
+
   if (!post) return <LoadingWithBackgroundGray/>;
 
   return (
     <div>
-      <Header title="게시판" leftButton={<GoBackButton/>}/>
+      <Header
+        title="게시판"
+        leftButton={<GoBackButton/>}
+        rightButton={post.isMine && <VerticalMenu menuItems={menuItems} />}
+      />
       <Body className="px-8" style={{paddingBottom: "15vh"}}>
         <div className="border-b mt-4">
           {/*메타정보*/}
@@ -310,6 +338,18 @@ export default function PostDetail() {
       )}
 
       {isLoading && <LoadingWithBackgroundGray/>}
+
+      {/* 글 삭제 확인 팝업 */}
+      {showDeletePostModal && (
+        <ConfirmModal
+          message="글을 삭제하시겠습니까?"
+          onConfirm={() => {
+            handleDeletePost();
+            setShowDeletePostModal(false);
+          }}
+          onCancel={() => setShowDeletePostModal(false)}
+        />
+      )}
     </div>
-  );
+);
 }

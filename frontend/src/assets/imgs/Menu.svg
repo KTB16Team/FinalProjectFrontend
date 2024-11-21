@@ -1,7 +1,7 @@
 <!-- 여백을 없애기 위해 display 속성 추가 -->
 <svg
-        width="18"
-        height="18"
+        width="27"
+        height="27"
         viewBox="0 0 9 9"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

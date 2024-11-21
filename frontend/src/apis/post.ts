@@ -38,3 +38,7 @@ export const postPost = async (request: PostPostForm) => {
 export const getAiResult = async (postId: number) => {
   return await axiosInstance.get(`${BACKEND_URL}/api/v1/posts/${postId}/judgement`);
 }
+
+export const deletePost = async (postId: number) => {
+  return await axiosInstance.delete(`${BACKEND_URL}/api/v1/posts/${postId}`);
+}
