@@ -3,7 +3,7 @@ import { deleteComment, postCommentLike } from "@/apis/comment.ts";
 import { CommentForm } from "@/types/commentForm.ts";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
 import CommentLogo from "@/assets/imgs/Comment.svg?react";
-import MenuVertical from "@/assets/imgs/MenuVertical.svg?react";
+import MenuVertical from "@/assets/imgs/Menu.svg?react";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 
 interface CommentProps {
@@ -89,7 +89,7 @@ export default function Comment({ comment, onReply, isSelected, refreshComments 
                 <MenuVertical style={{ verticalAlign: "middle" }} />
               </button>
               {dropdownOpen && (
-                <div className="right-0 absolute bottom-full bg-white border rounded shadow-lg p-2 flex z-50">
+                <div className="right-0 top-full absolute bg-white border rounded shadow-lg p-2 flex z-50 w-32">
                   <button
                     onClick={() => {
                       setShowDeleteModal(true);

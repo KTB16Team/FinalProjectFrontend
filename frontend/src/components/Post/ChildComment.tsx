@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import LVectorLogo from "@/assets/imgs/LVector.svg?react";
 import LikeLogo from "@/assets/imgs/Like.svg?react";
-import MenuVertical from "@/assets/imgs/MenuVertical.svg?react";
+import MenuVertical from "@/assets/imgs/Menu.svg?react";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx"; // ConfirmModal 추가
 import { postChildCommentLike, deleteChildComment } from "@/apis/comment.ts";
 import { ChildCommentForm } from "@/types/commentForm.ts";
@@ -78,13 +78,13 @@ export default function ChildComment({ child, refreshComments }: ChildCommentPro
 
             {/*댓글 삭제*/}
             {child.isMine && (
-              <span className="flex" ref={dropdownRef}>
+              <span className="relative flex" ref={dropdownRef}>
                 |
                 <button onClick={toggleDropdown} className="ml-1">
                   <MenuVertical style={{ verticalAlign: "middle" }} />
                 </button>
                 {dropdownOpen && (
-                  <div className="bottom-full absolute right-0 bg-white border rounded shadow-lg p-2 flex z-50">
+                  <div className="top-full absolute right-0 bg-white border rounded shadow-lg p-2 flex z-50 w-32">
                     <button
                       onClick={() => {
                         setShowDeleteModal(true);
