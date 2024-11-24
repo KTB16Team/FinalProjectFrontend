@@ -124,7 +124,7 @@ export default function Home() {
         </HomepageSection>
 
         {/* 전체 글 섹션 */}
-        <HomepageSection title={"전체 글"} url={"/categories/all-posts"}>
+        <HomepageSection title="전체 글" url="/categories/all-posts">
           {allPosts.map((post, index) => (
             <AllItem key={index} post={post}/>
           ))}
