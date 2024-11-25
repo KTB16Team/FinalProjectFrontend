@@ -21,8 +21,9 @@ import WithdrawAgreementPage from "@/pages/MyPage/Withdraw/Agree.tsx"
 import ChangePasswordPage from '@/pages/MyPage/Password/PasswordChange.tsx'
 import FindPasswordPage from "@/pages/MyPage/Password/FindPassword.tsx";
 import ResetPasswordPage from "@/pages/MyPage/Password/ResetPassword.tsx";
-import ResetPasswordCompletePage from "@/pages/MyPage/Password/ResetPasswordCompliete.tsx"
+import ResetPasswordCompletePage from "@/pages/MyPage/Password/ResetPasswordCompliete.tsx";
 import AiResultDetail from "@/pages/Post/AiResult.tsx";
+import KakaoOAuthCallback from "@/pages/Oauth/KakaoOAuthCallback.tsx";
 
 function App() {
   return (
@@ -42,6 +43,9 @@ function App() {
 
               {/* 500 에러 페이지 */}
               <Route path="/500" element={<Page500/>}/>
+
+              {/*카카오 콜백 페이지*/}
+              <Route path="/oauth/callback/kakao" element={<KakaoOAuthCallback/>} />
 
               {/* 인증이 필요한 경로 */}
               <Route

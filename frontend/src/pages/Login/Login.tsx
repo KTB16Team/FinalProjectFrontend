@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
-import {fetchLogin} from "@/apis/login.ts";
+import {fetchLogin, redirectKakaoLogin} from "@/apis/login.ts";
 import {Link, useNavigate} from "react-router-dom";
 import LoginIdLogo from "@/assets/imgs/LoginId.svg?react";
 import PasswordLogo from "@/assets/imgs/Password.svg?react";
@@ -91,7 +91,7 @@ export default function Login() {
         {/* 카카오 로그인버튼 */}
         <button
           type="button"
-          onClick={() => alert('카카오톡으로 로그인')}
+          onClick={() => redirectKakaoLogin()}
           className="w-full py-3 bg-yellow-300 text-black rounded-lg font-medium hover:bg-yellow-400 transition-colors flex items-center justify-center space-x-2"
         >
           <KakaoLogo width="20"/>

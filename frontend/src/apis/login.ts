@@ -14,3 +14,7 @@ export const fetchLogin = async (login: LoginForm) => {
     withCredentials: true,
   });
 };
+
+export const redirectKakaoLogin = () => {
+  window.location.href = `${BACKEND_URL}/oauth2/authorization/kakao`;
+};
