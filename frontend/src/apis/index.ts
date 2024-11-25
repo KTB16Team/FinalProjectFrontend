@@ -10,7 +10,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
+    if (accessToken && accessToken !== 'undefined') {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
@@ -24,14 +24,13 @@ axiosInstance.interceptors.response.use(
     const { config, response } = error;
 
     // AccessToken이 없음
-    if (response?.data?.code === 'AUTH-004') {
-      alert("로그인이 필요합니다.");
+    if (response?.data?.code === 'AUTH-004' || response?.data?.code === 'AUTH-006' || response?.data?.code === 'AUTH-001') {
       logout();
-      return Promise.reject(error);
+      window.location.href = `/login`;
     }
 
     // AccessToken 만료
-    if (response?.data?.code === 'AUTH-001' && !config._retry) {
+    if (response?.data?.code === 'AUTH-003' && !config._retry) {
       config._retry = true;
       const newAccessToken = await refreshAccessToken();
 
