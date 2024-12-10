@@ -9,6 +9,7 @@ import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import Body from "@/components/Body/Body.tsx";
 import Loading from "@/components/Loading/Loading.tsx";
 import FloatingButton from "@/components/Button/FloatingButton.tsx";
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 export default function MyPrivatePostList() {
   const [posts, setPosts] = useState<MyPrivatePostPreviewForm[]>([]);
@@ -20,6 +21,7 @@ export default function MyPrivatePostList() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const scrollEndRef = useRef<HTMLDivElement | null>(null);
   const [showActions, setShowActions] = useState(false);
+  const { showModal } = useModal();
 
   // 포스트 목록 조회
   const fetchPosts = useCallback(async (page: number) => {
@@ -28,8 +30,8 @@ export default function MyPrivatePostList() {
       const response = await getMyPrivatePosts(page, 10);
       setPosts((prevPosts) => [...prevPosts, ...response.data.data.content]);
       setTotalPages(response.data.data.totalPages);
-    } catch (error) {
-      console.error("포스트를 불러오는 중 오류 발생", error);
+    } catch {
+      showModal("포스트를 불러오는 중 오류 발생", () => {});
     } finally {
       setLoading(false);
     }

@@ -18,6 +18,7 @@ import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroun
 import VoteButton from "@/components/Vote/VoteButton.tsx";
 import VerticalMenu from "@/components/Menu/VerticalMenu.tsx";
 import {MenuItem} from "@/types/menuForm.ts";
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 export default function PostDetail() {
   const {postId} = useParams<{ postId: string }>();
@@ -35,6 +36,8 @@ export default function PostDetail() {
   const [isLoading, setIsLoading] = useState(false);
   const commentInputRef = useRef<HTMLInputElement>(null);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+  const { showModal } = useModal();
+
 
   // 게시글 정보 가져오기
   const fetchPost = () => {
@@ -142,7 +145,7 @@ export default function PostDetail() {
         fetchPost();
       })
       .catch(() => {
-        alert("서버 오류가 발생했습니다.");
+        showModal("서버 오류가 발생했습니다.", () => {});
       });
   };
 
@@ -185,7 +188,7 @@ export default function PostDetail() {
         navigate(-1);
       })
       .catch(() => {
-        alert("서버 오류가 발생했습니다.");
+        showModal("서버 오류가 발생했습니다.", () => {});
       })
       .finally(() => {
         setIsLoading(false);

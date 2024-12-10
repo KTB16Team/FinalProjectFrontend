@@ -8,6 +8,7 @@ import Body from "@/components/Body/Body.tsx";
 import {updateNickname} from "@/apis/member.ts";
 import {UpdateNicknameForm} from "@/types/member.ts";
 import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 const ProfileEditPage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ const ProfileEditPage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isEdited, setIsEdited] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { showModal } = useModal();
+
 
   const handleImageClick = () => {
     fileInputRef.current?.click();
@@ -47,11 +50,12 @@ const ProfileEditPage = () => {
 
     updateNickname(request)
       .then(() => {
-        alert("프로필이 변경되었습니다.");
+        showModal("프로필이 변경되었습니다.", () => {});
         navigate('/my-page');
 
       })
       .catch(() => {
+        showModal("프로필 변경 중 오류가 발생했습니다.", () => {});
         navigate("/500");
       })
       .finally(() => {

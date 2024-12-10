@@ -10,11 +10,14 @@ import {useNavigate} from "react-router-dom";
 import CancelButton from "@/components/Button/CancelButton.tsx";
 import Header from "@/components/Header/Header.tsx";
 import Body from "@/components/Body/Body.tsx";
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 export default function SignUp() {
   const {register, handleSubmit, formState: {errors}, watch} = useForm<SignUpForm>();
   const [isDone, setIsDone] = useState(false);
   const navigate = useNavigate();
+  const { showModal } = useModal();
+
 
   // 모든 필드를 감시
   const watchFields = watch([
@@ -26,7 +29,7 @@ export default function SignUp() {
 
     signup(data)
       .then(() => {
-        alert('회원가입이 완료되었습니다.');
+        showModal('회원가입이 완료되었습니다.', () => {});
         navigate('/login');
       })
       .catch((error) => {
@@ -36,28 +39,28 @@ export default function SignUp() {
 
           // validation 에러 처리
           if (error.status === 400) {
-            alert(response.reasons);
+            showModal(response.reasons, () => {});
             return;
           }
 
           // 서버 응답에서 code를 가져와 처리
           switch (response?.code) {
             case 'COMMON-002':
-              alert('요청 파라미터가 잘못되었습니다.');
+              showModal('요청 파라미터가 잘못되었습니다.', () => {});
               break;
             case 'MEMBER-003':
-              alert('이메일이 중복되었습니다.');
+              showModal('이메일이 중복되었습니다.', () => {});
               break;
             case 'MEMBER-004':
-              alert('닉네임이 중복되었습니다.');
+              showModal('닉네임이 중복되었습니다.', () => {});
               break;
             // 다른 에러 코드 처리
             default:
-              alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+              showModal('회원가입에 실패했습니다. 다시 시도해주세요.', () => {});
           }
         } else {
           // 예상치 못한 에러 처리
-          alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+          showModal('네트워크 오류가 발생했습니다. 다시 시도해주세요.',  () => {});
         }
       })
   };

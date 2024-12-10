@@ -15,6 +15,7 @@ const WithdrawAgreementPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   const {logout} = useContext(AuthContext)!;
 
+
   const handleWithdraw = () => {
     if (isAgreed) {
       setShowModal(true);

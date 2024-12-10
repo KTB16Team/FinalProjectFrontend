@@ -6,6 +6,7 @@ import BottomButton from "@/components/Button/BottomButton.tsx";
 import Body from "@/components/Body/Body.tsx";
 import { updatePassword } from "@/apis/member.ts";
 import { UpdatePasswordForm } from "@/types/member.ts";
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 const ChangePasswordPage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ const ChangePasswordPage = () => {
   const [newPasswordError, setNewPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [generalError, setGeneralError] = useState('');
+  const { showModal } = useModal();
+
 
   const handleSubmit = () => {
     let valid = true;
@@ -47,7 +50,7 @@ const ChangePasswordPage = () => {
 
     updatePassword(request)
       .then(() => {
-        alert("비밀번호 변경이 완료되었습니다.");
+        showModal("비밀번호 변경이 완료되었습니다.", () => {});
         navigate('/my-page');
       })
       .catch((error) => {
@@ -56,7 +59,7 @@ const ChangePasswordPage = () => {
           setCurrentPasswordError(true);
           setGeneralError('현재 비밀번호가 틀렸습니다.');
         } else {
-          alert("서버에서 에러가 발생했습니다.");
+          showModal("서버에서 에러가 발생했습니다.", () => {});
         }
       });
   };

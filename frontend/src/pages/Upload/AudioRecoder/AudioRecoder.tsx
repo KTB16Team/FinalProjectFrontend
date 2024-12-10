@@ -5,6 +5,8 @@ import PauseIcon from "@/assets/imgs/Pause.svg";
 import StopIcon from "@/assets/imgs/Stop.svg";
 import MicIcon from "@/assets/imgs/Mic.svg";
 import Body from "@/components/Body/Body.tsx";
+import { useModal } from "@/contexts/ModalContext.tsx";
+
 //
 // interface AudioData {
 //   dataArray: Float32Array;
@@ -18,6 +20,8 @@ const AudioRecorder: React.FC = () => {
   const [time, setTime] = useState(0); // 녹음 시간 (초 단위)
   const [audioURL, setAudioURL] = useState<string | null>(null); // 녹음된 오디오 URL
   const [audioData, setAudioData] = useState<number[]>([]);
+  const { showModal } = useModal();
+
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null); // MediaRecorder 참조
   const intervalRef = useRef<number | null>(null); // 타이머 참조
@@ -90,7 +94,7 @@ const AudioRecorder: React.FC = () => {
 
     } catch (error) {
       console.error('Error starting recording:', error);
-      alert('마이크 접근 권한이 필요합니다.');
+      showModal('마이크 접근 권한이 필요합니다.', () => {});
     }
   };
 

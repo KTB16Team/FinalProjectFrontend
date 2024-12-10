@@ -16,7 +16,7 @@ import MyPrivatePostDetailTitle from "@/components/MyPrivatePostDetail/MyPrivate
 import MyPrivatePostDetailContent from "@/components/MyPrivatePostDetail/MyPrivatePostDetailContent.tsx";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
-import Modal from "@/components/Modal/Modal.tsx"; // 추가된 부분
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -51,10 +51,10 @@ export default function MyPrivatePostDetail() {
   const [isPublished, setIsPublished] = useState(true);
   const [judgementSlideForm, setJudgementSlideForm] = useState<JudgementSlideForm | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false); // 모달 표시 상태
+  const [showPublishModal, setShowPublishModal] = useState(false); // 모달 표시 상태
   const navigate = useNavigate();
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [savedPostId, setSavedPostId] = useState({savedPostId: 0});
+  const { showModal } = useModal();
 
   useEffect(() => {
     if (postId) {
@@ -102,7 +102,7 @@ export default function MyPrivatePostDetail() {
       .then((response) => {
         const data = response.data.data;
         setSavedPostId(data.postId);
-        setShowConfirmModal(true);
+        showModal("대화록이 발행되었습니다.", () => {navigate(`/posts/${savedPostId}`)});
       })
       .catch((error) => {
         const response = error.response.data;
@@ -178,33 +178,23 @@ export default function MyPrivatePostDetail() {
         <BottomButton
           label="발행"
           disabled={isPublished}
-          onClick={() => setShowModal(true)} // 모달 표시
+          onClick={() => setShowPublishModal(true)} // 모달 표시
         />
       )}
 
       {/*발행 모달*/}
-      {showModal && (
+      {showPublishModal && (
         <ConfirmModal
           onConfirm={() => {
-            setShowModal(false);
+            setShowPublishModal(false);
             handlePublish();
           }}
-          onCancel={() => setShowModal(false)}
+          onCancel={() => setShowPublishModal(false)}
         >
           포스트를 발행하시겠습니까?
         </ConfirmModal>
       )}
 
-      {/*확인 모달*/}
-      {showConfirmModal && (
-        <Modal
-          children="대화록이 발행되었습니다."
-          onConfirm={() => {
-            setShowConfirmModal(false);
-            navigate(`/posts/${savedPostId}`);
-          }}
-        />
-      )}
     </div>
   );
 }

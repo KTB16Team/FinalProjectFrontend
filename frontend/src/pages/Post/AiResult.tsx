@@ -14,6 +14,7 @@ import Body from "@/components/Body/Body.tsx";
 import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
 import MyPrivatePostDetailTitle from "@/components/MyPrivatePostDetail/MyPrivatePostDetailTitle.tsx";
 import MyPrivatePostDetailContent from "@/components/MyPrivatePostDetail/MyPrivatePostDetailContent.tsx";
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -47,6 +48,7 @@ export default function AiResultDetail() {
   const [postData, setPostData] = useState<AiResultForm | null>(null);
   const [judgementSlideForm, setJudgementSlideForm] = useState<JudgementSlideForm | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { showModal } = useModal();
 
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function AiResultDetail() {
           setJudgementSlideForm(judgementSlideForm);
         })
         .catch(() => {
-          console.error("서버에서 오류가 발생했습니다.");
+          showModal("서버에서 오류가 발생했습니다.", () => {});
         }).finally(() => {
           setIsLoading(false);
         }

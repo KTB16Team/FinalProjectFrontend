@@ -7,12 +7,15 @@ import {AuthContext} from "@/contexts/AuthContext.tsx";
 import {getProfile} from "@/apis/member.ts";
 import {GetProfileForm} from "@/types/member.ts";
 import LoadingWithBackgroundGray from "@/components/Loading/LoadingWithBackgroundGray.tsx";
+import {useModal} from "@/contexts/ModalContext.tsx";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<GetProfileForm | null>(null);
   const {logout} = useContext(AuthContext)!;
   const [isLoading, setIsLoading] = useState(false);
+  const { showModal } = useModal();
+
 
 
   const handleLogout = () => {
@@ -39,7 +42,7 @@ const MyPage = () => {
 
         setProfile(profile);
       }).catch(() => {
-        navigate('/500');
+        showModal('프로필을 불러오는 중 오류가 발생했습니다.', () => {navigate('/500')});
       }).finally(() => {
         setIsLoading(false);
       });
