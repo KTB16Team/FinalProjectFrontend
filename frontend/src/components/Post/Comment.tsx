@@ -116,37 +116,40 @@ export default function Comment({ comment, onReply, isSelected, refreshComments 
       {/* 좋아요 확인 팝업 */}
       {showLikeModal && (
         <ConfirmModal
-          message="좋아요를 누르시겠습니까?"
           onConfirm={() => {
             handleLike();
             setShowLikeModal(false);
           }}
           onCancel={() => setShowLikeModal(false)}
-        />
+        >
+          좋아요를 누르시겠습니까?
+        </ConfirmModal>
       )}
 
       {/* 댓글 삭제 확인 팝업 */}
       {showDeleteModal && (
         <ConfirmModal
-          message="댓글을 삭제하시겠습니까?"
           onConfirm={() => {
             handleDelete();
             setShowDeleteModal(false);
           }}
           onCancel={() => setShowDeleteModal(false)}
-        />
+        >
+          댓글을 삭제하시겠습니까?
+        </ConfirmModal>
       )}
 
       {/* 대댓글 작성 확인 팝업 */}
       {showReplyModal && (
         <ConfirmModal
-          message="대댓글을 작성하시겠습니까?"
           onConfirm={() => {
             onReply(comment.commentId); // 대댓글 작성 함수 호출
             setShowReplyModal(false);
           }}
           onCancel={() => setShowReplyModal(false)}
-        />
+        >
+          대댓글을 작성하시겠습니까?
+        </ConfirmModal>
       )}
     </div>
   );

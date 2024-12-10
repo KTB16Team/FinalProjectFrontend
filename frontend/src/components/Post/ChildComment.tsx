@@ -112,25 +112,27 @@ export default function ChildComment({ child, refreshComments }: ChildCommentPro
       {/* 좋아요 확인 팝업 */}
       {showLikeModal && (
         <ConfirmModal
-          message="좋아요를 누르시겠습니까?"
           onConfirm={() => {
             handleLike();
             setShowLikeModal(false);
           }}
           onCancel={() => setShowLikeModal(false)}
-        />
+        >
+          좋아요를 누르시겠습니까?
+        </ConfirmModal>
       )}
 
       {/* 대댓글 삭제 확인 팝업 */}
       {showDeleteModal && (
         <ConfirmModal
-          message="대댓글을 삭제하시겠습니까?"
           onConfirm={() => {
             handleDelete();
             setShowDeleteModal(false);
           }}
           onCancel={() => setShowDeleteModal(false)}
-        />
+        >
+          대댓글을 삭제하시겠습니까?
+        </ConfirmModal>
       )}
     </div>
   );

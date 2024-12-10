@@ -185,13 +185,14 @@ export default function MyPrivatePostDetail() {
       {/*발행 모달*/}
       {showModal && (
         <ConfirmModal
-          message="포스트를 발행하시겠습니까?"
           onConfirm={() => {
             setShowModal(false);
             handlePublish();
           }}
           onCancel={() => setShowModal(false)}
-        />
+        >
+          포스트를 발행하시겠습니까?
+        </ConfirmModal>
       )}
 
       {/*확인 모달*/}
