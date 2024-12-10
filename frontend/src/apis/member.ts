@@ -18,3 +18,7 @@ export const getProfile = async () => {
 export const updateNickname = async (request: UpdateNicknameForm) => {
   return await axiosInstance.put(`${BACKEND_URL}/api/v1/members/nickname`, request);
 }
+
+export const getPoint = async () => {
+  return await axiosInstance.get(`${BACKEND_URL}/api/v1/members/points`);
+}

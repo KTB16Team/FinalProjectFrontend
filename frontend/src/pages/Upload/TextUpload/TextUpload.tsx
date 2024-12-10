@@ -48,6 +48,8 @@ export default function TextUpload() {
         showModal(`포인트가 부족합니다. 최소 ${DECREASE_POINT['ai-result']}P가 필요합니다.`, () => {});
         return;
       }
+
+      setShowConfirmModal(true);
     } catch {
       showModal('포인트 조회 중 에러가 발생했습니다.', () => {});
     } finally {

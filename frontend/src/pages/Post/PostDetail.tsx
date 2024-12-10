@@ -328,13 +328,14 @@ export default function PostDetail() {
       {/*좋아요 모달*/}
       {showLikeModal && (
         <ConfirmModal
-          message="좋아요를 누르시겠습니까?"
           onConfirm={() => {
             handleLike();
             setShowLikeModal(false);
           }}
           onCancel={() => setShowLikeModal(false)}
-        />
+        >
+          좋아요를 누르시겠습니까?
+        </ConfirmModal>
       )}
 
       {isLoading && <LoadingWithBackgroundGray/>}
@@ -342,13 +343,14 @@ export default function PostDetail() {
       {/* 글 삭제 확인 팝업 */}
       {showDeletePostModal && (
         <ConfirmModal
-          message="글을 삭제하시겠습니까?"
           onConfirm={() => {
             handleDeletePost();
             setShowDeletePostModal(false);
           }}
           onCancel={() => setShowDeletePostModal(false)}
-        />
+        >
+          글을 삭제하시겠습니까?
+        </ConfirmModal>
       )}
     </div>
 );
