@@ -34,6 +34,7 @@ const MyPage = () => {
           nickname: data.nickname,
           email: data.email,
           profileImage: "",
+          point: data.point
         };
 
         setProfile(profile);
@@ -73,6 +74,7 @@ const MyPage = () => {
           <div className="ml-4 flex-1">
             <h2 className="text-lg font-medium text-left">{profile?.nickname}</h2>
             <p className="text-gray-500 text-sm text-left">{profile?.email}</p>
+            <p className="text-gray-500 text-sm text-left">P {profile?.point}P</p>
           </div>
         </div>
 
