@@ -25,6 +25,7 @@ import ResetPasswordCompletePage from "@/pages/MyPage/Password/ResetPasswordComp
 import AiResultDetail from "@/pages/Post/AiResult.tsx";
 import KakaoOAuthCallback from "@/pages/Oauth/KakaoOAuthCallback.tsx";
 import {ModalProvider} from "@/contexts/ModalContext.tsx";
+import FileUpload from "@/pages/Upload/FileUpload/FileUpload.tsx";
 
 function App() {
   return (
@@ -105,6 +106,9 @@ function App() {
 
                         {/* 인증된 사용자만 접근할 수 있는 프로필 페이지 */}
                         <Route path="/profile" element={<Home/>}/>
+
+                        {/* 파일 업로드 페이지 */}
+                        <Route path="/file-upload" element={<FileUpload/>}/>
                       </Routes>
                     </ProtectedRoute>
                   }

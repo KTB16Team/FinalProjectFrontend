@@ -45,7 +45,7 @@ export default function TextUpload() {
       setMemberPoint(currentPoints);
 
       if (currentPoints < REQUIRED_POINTS) {
-        showModal(`포인트가 부족합니다. 최소 ${DECREASE_POINT['ai-result']}P가 필요합니다.`, () => {});
+        showModal(`포인트가 부족합니다. 최소 ${DECREASE_POINT['ai-request']}P가 필요합니다.`, () => {});
         return;
       }
 
@@ -121,7 +121,7 @@ export default function TextUpload() {
             }}
             onCancel={() => setShowConfirmModal(false)} // 모달 닫기
           >
-            <p>업로드 시 ${DECREASE_POINT['ai-result']}P가 차감됩니다.</p>
+            <p>업로드 시 {DECREASE_POINT['ai-request']}P가 차감됩니다.</p>
             <p>업로드 하시겠습니까?</p>
             <p>현재 포인트: {memberPoint}</p>
           </ConfirmModal>

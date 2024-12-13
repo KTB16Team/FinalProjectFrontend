@@ -40,7 +40,7 @@ const FloatingButton: React.FC<FloatingActionButtonProps> = ({ showActions, onTo
             <span className="absolute text-white text-sm -left-24">텍스트 업로드</span>
           </button>
           <button
-            onClick={() => alert('파일 업로드 준비 중입니다.')}
+            onClick={() => navigate('/file-upload')}
             className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 relative -mb-3"
           >
             <FileUploadLogo className="w-6 h-6" />
