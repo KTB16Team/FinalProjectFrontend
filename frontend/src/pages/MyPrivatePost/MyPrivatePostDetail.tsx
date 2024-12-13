@@ -73,8 +73,17 @@ export default function MyPrivatePostDetail() {
 
           setJudgementSlideForm(judgementSlideForm);
         })
-        .catch(() => {
-          console.error("서버에서 오류가 발생했습니다.");
+        .catch((error) => {
+          const response = error.response.data;
+
+          if (response.code === "PRIVATEPOST-011") {
+            showModal("아직 AI가 분석중입니다. \n 조금만 기달려주세요.", () => {});
+          } else if (response.code === "PRIVATEPOST-012") {
+            showModal("AI 분석 실패한 대화록입니다." , () => {});
+          } else {
+            showModal("서버에서 오류가 발생했습니다.", () => {});
+          }
+          navigate(`/my-private-posts`);
         })
         .finally(() => {
           setIsLoading(false);
@@ -108,11 +117,11 @@ export default function MyPrivatePostDetail() {
         const response = error.response.data;
 
         if (response.code === "PRIVATEPOST-001") {
-          alert("대화록을 찾을 수 없습니다.");
+          showModal("대화록을 찾을 수 없습니다.", () => {});
         } else if (response.code === "PRIVATEPOST-002") {
-          alert("이미 발행된 대화록입니다.");
+          showModal("이미 발행된 대화록입니다.", () => {});
         } else {
-          alert("서버에서 오류가 발생했습니다.");
+          showModal("서버에서 오류가 발생했습니다.", () => {});
         }
       })
       .finally(() => {
