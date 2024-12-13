@@ -79,7 +79,7 @@ export default function MyPrivatePostList() {
             logout();
           }
         } else {
-          console.error("서버에서 오류가 발생했습니다.");
+           showModal("서버에서 오류가 발생했습니다.", () => {});
         }
       });
   };

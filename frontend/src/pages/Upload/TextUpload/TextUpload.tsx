@@ -65,9 +65,8 @@ export default function TextUpload() {
     setIsLoading(true);
 
     uploadText(request)
-      .then((response) => {
-        const data = response.data.data;
-        showModal("텍스트가 업로드 되었습니다.", () => {navigate(`/my-private-posts/${data.privatePostId}`)});
+      .then(() => {
+        showModal("텍스트가 업로드 되었습니다.", () => {navigate(`/my-private-posts`)});
       })
       .catch(() => {
         showModal('업로드 중 에러가 발생했습니다.', () => {});
