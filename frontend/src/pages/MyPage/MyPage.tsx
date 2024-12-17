@@ -14,8 +14,7 @@ const MyPage = () => {
   const [profile, setProfile] = useState<GetProfileForm | null>(null);
   const {logout} = useContext(AuthContext)!;
   const [isLoading, setIsLoading] = useState(false);
-  const { showModal } = useModal();
-
+  const {showModal} = useModal();
 
 
   const handleLogout = () => {
@@ -36,16 +35,18 @@ const MyPage = () => {
         const profile: GetProfileForm = {
           nickname: data.nickname,
           email: data.email,
-          profileImage: "",
-          point: data.point
+          profileImageUrl: data.profileImageUrl,
+          point: data.point,
         };
 
         setProfile(profile);
       }).catch(() => {
-        showModal('프로필을 불러오는 중 오류가 발생했습니다.', () => {navigate('/500')});
-      }).finally(() => {
-        setIsLoading(false);
+      showModal('프로필을 불러오는 중 오류가 발생했습니다.', () => {
+        navigate('/500')
       });
+    }).finally(() => {
+      setIsLoading(false);
+    });
   }
 
   useEffect(() => {
@@ -63,13 +64,12 @@ const MyPage = () => {
         {/*프로필*/}
         <div className="flex items-center p-6 bg-white mb-3">
           <div className="relative w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-            {profile?.profileImage ? (
-              // <img
-              //   src={profile.profileImage}
-              //   alt="Profile"
-              //   className="w-full h-full rounded-full object-cover"
-              // />
-              <span className="text-gray-600 text-2xl">{'M'}</span>
+            {profile?.profileImageUrl ? (
+              <img
+                src={profile.profileImageUrl}
+                alt="Profile"
+                className="w-full h-full rounded-full object-cover"
+              />
             ) : (
               <span className="text-gray-600 text-2xl">{'M'}</span>
             )}

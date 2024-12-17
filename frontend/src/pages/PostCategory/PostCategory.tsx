@@ -1,14 +1,13 @@
 import PostCategoryItem from "@/components/PostCategory/PostCategoryItem.tsx";
 import Header from "@/components/Header/Header.tsx";
 import GoBackButton from "@/components/Button/GoBackButton.tsx";
-import BellButton from "@/components/Button/BellButton.tsx";
 import Body from "@/components/Body/Body.tsx";
 
 export default function PostCategory() {
 
   return (
     <div>
-      <Header title={"메뉴"} leftButton={<GoBackButton/>} rightButton={<BellButton/>}/>
+      <Header title={"메뉴"} leftButton={<GoBackButton/>}/>
       <Body
         className="bg-background"
       >

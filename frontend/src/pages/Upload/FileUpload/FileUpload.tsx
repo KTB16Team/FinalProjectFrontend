@@ -32,6 +32,7 @@ export default function FileUpload() {
         "txt" // 텍스트
       ];
 
+      // 허용된 확장자가 아닌 경우
       if (!allowedExtensions.includes(extension!)) {
         showModal(
           '지원하지 않는 파일 형식입니다. 허용된 파일 형식만 업로드 가능합니다.',
@@ -40,6 +41,7 @@ export default function FileUpload() {
         return;
       }
 
+      // 파일 크기 체크
       if (selectedFile.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
         showModal(`파일 크기는 최대 ${MAX_FILE_SIZE_MB}MB까지 허용됩니다.`, () => {});
         return;
@@ -149,10 +151,8 @@ export default function FileUpload() {
       };
       postFileMetaData(postFileMetaDataRequest);
 
-    } catch (error) {
-      showModal('파일 업로드 중 에러가 발생했습니다.', () => {
-        console.error('Error during file upload:', error);
-      });
+    } catch {
+      showModal('파일 업로드 중 에러가 발생했습니다.', () => {});
     } finally {
       setIsLoading(false);
     }

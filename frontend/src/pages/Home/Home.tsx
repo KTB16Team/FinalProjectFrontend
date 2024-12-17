@@ -7,7 +7,6 @@ import AllItem from "@/components/Home/SliderItem/AllItem.tsx";
 import {PostPreviewForm} from "@/types/postForm.ts";
 import Header from "@/components/Header/Header.tsx";
 import MenuButton from "@/components/Button/MenuButton.tsx";
-import BellButton from "@/components/Button/BellButton.tsx";
 import PopularItem from "@/components/Home/SliderItem/PopularItem.tsx";
 import MyPublicItem from "@/components/Home/SliderItem/MyPublicItem.tsx";
 import {getPosts} from "@/apis/post.ts";
@@ -104,7 +103,6 @@ export default function Home() {
       <Header
         title="aimo"
         leftButton={<MenuButton/>}
-        rightButton={<BellButton/>}
       />
       <Body className="bg-background">
         {/* 내 공개글 섹션 */}
@@ -135,7 +133,7 @@ export default function Home() {
         </HomepageSection>
       </Body>
 
-      <FloatingButton showActions={showActions} onToggleActions={() => setShowActions(!showActions)} />
+      <FloatingButton showActions={showActions} onToggleActions={() => setShowActions(!showActions)}/>
     </div>
   );
 }

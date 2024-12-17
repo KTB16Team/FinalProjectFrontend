@@ -10,7 +10,7 @@ export interface UploadFileToS3Form {
 export interface GetPreSignedUrlRequest {
   filename: string;
   extension: string;
-  prefix: "IMAGE" | "AUDIO" | "TEXT";
+  prefix: "IMAGE" | "AUDIO" | "TEXT" | "PROFILE";
 }
 
 export interface PostFileMetaDataRequest {
@@ -19,3 +19,4 @@ export interface PostFileMetaDataRequest {
   extension: string;
   prefix: string;
 }
+

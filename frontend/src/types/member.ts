@@ -10,10 +10,21 @@ export interface UpdatePasswordForm {
 export interface GetProfileForm {
   nickname: string;
   email: string;
-  profileImage: string;
+  profileImageUrl: string;
   point: number;
 }
 
 export interface UpdateNicknameForm {
   newNickname: string;
+}
+
+export interface PostProfileImageMetaDataRequest {
+  filename: string;
+  key: string;
+  extension: string;
+  prefix: string;
+}
+
+export interface GetProfilePreSignedUrlForm {
+  filename: string;
 }
