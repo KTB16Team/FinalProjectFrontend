@@ -7,7 +7,7 @@ export default function PostCategory() {
 
   return (
     <div>
-      <Header title={"메뉴"} leftButton={<GoBackButton/>}/>
+      <Header title={"메뉴"} leftButton={<GoBackButton to="/"/>}/>
       <Body
         className="bg-background"
       >

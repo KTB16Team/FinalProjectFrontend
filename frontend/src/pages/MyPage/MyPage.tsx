@@ -57,7 +57,7 @@ const MyPage = () => {
     <div className="bg-gray-50 min-h-screen">
       <Header
         title="aimo"
-        leftButton={<GoBackButton/>}
+        leftButton={<GoBackButton to={"/categories"}/>}
       />
 
       <Body>

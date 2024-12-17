@@ -2,13 +2,13 @@ import {useLocation} from "react-router-dom";
 import {PostPreviewForm} from "@/types/postForm.ts";
 import PostItem from "@/components/Post/PostItem.tsx";
 import Header from "@/components/Header/Header.tsx";
-import GoBackButton from "@/components/Button/GoBackButton.tsx";
 import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "@/contexts/AuthContext.tsx";
 import {getPosts} from "@/apis/post.ts";
 import {CATEGORY_NAMES} from "@/constants/categoryName.ts";
 import Body from "@/components/Body/Body.tsx";
 import Loading from "@/components/Loading/Loading.tsx";
+import GoBackButton from "@/components/Button/GoBackButton.tsx";
 
 const FETCH_SIZE = 10;
 
@@ -93,7 +93,7 @@ export default function PostList() {
 
   return (
     <div>
-      <Header title={categoryName} leftButton={<GoBackButton/>}/>
+      <Header title={categoryName} leftButton={<GoBackButton to={"/categories"}/>}/>
       <Body
         className="bg-background"
       >
