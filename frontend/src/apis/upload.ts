@@ -13,7 +13,7 @@ export const uploadText = async (request: TextUploadForm) => {
 }
 
 export const getFilePreSignedUrl = async (request : GetPreSignedUrlRequest) => {
-  return await axiosInstance.get(`${BACKEND_URL}/api/v1/file/presigned?filename=${request.filename}&prefix=${request.prefix}`);
+  return await axiosInstance.get(`${BACKEND_URL}/api/v1/file/presigned?filename=${request.filename}&prefix=${request.prefix}&extension=${request.extension}`);
 }
 
 export const uploadFileToS3 = async (request: UploadFileToS3Form) => {
