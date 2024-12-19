@@ -2,7 +2,7 @@ import {axiosInstance} from "@/apis/index.ts";
 import {
   DeleteMemberForm,
   GetProfilePreSignedUrlForm,
-  PostProfileImageMetaDataRequest,
+  PostProfileImageMetaDataRequest, ReissuePasswordForm,
   UpdateNicknameForm,
   UpdatePasswordForm,
 } from "@/types/member.ts";
@@ -35,4 +35,8 @@ export const saveProfileImageMetaData = async (request: PostProfileImageMetaData
 
 export const getPoint = async () => {
   return await axiosInstance.get(`${BACKEND_URL}/api/v1/members/points`);
+}
+
+export const reissuePassword = async (request : ReissuePasswordForm) => {
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/members/password-reissue`, request);
 }

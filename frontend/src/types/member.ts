@@ -28,3 +28,8 @@ export interface PostProfileImageMetaDataRequest {
 export interface GetProfilePreSignedUrlForm {
   filename: string;
 }
+
+export interface ReissuePasswordForm {
+  email: string;
+  code: string;
+}

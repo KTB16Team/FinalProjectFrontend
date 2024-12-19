@@ -30,8 +30,8 @@ export default function Login() {
       );
   };
 
-  const handleFindPassword = () => {
-    navigate('/password-find');
+  const handleReissuePassword = () => {
+    navigate('/password-reissue');
   };
 
   return (
@@ -77,8 +77,8 @@ export default function Login() {
           </button>
 
           <div className="flex justify-between text-xs text-gray-500 px-1 mt-1">
-            <button type="button" onClick={handleFindPassword}
-              className="hover:text-gray-700">비밀번호 찾기</button>
+            <button type="button" onClick={handleReissuePassword}
+              className="hover:text-gray-700">비밀번호 재발급</button>
             <Link to="/signup" type="button" className="text-red-400 hover:text-red-500">회원가입</Link>
           </div>
 
