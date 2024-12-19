@@ -160,11 +160,12 @@ export default function FileUpload() {
       let url = "";
       await postFileMetaData(postFileMetaDataRequest)
         .then((response) => {
-          url = response.data.url;
+          url = response.data.data.url;
         })
 
       // stt or ocr
       let script = "";
+      console.log(url);
       if (prefix === "AUDIO") {
         const request : XtoTextForm = {
           url: url
