@@ -1,5 +1,5 @@
 import {axiosInstance} from "@/apis/index.ts";
-import {PostPostForm} from "@/types/postForm.ts";
+import {PostPostForm, XtoTextForm} from "@/types/postForm.ts";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -41,4 +41,12 @@ export const getAiResult = async (postId: number) => {
 
 export const deletePost = async (postId: number) => {
   return await axiosInstance.delete(`${BACKEND_URL}/api/v1/posts/${postId}`);
+}
+
+export const speechToText = async (request : XtoTextForm) => {
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/speech-to-text`, request);
+}
+
+export const imageToText = async (request : XtoTextForm) => {
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/image-to-text`, request);
 }

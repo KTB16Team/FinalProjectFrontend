@@ -50,3 +50,7 @@ export interface AiResultForm {
   faultRatePlaintiff: number;
   faultRateDefendant: number;
 }
+
+export interface XtoTextForm {
+  url: string;
+}

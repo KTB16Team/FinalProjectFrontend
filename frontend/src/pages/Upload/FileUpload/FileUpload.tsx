@@ -6,8 +6,16 @@ import Body from "@/components/Body/Body.tsx";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 import { useModal } from "@/contexts/ModalContext.tsx";
 import { DECREASE_POINT } from "@/constants/point.ts";
-import { getFilePreSignedUrl, postFileMetaData, uploadFileToS3 } from "@/apis/upload.ts";
-import { GetPreSignedUrlRequest, PostFileMetaDataRequest, UploadFileToS3Form } from "@/types/UploadForm.ts";
+import {getFilePreSignedUrl, postFileMetaData, uploadFileToS3, uploadText} from "@/apis/upload.ts";
+import {
+  GetPreSignedUrlRequest,
+  PostFileMetaDataRequest,
+  TextUploadForm,
+  UploadFileToS3Form
+} from "@/types/UploadForm.ts";
+import {imageToText, speechToText} from "@/apis/post.ts";
+import {XtoTextForm} from "@/types/postForm.ts";
+import {useNavigate} from "react-router-dom";
 
 const REQUIRED_POINTS = 10; // 업로드 시 차감 포인트
 const MAX_FILE_SIZE_MB = 10; // 최대 파일 크기 (MB)
@@ -18,6 +26,7 @@ export default function FileUpload() {
   const [showConfirmModal, setShowConfirmModal] = useState(false); // ConfirmModal 표시 여부
   const [memberPoint, setMemberPoint] = useState<number>(0); // 회원 포인트
   const { showModal } = useModal();
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -28,8 +37,7 @@ export default function FileUpload() {
       // 허용된 확장자와 Prefix 매핑
       const allowedExtensions = [
         "png", "jpg", "jpeg", // 이미지
-        "mp3", "wav", "ogg", "acc", "flac", "m4a", // 오디오
-        "txt" // 텍스트
+        "mp3", "wav", "ogg", "acc", "flac", "m4a" // 오디오
       ];
 
       // 허용된 확장자가 아닌 경우
@@ -95,7 +103,7 @@ export default function FileUpload() {
       const extension = file.name.split('.').pop()?.toLowerCase();
 
       // 허용된 확장자와 Prefix 매핑
-      const extensionToPrefixMap: { [key: string]: "IMAGE" | "AUDIO" | "TEXT" } = {
+      const extensionToPrefixMap: { [key: string]: "IMAGE" | "AUDIO" } = {
         png: "IMAGE",
         jpg: "IMAGE",
         jpeg: "IMAGE",
@@ -105,7 +113,6 @@ export default function FileUpload() {
         acc: "AUDIO",
         flac: "AUDIO",
         m4a: "AUDIO",
-        txt: "TEXT",
       };
 
       // Prefix 결정
@@ -121,14 +128,14 @@ export default function FileUpload() {
       const filenameWithoutExtension = file.name.slice(0, file.name.lastIndexOf('.'));
 
       // 요청 생성
-      const request: GetPreSignedUrlRequest = {
+      const getPreSignedUrlRequest: GetPreSignedUrlRequest = {
         filename: filenameWithoutExtension,
         extension: extension!,
         prefix: prefix,
       };
 
       // Presigned URL 가져오기
-      const response = await getFilePreSignedUrl(request);
+      const response = await getFilePreSignedUrl(getPreSignedUrlRequest);
       const preSignedUrl = response.data.data.preSignedUrl;
       const key = response.data.data.key;
 
@@ -149,7 +156,53 @@ export default function FileUpload() {
         extension: extension!,
         prefix: prefix
       };
-      postFileMetaData(postFileMetaDataRequest);
+
+      let url = "";
+      postFileMetaData(postFileMetaDataRequest)
+        .then((response) => {
+          url = response.data.url;
+        })
+
+      // stt or ocr
+      let script = "";
+      if (prefix === "AUDIO") {
+        const request : XtoTextForm = {
+          url: url
+        }
+
+        speechToText(request)
+          .then((response) => {
+            script = response.data.script;
+          })
+      } else if (prefix === "IMAGE") {
+        const request : XtoTextForm = {
+          url: url
+        }
+
+        imageToText(request)
+          .then((response) => {
+            script = response.data.script;
+          })
+      }
+
+
+      // ai 요청
+      const request: TextUploadForm = {
+        content: script,
+      };
+
+      setIsLoading(true);
+
+      uploadText(request)
+        .then(() => {
+          showModal("업로드 되었습니다.", () => {navigate(`/my-private-posts`)});
+        })
+        .catch(() => {
+          showModal('업로드 중 에러가 발생했습니다.', () => {});
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
 
     } catch {
       showModal('파일 업로드 중 에러가 발생했습니다.', () => {});
@@ -183,7 +236,7 @@ export default function FileUpload() {
           <h2 className="text-xl font-medium text-gray-700 mb-2 text-left">파일 선택</h2>
           <input
             type="file"
-            accept=".png, .jpg, .jpeg, .mp3, .wav, .ogg, .acc, .flac, .m4a, .txt" // 허용 확장자 추가
+            accept=".png, .jpg, .jpeg, .mp3, .wav, .ogg, .acc, .flac, .m4a" // 허용 확장자 추가
             onChange={handleFileChange}
             className="block w-full text-sm text-gray-700 bg-gray-100 rounded-md focus:outline-none"
           />
