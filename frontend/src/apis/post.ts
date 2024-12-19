@@ -44,9 +44,9 @@ export const deletePost = async (postId: number) => {
 }
 
 export const speechToText = async (request : XtoTextForm) => {
-  return await axiosInstance.post(`${BACKEND_URL}/api/v1/speech-to-text`, request);
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/private-posts/speech-to-text`, request);
 }
 
 export const imageToText = async (request : XtoTextForm) => {
-  return await axiosInstance.post(`${BACKEND_URL}/api/v1/image-to-text`, request);
+  return await axiosInstance.post(`${BACKEND_URL}/api/v1/private-posts/image-to-text`, request);
 }
