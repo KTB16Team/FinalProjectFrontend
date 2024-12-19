@@ -158,7 +158,7 @@ export default function FileUpload() {
       };
 
       let url = "";
-      postFileMetaData(postFileMetaDataRequest)
+      await postFileMetaData(postFileMetaDataRequest)
         .then((response) => {
           url = response.data.url;
         })
@@ -170,7 +170,7 @@ export default function FileUpload() {
           url: url
         }
 
-        speechToText(request)
+        await speechToText(request)
           .then((response) => {
             script = response.data.script;
           })
@@ -179,7 +179,7 @@ export default function FileUpload() {
           url: url
         }
 
-        imageToText(request)
+        await imageToText(request)
           .then((response) => {
             script = response.data.script;
           })
@@ -191,18 +191,13 @@ export default function FileUpload() {
         content: script,
       };
 
-      setIsLoading(true);
-
-      uploadText(request)
+      await uploadText(request)
         .then(() => {
           showModal("업로드 되었습니다.", () => {navigate(`/my-private-posts`)});
         })
         .catch(() => {
           showModal('업로드 중 에러가 발생했습니다.', () => {});
         })
-        .finally(() => {
-          setIsLoading(false);
-        });
 
     } catch {
       showModal('파일 업로드 중 에러가 발생했습니다.', () => {});
