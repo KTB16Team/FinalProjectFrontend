@@ -11,23 +11,22 @@ import CancelButton from "@/components/Button/CancelButton.tsx";
 import Header from "@/components/Header/Header.tsx";
 import Body from "@/components/Body/Body.tsx";
 import {useModal} from "@/contexts/ModalContext.tsx";
+import {sendSignupEmailCode} from "@/apis/email.ts";
+import {SendEmailCodeForm} from "@/types/emailForm.ts";
 
 export default function SignUp() {
   const {register, handleSubmit, formState: {errors}, watch, setValue} = useForm<SignUpForm>();
-  const [isDone, setIsDone] = useState(false);
+  const [verificationFieldVisible, setVerificationFieldVisible] = useState(false);
   const navigate = useNavigate();
   const {showModal} = useModal();
 
-  // 모든 필드를 감시
-  const watchFields = watch([
-    'email', 'password', 'confirmPassword', 'nickname', 'birth', 'gender'
-  ]);
-  const watchBirth = watch('birth'); // 생년월일 필드 감시
+  const watchBirth = watch('birth');
+  const watchEmail = watch('email');
 
   // 생년월일 자동 포맷팅 및 유효성 검사
   useEffect(() => {
     if (watchBirth) {
-      let formatted = watchBirth.replace(/[^0-9]/g, ''); // 숫자만 남기기
+      let formatted = watchBirth.replace(/[^0-9]/g, '');
       if (formatted.length > 4) {
         formatted = formatted.slice(0, 4) + '-' + formatted.slice(4);
       }
@@ -35,30 +34,60 @@ export default function SignUp() {
         formatted = formatted.slice(0, 7) + '-' + formatted.slice(7, 10);
       }
 
-      // 유효한 년, 월 및 일 검증
       const [year, month, day] = formatted.split('-').map(Number);
       if (year && (year < 1900 || year > new Date().getFullYear())) {
-        setValue('birth', formatted.slice(0, 4)); // 잘못된 년도 입력 시 제거
+        setValue('birth', formatted.slice(0, 4));
         return;
       }
-
       if (month && (month < 1 || month > 12)) {
-        setValue('birth', formatted.slice(0, 5)); // 잘못된 월 입력 시 제거
+        setValue('birth', formatted.slice(0, 5));
         return;
       }
       if (day && (day < 1 || day > 31)) {
-        setValue('birth', formatted.slice(0, 8)); // 잘못된 일 입력 시 제거
+        setValue('birth', formatted.slice(0, 8));
         return;
       }
-
-      // 입력 값을 포맷팅 후 상태 업데이트
       if (formatted !== watchBirth) {
-        setValue('birth', formatted); // useForm의 setValue로 업데이트
+        setValue('birth', formatted);
       }
     }
   }, [watchBirth, setValue]);
 
-  // 회원가입 요청
+  // 이메일 인증 코드 요청
+  const handleSendVerificationCode = () => {
+    if (!watchEmail) {
+      showModal('이메일을 입력해주세요.', () => {});
+      return;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(watchEmail)) {
+      showModal('유효한 이메일 주소를 입력해주세요.', () => {});
+      return;
+    }
+
+    const request : SendEmailCodeForm = {
+      email: watchEmail,
+    }
+
+    // 이메일 인증 코드 요청 API 호출
+    sendSignupEmailCode(request)
+      .then(() => {
+        showModal('인증 코드가 이메일로 전송되었습니다.', () => {});
+        setVerificationFieldVisible(true);
+      })
+      .catch((error) => {
+        const response = error.response?.data;
+
+        if (response?.code === 'EMAIL-004') {
+          showModal('이미 가입된 이메일입니다.', () => {});
+          return;
+        }
+
+        showModal('인증 코드 전송에 실패했습니다. 다시 시도해주세요.', () => {});
+      });
+  };
+
   const onSubmit: SubmitHandler<SignUpForm> = data => {
     signup(data)
       .then(() => {
@@ -66,20 +95,11 @@ export default function SignUp() {
         navigate('/login');
       })
       .catch((error) => {
-        // 에러 처리
         if (axios.isAxiosError(error)) {
           const response = error.response?.data;
-
-          // validation 에러 처리
-          if (error.status === 400) {
-            showModal(response.reasons, () => {});
-            return;
-          }
-
-          // 서버 응답에서 code를 가져와 처리
           switch (response?.code) {
             case 'COMMON-002':
-              showModal('요청 파라미터가 잘못되었습니다.', () => {});
+              showModal(response.reasons, () => {});
               break;
             case 'MEMBER-003':
               showModal('이메일이 중복되었습니다.', () => {});
@@ -87,42 +107,52 @@ export default function SignUp() {
             case 'MEMBER-004':
               showModal('닉네임이 중복되었습니다.', () => {});
               break;
+            case 'EMAIL-005':
+              showModal('이메일 인증 코드가 일치하지 않습니다.', () => {});
+              break;
             default:
               showModal('회원가입에 실패했습니다. 다시 시도해주세요.', () => {});
           }
         } else {
-          // 예상치 못한 에러 처리
           showModal('네트워크 오류가 발생했습니다. 다시 시도해주세요.', () => {});
         }
-      })
+      });
   };
-
-  // useEffect를 사용하여 watchFields가 변경될 때마다 isDone 상태 업데이트
-  useEffect(() => {
-    // 모든 필드가 채워졌는지 확인
-    const allFieldsFilled = watchFields.every(field => field !== undefined && field !== '');
-    const passwordsMatch = watchFields[1] === watchFields[2]; // password와 confirmPassword가 일치하는지 확인
-
-    setIsDone(allFieldsFilled && passwordsMatch); // 모든 필드가 채워지고 비밀번호가 일치하면 true로 설정
-  }, [watchFields]);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 헤더 부분 */}
       <Header title="회원가입" leftButton={<CancelButton />} />
-
-      {/* 메인 컨텐츠 영역 */}
       <Body>
         <form className="pt-5" onSubmit={handleSubmit(onSubmit)}>
-          {/* 이메일 */}
-          <Input
-            label={"이메일"}
-            type="email"
-            placeholder={'이메일을 입력해주세요'}
-            register={register('email', {required: '이메일을 입력해주세요'})}
-            error={errors.email?.message}
-            required={true}
-          />
+          <div className="flex items-center space-x-2">
+            <Input
+              label={"이메일"}
+              type="email"
+              placeholder={'이메일을 입력해주세요'}
+              register={register('email', {required: '이메일을 입력해주세요'})}
+              error={errors.email?.message}
+              required={true}
+            />
+            <button
+              type="button"
+              onClick={handleSendVerificationCode}
+              className="rounded-lg bg-red-500 text-white px-4 py-2 font-bold hover:bg-red-600"
+            >
+              인증
+            </button>
+          </div>
+
+          {verificationFieldVisible && (
+            <Input
+              label="인증 코드"
+              type="text"
+              placeholder={'인증 코드를 입력해주세요'}
+              register={register('code', {required: '인증 코드를 입력해주세요'})}
+              error={errors.code?.message}
+              required={true}
+            />
+          )}
+
           {/* 비밀번호 */}
           <Input
             label="비밀번호"
@@ -200,8 +230,7 @@ export default function SignUp() {
       </Body>
       <BottomButton
         label="회원 가입"
-        disabled={!isDone} // 모든 필드가 채워지고 비밀번호가 일치할 때만 버튼 활성화
-        onClick={handleSubmit(onSubmit)}  // 폼 제출
+        onClick={handleSubmit(onSubmit)}
       />
     </div>
   );
