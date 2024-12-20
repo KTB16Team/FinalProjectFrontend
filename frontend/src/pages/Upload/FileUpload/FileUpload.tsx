@@ -173,7 +173,7 @@ export default function FileUpload() {
 
         await speechToText(request)
           .then((response) => {
-            script = response.data.script;
+            script = response.data.data.script;
           })
       } else if (prefix === "IMAGE") {
         const request : XtoTextForm = {
@@ -182,7 +182,7 @@ export default function FileUpload() {
 
         await imageToText(request)
           .then((response) => {
-            script = response.data.script;
+            script = response.data.data.script;
           })
       }
 
