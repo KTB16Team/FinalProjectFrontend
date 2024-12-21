@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import MicIconLogo from "@/assets/imgs/Mic.svg?react";
 import PlusLogo from "@/assets/imgs/Plus.svg?react";
 import FileUploadLogo from "@/assets/imgs/FileUpload.svg?react";
 
@@ -25,13 +24,6 @@ const FloatingButton: React.FC<FloatingActionButtonProps> = ({ showActions, onTo
       {/* Floating Action Buttons */}
       {showActions && (
         <div className="fixed bottom-24 right-4 flex flex-col items-center space-y-3 z-50">
-          <button
-            onClick={() => navigate('/audio-recorder')}
-            className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 relative"
-          >
-            <MicIconLogo className="w-6 h-6" />
-            <span className="absolute text-white text-sm -left-24">실시간 녹음</span>
-          </button>
           <button
             onClick={() => navigate('/text-upload')}
             className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 relative -mb-3"
