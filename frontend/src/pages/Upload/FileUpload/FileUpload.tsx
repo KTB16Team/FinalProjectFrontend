@@ -6,16 +6,14 @@ import Body from "@/components/Body/Body.tsx";
 import ConfirmModal from "@/components/Modal/ConfirmModal.tsx";
 import { useModal } from "@/contexts/ModalContext.tsx";
 import { DECREASE_POINT } from "@/constants/point.ts";
-import {getFilePreSignedUrl, postFileMetaData, uploadFileToS3, uploadText} from "@/apis/upload.ts";
+import {getFilePreSignedUrl, postFileMetaData, uploadFileToS3} from "@/apis/upload.ts";
 import {
   GetPreSignedUrlRequest,
   PostFileMetaDataRequest,
-  TextUploadForm,
   UploadFileToS3Form
 } from "@/types/UploadForm.ts";
 import {imageToText, speechToText} from "@/apis/post.ts";
 import {XtoTextForm} from "@/types/postForm.ts";
-import {useNavigate} from "react-router-dom";
 
 const REQUIRED_POINTS = 10; // 업로드 시 차감 포인트
 const MAX_FILE_SIZE_MB = 10; // 최대 파일 크기 (MB)
@@ -26,7 +24,6 @@ export default function FileUpload() {
   const [showConfirmModal, setShowConfirmModal] = useState(false); // ConfirmModal 표시 여부
   const [memberPoint, setMemberPoint] = useState<number>(0); // 회원 포인트
   const { showModal } = useModal();
-  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -164,42 +161,18 @@ export default function FileUpload() {
         })
 
       // stt or ocr
-      let script = "";
-      console.log(url);
       if (prefix === "AUDIO") {
         const request : XtoTextForm = {
           url: url
         }
-
         await speechToText(request)
-          .then((response) => {
-            script = response.data.data.script;
-          })
+
       } else if (prefix === "IMAGE") {
         const request : XtoTextForm = {
           url: url
         }
-
         await imageToText(request)
-          .then((response) => {
-            script = response.data.data.script;
-          })
       }
-
-
-      // ai 요청
-      const request: TextUploadForm = {
-        content: script,
-      };
-
-      await uploadText(request)
-        .then(() => {
-          showModal("업로드 되었습니다.", () => {navigate(`/my-private-posts`)});
-        })
-        .catch(() => {
-          showModal('업로드 중 에러가 발생했습니다.', () => {});
-        })
-
     } catch {
       showModal('파일 업로드 중 에러가 발생했습니다.', () => {});
     } finally {
