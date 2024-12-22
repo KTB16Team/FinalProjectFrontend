@@ -53,7 +53,6 @@ export default function MyPrivatePostDetail() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPublishModal, setShowPublishModal] = useState(false); // 모달 표시 상태
   const navigate = useNavigate();
-  const [savedPostId, setSavedPostId] = useState({savedPostId: 0});
   const { showModal } = useModal();
 
   useEffect(() => {
@@ -110,8 +109,7 @@ export default function MyPrivatePostDetail() {
     postPost(request)
       .then((response) => {
         const data = response.data.data;
-        setSavedPostId(data.postId);
-        showModal("대화록이 발행되었습니다.", () => {navigate(`/posts/${savedPostId}`)});
+        showModal("대화록이 발행되었습니다.", () => {navigate(`/posts/${data.postId}`)});
       })
       .catch((error) => {
         const response = error.response.data;
