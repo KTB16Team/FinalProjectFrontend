@@ -45,7 +45,7 @@ export default function PostList() {
       let response: PostResponse;
       try {
         switch (location.pathname) {
-          case "/my-public-posts":
+          case "/categories/my-public-posts":
             response = await getPosts("MY", page, FETCH_SIZE);
             break;
           case "/categories/commented-posts":
