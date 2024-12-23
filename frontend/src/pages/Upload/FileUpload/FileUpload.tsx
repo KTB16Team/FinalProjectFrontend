@@ -121,12 +121,9 @@ export default function FileUpload() {
         return;
       }
 
-      // 파일명에서 확장자 제거
-      const filenameWithoutExtension = file.name.slice(0, file.name.lastIndexOf('.'));
-
       // 요청 생성
       const getPreSignedUrlRequest: GetPreSignedUrlRequest = {
-        filename: filenameWithoutExtension,
+        filename: file.name,
         extension: extension!,
         prefix: prefix,
       };
@@ -148,7 +145,7 @@ export default function FileUpload() {
 
       // 백엔드에 S3 메타정보 저장
       const postFileMetaDataRequest: PostFileMetaDataRequest = {
-        filename: filenameWithoutExtension,
+        filename: file.name,
         key: key,
         extension: extension!,
         prefix: prefix

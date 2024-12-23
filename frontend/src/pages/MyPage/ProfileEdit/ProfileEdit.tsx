@@ -116,13 +116,12 @@ const ProfileEditPage = () => {
         return;
       }
 
-      const filenameWithoutExtension = file.name.slice(0, file.name.lastIndexOf('.'));
       const extension = file.name.split('.').pop()?.toLowerCase();
       const prefix = "PROFILE";
 
       // 프로필 presigned url 요청
       const getProfilePreSignedUrlRequest: GetPreSignedUrlRequest = {
-        filename: filenameWithoutExtension,
+        filename: file.name,
         extension: extension!,
         prefix: prefix,
       };
@@ -139,7 +138,7 @@ const ProfileEditPage = () => {
 
       // 백엔드에 S3 메타정보 저장
       const postProfileImageMetaDataRequest: PostProfileImageMetaDataRequest = {
-        filename: filenameWithoutExtension,
+        filename: file.name,
         key: key,
         extension: extension!,
         prefix: prefix
