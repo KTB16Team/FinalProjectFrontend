@@ -14,6 +14,7 @@ import {
 } from "@/types/UploadForm.ts";
 import {imageToText, speechToText} from "@/apis/post.ts";
 import {XtoTextForm} from "@/types/postForm.ts";
+import {useNavigate} from "react-router-dom";
 
 const REQUIRED_POINTS = 10; // 업로드 시 차감 포인트
 const MAX_FILE_SIZE_MB = 10; // 최대 파일 크기 (MB)
@@ -24,6 +25,7 @@ export default function FileUpload() {
   const [showConfirmModal, setShowConfirmModal] = useState(false); // ConfirmModal 표시 여부
   const [memberPoint, setMemberPoint] = useState<number>(0); // 회원 포인트
   const { showModal } = useModal();
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -141,7 +143,6 @@ export default function FileUpload() {
 
       // S3에 파일 업로드
       await uploadFileToS3(uploadRequest);
-      showModal('파일 업로드가 완료되었습니다.', () => {});
 
       // 백엔드에 S3 메타정보 저장
       const postFileMetaDataRequest: PostFileMetaDataRequest = {
@@ -170,6 +171,8 @@ export default function FileUpload() {
         }
         await imageToText(request)
       }
+
+      showModal('업로드가 완료되었습니다.', () => {navigate(`/my-private-posts`)});
     } catch {
       showModal('파일 업로드 중 에러가 발생했습니다.', () => {});
     } finally {
